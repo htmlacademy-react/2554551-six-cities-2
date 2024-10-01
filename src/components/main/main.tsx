@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 
-import { cards } from '../data/cardsData';
+import { cards } from '../../data/cardsData';
 import Card from '../card/card';
 
 const Main = () => {
