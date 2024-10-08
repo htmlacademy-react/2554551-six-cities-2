@@ -1,7 +1,8 @@
-import { SingleCard } from '../types';
+import { SingleCard } from '../lib/types.ts/card';
 
-export const cards: SingleCard[] = [
+export const CARDS: SingleCard[] = [
   {
+    id: 1,
     isPremium: true,
     imgPath: 'img/apartment-01.jpg',
     price: 120,
@@ -11,6 +12,7 @@ export const cards: SingleCard[] = [
     placeType: 'Apartment',
   },
   {
+    id: 2,
     isPremium: false,
     imgPath: 'img/room.jpg',
     price: 80,
@@ -20,6 +22,7 @@ export const cards: SingleCard[] = [
     placeType: 'Private room',
   },
   {
+    id: 3,
     isPremium: false,
     imgPath: 'img/apartment-02.jpg',
     price: 132,
@@ -29,6 +32,7 @@ export const cards: SingleCard[] = [
     placeType: 'Apartment',
   },
   {
+    id: 4,
     isPremium: true,
     imgPath: 'img/apartment-03.jpg',
     price: 180,
@@ -38,6 +42,7 @@ export const cards: SingleCard[] = [
     placeType: 'Apartment',
   },
   {
+    id: 5,
     isPremium: false,
     imgPath: 'img/room.jpg',
     price: 80,

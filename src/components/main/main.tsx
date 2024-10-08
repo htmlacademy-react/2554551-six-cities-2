@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 
-import { cards } from '../../data/cardsData';
+import { CARDS } from '../../data/cardsData';
 import Card from '../card/card';
 
 const Main = () => {
@@ -114,9 +114,10 @@ const Main = () => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cards.map((card) => (
+                {CARDS.map((card) => (
                   <Card
-                    key={crypto.randomUUID()}
+                    key={card.id}
+                    id={card.id}
                     isPremium={card.isPremium}
                     imgPath={card.imgPath}
                     price={card.price}

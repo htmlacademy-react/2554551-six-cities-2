@@ -1,24 +1,17 @@
-/* eslint-disable arrow-body-style */
+import { SingleCard } from '../../lib/types.ts/card';
+import clsx from 'clsx';
 
-type Props = {
-  isPremium: boolean;
-  imgPath: string;
-  price: number;
-  inBookmarks: boolean;
-  rating: 1 | 2 | 3 | 4 | 5;
-  placeName: string;
-  placeType: string;
-};
+const Card = (card: SingleCard) => {
+  const {
+    isPremium,
+    imgPath,
+    price,
+    inBookmarks,
+    rating,
+    placeName,
+    placeType,
+  } = card;
 
-const Card = ({
-  isPremium,
-  imgPath,
-  price,
-  inBookmarks,
-  rating,
-  placeName,
-  placeType,
-}: Props) => {
   return (
     <article className="cities__card place-card">
       {isPremium ? (
@@ -46,9 +39,11 @@ const Card = ({
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button  button ${
-              inBookmarks ? 'place-card__bookmark-button--active' : ''
-            }`}
+            className={clsx(
+              'place-card__bookmark-button',
+              'button',
+              inBookmarks && 'place-card__bookmark-button--active'
+            )}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
