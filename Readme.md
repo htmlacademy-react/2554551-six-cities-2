@@ -2,6 +2,7 @@
 
 - Студент: [Анастасия Сайдазимова](https://up.htmlacademy.ru/react-individual/2/user/2554551).
 - Наставник: `Артём Новоселов`.
+- [Просмотр проекта](2554551-six-cities-2-5fbygpzk0-nslyumas-projects.vercel.app)
 
 ---
 
