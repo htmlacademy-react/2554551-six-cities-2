@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 
 import { CARDS } from '../../data/cardsData';
-import Card from '../card/card';
+import Card from '../../components/card/card';
 
 const Main = () => {
   return (
