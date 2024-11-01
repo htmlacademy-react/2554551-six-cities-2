@@ -1,13 +1,21 @@
 /* eslint-disable arrow-body-style */
 
-const Favorites = () => {
+import { Favorite } from '../../lib/types.ts/favorite';
+import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
+import Card from '../../components/card/card';
+
+type Props = { favorites: Favorite[] };
+
+const Favorites = ({ favorites }: Props) => {
   return (
     <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link to={AppRoute.Main}>
+                <span className="header__logo-link">
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -15,7 +23,8 @@ const Favorites = () => {
                   width="81"
                   height="41"
                 />
-              </a>
+                </span>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -217,7 +226,8 @@ const Favorites = () => {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link to={AppRoute.Main}>
+          <span className="footer__logo-link">
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -225,7 +235,8 @@ const Favorites = () => {
             width="64"
             height="33"
           />
-        </a>
+          </span>
+        </Link>
       </footer>
     </div>
   );

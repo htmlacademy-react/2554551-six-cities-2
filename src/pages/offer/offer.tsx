@@ -1,5 +1,9 @@
 /* eslint-disable arrow-body-style */
 
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import ReviewForm from '../../components/review-form/review-form';
+
 const Offer = () => {
   return (
     <div className="page">
@@ -7,7 +11,8 @@ const Offer = () => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link to={AppRoute.Main}>
+                <span className="header__logo-link">
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -15,7 +20,8 @@ const Offer = () => {
                   width="81"
                   height="41"
                 />
-              </a>
+                </span>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
