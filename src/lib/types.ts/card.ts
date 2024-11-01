@@ -9,4 +9,5 @@ export type SingleCard = {
   rating: Rating;
   placeName: string;
   placeType: string;
+  isFavorites?: boolean;
 };
