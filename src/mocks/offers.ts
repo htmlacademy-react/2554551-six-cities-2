@@ -1,6 +1,6 @@
 import { SingleCard } from '../lib/types.ts/card';
 
-export const CARDS: SingleCard[] = [
+export const OFFERS: SingleCard[] = [
   {
     id: 1,
     isPremium: true,
