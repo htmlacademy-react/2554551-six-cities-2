@@ -1,19 +1,25 @@
+import { Link } from 'react-router-dom';
 import { SingleCard } from '../../lib/types.ts/card';
 import clsx from 'clsx';
 
-const Card = (card: SingleCard) => {
-  const {
-    isPremium,
-    imgPath,
-    price,
-    inBookmarks,
-    rating,
-    placeName,
-    placeType,
-  } = card;
+const Card = ({
+  id,
+  isPremium,
+  imgPath,
+  price,
+  inBookmarks,
+  rating,
+  placeName,
+  placeType,
+  isFavorites,
+}: SingleCard) => {
+  const cardClass = isFavorites ? 'favorites__card' : 'cities__card';
+  const imgAttributes = isFavorites
+    ? { className: 'favorites__image-wrapper', width: '150', height: '110' }
+    : { className: 'cities__image-wrapper', width: '260', height: '200' };
 
   return (
-    <article className="cities__card place-card">
+    <article className={clsx(cardClass, 'place-card')}>
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -21,18 +27,25 @@ const Card = (card: SingleCard) => {
       ) : (
         ''
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+      <div
+        className={clsx(imgAttributes.className, 'place-card__image-wrapper')}
+      >
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={imgPath}
-            width="260"
-            height="200"
+            width={imgAttributes.width}
+            height={imgAttributes.height}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
-      <div className="place-card__info">
+      <div
+        className={clsx(
+          isFavorites && 'favorites__card-info',
+          'place-card__info'
+        )}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -61,7 +74,7 @@ const Card = (card: SingleCard) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeName}</a>
+          <Link to={`/offer/${id}`}>{placeName}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>
