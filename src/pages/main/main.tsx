@@ -1,9 +1,11 @@
 /* eslint-disable arrow-body-style */
 
-import { CARDS } from '../../data/cardsData';
-import Card from '../../components/card/card';
+import { SingleCard } from '../../lib/types.ts/card';
+import OfferList from '../../components/offer-list/offer-list';
 
-const Main = () => {
+type Props = { offers: SingleCard[] };
+
+const Main = ({ offers }: Props) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -113,21 +115,8 @@ const Main = () => {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {CARDS.map((card) => (
-                  <Card
-                    key={card.id}
-                    id={card.id}
-                    isPremium={card.isPremium}
-                    imgPath={card.imgPath}
-                    price={card.price}
-                    inBookmarks={card.inBookmarks}
-                    rating={card.rating}
-                    placeName={card.placeName}
-                    placeType={card.placeType}
-                  />
-                ))}
-              </div>
+
+              <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
