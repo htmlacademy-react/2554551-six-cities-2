@@ -52,9 +52,7 @@ const Map = ({ city, points, selectedPoint }: Props) => {
       className={styles.map}
       style={{ width: '100%', alignSelf: 'stretch' }}
       ref={mapRef}
-    >
-      {}
-    </div>
+    />
   );
 };
 
