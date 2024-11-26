@@ -1,5 +1,5 @@
 import { SingleCard } from '../../lib/types.ts/card';
-import OfferCard from '../offer/offer-card';
+import OfferCard from '../offer-card/offer-card';
 
 type Props = {
   offers: SingleCard[];
