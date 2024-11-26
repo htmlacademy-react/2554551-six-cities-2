@@ -1,11 +1,25 @@
-/* eslint-disable arrow-body-style */
-
+import { useState } from 'react';
 import { SingleCard } from '../../lib/types.ts/card';
+import { City } from '../../lib/types.ts/city';
+import { Point } from '../../lib/types.ts/point';
 import OfferList from '../../components/offer-list/offer-list';
+import Map from '../../components/map/map';
 
-type Props = { offers: SingleCard[] };
+type Props = { offers: SingleCard[]; city: City; points: Point[] };
 
-const Main = ({ offers }: Props) => {
+const Main = ({ offers, city, points }: Props) => {
+  const [selectedOffer, setSelectedOffer] = useState<Point | undefined>();
+
+  const handleOfferHover = (placeName: string | undefined) => {
+    if (placeName === undefined) {
+      setSelectedOffer(undefined);
+    }
+
+    const currentPoint = points.find((point) => point.title === placeName);
+
+    setSelectedOffer(currentPoint);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -116,10 +130,16 @@ const Main = ({ offers }: Props) => {
                 </ul>
               </form>
 
-              <OfferList offers={offers} />
+              <OfferList offers={offers} onCardMouseOver={handleOfferHover} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  city={city}
+                  points={points}
+                  selectedPoint={selectedOffer}
+                />
+              </section>
             </div>
           </div>
         </div>
