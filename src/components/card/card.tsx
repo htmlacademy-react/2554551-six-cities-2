@@ -3,9 +3,12 @@ import { SingleCard } from '../../lib/types.ts/card';
 import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
-type Props = { card: SingleCard };
+type Props = {
+  card: SingleCard;
+  onCardMouseOver: (placeName: string | undefined) => void;
+};
 
-const Card = ({ card }: Props) => {
+const Card = ({ card, onCardMouseOver }: Props) => {
   const {
     id,
     isPremium,
@@ -24,7 +27,11 @@ const Card = ({ card }: Props) => {
     : { className: 'cities__image-wrapper', width: '260', height: '200' };
 
   return (
-    <article className={clsx(cardClass, 'place-card')}>
+    <article
+      className={clsx(cardClass, 'place-card')}
+      onMouseOver={() => onCardMouseOver(placeName)}
+      onMouseLeave={() => onCardMouseOver(undefined)}
+    >
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
