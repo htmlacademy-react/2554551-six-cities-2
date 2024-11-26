@@ -42,8 +42,7 @@ const ReviewForm = () => {
           (e: React.ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)
           // eslint-disable-next-line react/jsx-curly-newline
         }
-        // eslint-disable-next-line react/jsx-closing-tag-location
-      ></textarea>
+      />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
