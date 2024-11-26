@@ -5,10 +5,10 @@ import clsx from 'clsx';
 
 type Props = {
   card: SingleCard;
-  onCardMouseOver: (placeName: string | undefined) => void;
+  inFavorites?: boolean;
 };
 
-const Card = ({ card, onCardMouseOver }: Props) => {
+const Card = ({ card, inFavorites }: Props) => {
   const {
     id,
     isPremium,
@@ -18,20 +18,14 @@ const Card = ({ card, onCardMouseOver }: Props) => {
     rating,
     placeName,
     placeType,
-    isFavorites,
   } = card;
 
-  const cardClass = isFavorites ? 'favorites__card' : 'cities__card';
-  const imgAttributes = isFavorites
+  const imgAttributes = inFavorites
     ? { className: 'favorites__image-wrapper', width: '150', height: '110' }
     : { className: 'cities__image-wrapper', width: '260', height: '200' };
 
   return (
-    <article
-      className={clsx(cardClass, 'place-card')}
-      onMouseOver={() => onCardMouseOver(placeName)}
-      onMouseLeave={() => onCardMouseOver(undefined)}
-    >
+    <>
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -54,7 +48,7 @@ const Card = ({ card, onCardMouseOver }: Props) => {
       </div>
       <div
         className={clsx(
-          isFavorites && 'favorites__card-info',
+          inFavorites && 'favorites__card-info',
           'place-card__info'
         )}
       >
@@ -90,7 +84,7 @@ const Card = ({ card, onCardMouseOver }: Props) => {
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>
-    </article>
+    </>
   );
 };
 
