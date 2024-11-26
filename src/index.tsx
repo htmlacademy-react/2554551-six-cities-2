@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { OFFERS } from './mocks/offers';
 import { FAVORITES } from './mocks/favorites';
+import { CITY } from './mocks/city';
+import { POINTS } from './mocks/points';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,6 +12,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={OFFERS} favorites={FAVORITES} />
+    <App offers={OFFERS} favorites={FAVORITES} city={CITY} points={POINTS} />
   </React.StrictMode>
 );
