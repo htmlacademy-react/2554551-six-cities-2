@@ -1,25 +1,31 @@
 import { Link } from 'react-router-dom';
 import { SingleCard } from '../../lib/types.ts/card';
+import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
-const Card = ({
-  id,
-  isPremium,
-  imgPath,
-  price,
-  inBookmarks,
-  rating,
-  placeName,
-  placeType,
-  isFavorites,
-}: SingleCard) => {
-  const cardClass = isFavorites ? 'favorites__card' : 'cities__card';
-  const imgAttributes = isFavorites
+type Props = {
+  card: SingleCard;
+  inFavorites?: boolean;
+};
+
+const Card = ({ card, inFavorites }: Props) => {
+  const {
+    id,
+    isPremium,
+    imgPath,
+    price,
+    inBookmarks,
+    rating,
+    placeName,
+    placeType,
+  } = card;
+
+  const imgAttributes = inFavorites
     ? { className: 'favorites__image-wrapper', width: '150', height: '110' }
     : { className: 'cities__image-wrapper', width: '260', height: '200' };
 
   return (
-    <article className={clsx(cardClass, 'place-card')}>
+    <>
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -30,7 +36,7 @@ const Card = ({
       <div
         className={clsx(imgAttributes.className, 'place-card__image-wrapper')}
       >
-        <Link to={`/offer/${id}`}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
             src={imgPath}
@@ -42,7 +48,7 @@ const Card = ({
       </div>
       <div
         className={clsx(
-          isFavorites && 'favorites__card-info',
+          inFavorites && 'favorites__card-info',
           'place-card__info'
         )}
       >
@@ -74,11 +80,11 @@ const Card = ({
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{placeName}</Link>
+          <Link to={`${AppRoute.Offer}/${id}`}>{placeName}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>
-    </article>
+    </>
   );
 };
 
