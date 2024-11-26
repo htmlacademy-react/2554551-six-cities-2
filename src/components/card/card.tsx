@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SingleCard } from '../../lib/types.ts/card';
+import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
 const Card = ({
@@ -30,7 +31,7 @@ const Card = ({
       <div
         className={clsx(imgAttributes.className, 'place-card__image-wrapper')}
       >
-        <Link to={`/offer/${id}`}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
             src={imgPath}
@@ -74,7 +75,7 @@ const Card = ({
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{placeName}</Link>
+          <Link to={`${AppRoute.Offer}/${id}`}>{placeName}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>
