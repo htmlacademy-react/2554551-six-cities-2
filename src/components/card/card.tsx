@@ -3,17 +3,21 @@ import { SingleCard } from '../../lib/types.ts/card';
 import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
-const Card = ({
-  id,
-  isPremium,
-  imgPath,
-  price,
-  inBookmarks,
-  rating,
-  placeName,
-  placeType,
-  isFavorites,
-}: SingleCard) => {
+type Props = { card: SingleCard };
+
+const Card = ({ card }: Props) => {
+  const {
+    id,
+    isPremium,
+    imgPath,
+    price,
+    inBookmarks,
+    rating,
+    placeName,
+    placeType,
+    isFavorites,
+  } = card;
+
   const cardClass = isFavorites ? 'favorites__card' : 'cities__card';
   const imgAttributes = isFavorites
     ? { className: 'favorites__image-wrapper', width: '150', height: '110' }

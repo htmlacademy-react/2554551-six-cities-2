@@ -67,18 +67,7 @@ const Favorites = ({ favorites }: Props) => {
                   </div>
                   <div className="favorites__places">
                     {item.cards.map((card) => (
-                      <Card
-                        key={card.id}
-                        id={card.id}
-                        isPremium={card.isPremium}
-                        imgPath={card.imgPath}
-                        price={card.price}
-                        inBookmarks={card.inBookmarks}
-                        rating={card.rating}
-                        placeName={card.placeName}
-                        placeType={card.placeType}
-                        isFavorites
-                      />
+                      <Card key={card.id} card={card} />
                     ))}
                   </div>
                 </li>
