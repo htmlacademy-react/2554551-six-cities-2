@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 // import { useState } from 'react';
 import { SingleCard } from '../../lib/types.ts/card';
-import Card from '../card/card';
+import OfferCard from '../offer/offer-card';
 
 type Props = {
   offers: SingleCard[];
@@ -15,7 +15,11 @@ const OfferList = ({ offers, onCardMouseOver }: Props) => {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((card) => (
-        <Card key={card.id} card={card} onCardMouseOver={onCardMouseOver} />
+        <OfferCard
+          key={card.id}
+          card={card}
+          onCardMouseOver={onCardMouseOver}
+        />
       ))}
     </div>
   );

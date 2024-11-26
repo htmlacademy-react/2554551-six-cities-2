@@ -3,7 +3,7 @@
 import { Favorite } from '../../lib/types.ts/favorite';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
-import Card from '../../components/card/card';
+import FavoriteCard from '../../components/favorite-card/favorite-card';
 
 type Props = { favorites: Favorite[] };
 
@@ -67,7 +67,7 @@ const Favorites = ({ favorites }: Props) => {
                   </div>
                   <div className="favorites__places">
                     {item.cards.map((card) => (
-                      <Card key={card.id} card={card} />
+                      <FavoriteCard key={card.id} card={card} />
                     ))}
                   </div>
                 </li>
