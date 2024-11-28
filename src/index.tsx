@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { OFFERS } from './mocks/offers';
+import { NEIGHBOURHOOD_OFFERS, OFFERS } from './mocks/offers';
 import { FAVORITES } from './mocks/favorites';
 import { CITY } from './mocks/city';
 import { POINTS } from './mocks/points';
@@ -15,6 +15,7 @@ root.render(
   <React.StrictMode>
     <App
       offers={OFFERS}
+      neighbourhoodOffers={NEIGHBOURHOOD_OFFERS}
       favorites={FAVORITES}
       city={CITY}
       points={POINTS}

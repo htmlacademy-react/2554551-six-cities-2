@@ -15,13 +15,21 @@ import PrivateRoute from '../private-route/private-route';
 
 type Props = {
   offers: SingleCard[];
+  neighbourhoodOffers: SingleCard[];
   favorites: Favorite[];
   city: City;
   points: Point[];
   reviews: SingleReview[];
 };
 
-const App = ({ offers, favorites, city, points, reviews }: Props) => {
+const App = ({
+  offers,
+  neighbourhoodOffers,
+  favorites,
+  city,
+  points,
+  reviews,
+}: Props) => {
   return (
     <BrowserRouter>
       <Routes>
@@ -40,7 +48,14 @@ const App = ({ offers, favorites, city, points, reviews }: Props) => {
         />
         <Route
           path={`${AppRoute.Offer}/:id`}
-          element={<Offer reviews={reviews} />}
+          element={
+            <Offer
+              offers={neighbourhoodOffers}
+              reviews={reviews}
+              city={city}
+              points={points.slice(-3)}
+            />
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
