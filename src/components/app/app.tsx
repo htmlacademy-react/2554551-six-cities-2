@@ -5,6 +5,7 @@ import { SingleCard } from '../../lib/types.ts/card';
 import { Favorite } from '../../lib/types.ts/favorite';
 import { City } from '../../lib/types.ts/city';
 import { Point } from '../../lib/types.ts/point';
+import { SingleReview } from '../../lib/types.ts/review';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
@@ -17,9 +18,10 @@ type Props = {
   favorites: Favorite[];
   city: City;
   points: Point[];
+  reviews: SingleReview[];
 };
 
-const App = ({ offers, favorites, city, points }: Props) => {
+const App = ({ offers, favorites, city, points, reviews }: Props) => {
   return (
     <BrowserRouter>
       <Routes>
@@ -36,7 +38,10 @@ const App = ({ offers, favorites, city, points }: Props) => {
             </PrivateRoute>
           }
         />
-        <Route path={`${AppRoute.Offer}/:id`} element={<Offer />} />
+        <Route
+          path={`${AppRoute.Offer}/:id`}
+          element={<Offer reviews={reviews} />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

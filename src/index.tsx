@@ -5,6 +5,7 @@ import { OFFERS } from './mocks/offers';
 import { FAVORITES } from './mocks/favorites';
 import { CITY } from './mocks/city';
 import { POINTS } from './mocks/points';
+import { REVIEWS } from './mocks/reviews';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,6 +13,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={OFFERS} favorites={FAVORITES} city={CITY} points={POINTS} />
+    <App
+      offers={OFFERS}
+      favorites={FAVORITES}
+      city={CITY}
+      points={POINTS}
+      reviews={REVIEWS}
+    />
   </React.StrictMode>
 );
