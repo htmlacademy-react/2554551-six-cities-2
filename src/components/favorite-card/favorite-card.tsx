@@ -7,7 +7,15 @@ type Props = {
 
 const FavoriteCard = ({ card }: Props) => (
   <article className="place-card favorites__card">
-    <Card card={card} inFavorites />
+    <Card
+      card={card}
+      imgAttributes={{
+        className: 'favorites__image-wrapper',
+        width: '150',
+        height: '110',
+      }}
+      inFavorites
+    />
   </article>
 );
 
