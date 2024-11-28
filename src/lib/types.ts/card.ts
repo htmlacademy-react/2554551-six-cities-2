@@ -10,3 +10,9 @@ export type SingleCard = {
   placeName: string;
   placeType: string;
 };
+
+export type CardImgAttributes = {
+  className: string;
+  width: string;
+  height: string;
+};

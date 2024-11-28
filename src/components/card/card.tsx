@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
-import { SingleCard } from '../../lib/types.ts/card';
+import { CardImgAttributes, SingleCard } from '../../lib/types.ts/card';
 import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
 type Props = {
   card: SingleCard;
+  imgAttributes: CardImgAttributes;
   inFavorites?: boolean;
 };
 
-const Card = ({ card, inFavorites }: Props) => {
+const Card = ({ card, imgAttributes, inFavorites }: Props) => {
   const {
     id,
     isPremium,
@@ -19,10 +20,6 @@ const Card = ({ card, inFavorites }: Props) => {
     placeName,
     placeType,
   } = card;
-
-  const imgAttributes = inFavorites
-    ? { className: 'favorites__image-wrapper', width: '150', height: '110' }
-    : { className: 'cities__image-wrapper', width: '260', height: '200' };
 
   return (
     <>
