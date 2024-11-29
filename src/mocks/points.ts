@@ -2,7 +2,7 @@ import { Point } from '../lib/types.ts/point';
 
 export const POINTS: Point[] = [
   {
-    title: 'Beautiful &amp; luxurious apartment at great location',
+    title: 'Beautiful & luxurious apartment at great location',
     lat: 52.3909553943508,
     lng: 4.85309666406198,
   },

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { SingleCard } from '../../lib/types.ts/card';
 import { City } from '../../lib/types.ts/city';
 import { Point } from '../../lib/types.ts/point';
-import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
+import CardList from '../../components/card-list/card-list';
 
 type Props = { offers: SingleCard[]; city: City; points: Point[] };
 
@@ -130,7 +130,11 @@ const Main = ({ offers, city, points }: Props) => {
                 </ul>
               </form>
 
-              <OfferList offers={offers} onCardMouseOver={handleOfferHover} />
+              <CardList
+                offers={offers}
+                cardType="offer"
+                onCardMouseOver={handleOfferHover}
+              />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

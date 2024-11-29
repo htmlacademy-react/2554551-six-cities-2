@@ -47,15 +47,7 @@ const Map = ({ city, points, selectedPoint }: Props) => {
     }
   }, [map, points, selectedPoint]);
 
-  return (
-    <div
-      className={styles.map}
-      style={{ width: '100%', alignSelf: 'stretch' }}
-      ref={mapRef}
-    >
-      {}
-    </div>
-  );
+  return <div className={styles.map} ref={mapRef} />;
 };
 
 export default Map;

@@ -1,4 +1,4 @@
-type Rating = 1 | 2 | 3 | 4 | 5;
+import { Rating } from './rating';
 
 export type SingleCard = {
   id: number;
@@ -9,4 +9,10 @@ export type SingleCard = {
   rating: Rating;
   placeName: string;
   placeType: string;
+};
+
+export type CardImgAttributes = {
+  className: string;
+  width: string;
+  height: string;
 };
