@@ -16,3 +16,5 @@ export type CardImgAttributes = {
   width: string;
   height: string;
 };
+
+export type CardType = 'offer' | 'near';
