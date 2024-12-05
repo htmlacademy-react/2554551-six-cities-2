@@ -1,4 +1,4 @@
-import { Point } from '../lib/types.ts/point';
+import { Point } from '../lib/types/point';
 
 export const POINTS: Point[] = [
   {

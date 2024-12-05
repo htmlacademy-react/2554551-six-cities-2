@@ -1,4 +1,4 @@
-import { City } from '../lib/types.ts/city';
+import { City } from '../lib/types/city';
 
 export const CITY: City = {
   title: 'Амстердам',

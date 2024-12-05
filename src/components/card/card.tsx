@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CardImgAttributes, SingleCard } from '../../lib/types.ts/card';
+import { CardImgAttributes, SingleCard } from '../../lib/types/card';
 import { AppRoute } from '../../const';
 import clsx from 'clsx';
 

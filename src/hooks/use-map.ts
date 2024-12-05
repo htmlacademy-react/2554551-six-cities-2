@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { City } from '../lib/types.ts/city';
+import { City } from '../lib/types/city';
 import { Map, TileLayer } from 'leaflet';
 
 export const useMap = (

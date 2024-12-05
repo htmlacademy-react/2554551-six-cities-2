@@ -1,4 +1,4 @@
-import { Favorite } from '../lib/types.ts/favorite';
+import { Favorite } from '../lib/types/favorite';
 
 export const FAVORITES: Favorite[] = [
   {

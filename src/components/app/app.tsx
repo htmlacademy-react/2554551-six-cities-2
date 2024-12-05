@@ -1,11 +1,11 @@
 /* eslint-disable arrow-body-style */
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { SingleCard } from '../../lib/types.ts/card';
-import { Favorite } from '../../lib/types.ts/favorite';
-import { City } from '../../lib/types.ts/city';
-import { Point } from '../../lib/types.ts/point';
-import { SingleReview } from '../../lib/types.ts/review';
+import { SingleCard } from '../../lib/types/card';
+import { Favorite } from '../../lib/types/favorite';
+import { City } from '../../lib/types/city';
+import { Point } from '../../lib/types/point';
+import { SingleReview } from '../../lib/types/review';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';

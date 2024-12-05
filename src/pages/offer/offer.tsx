@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { SingleReview } from '../../lib/types.ts/review';
-import { Point } from '../../lib/types.ts/point';
-import { City } from '../../lib/types.ts/city';
-import { SingleCard } from '../../lib/types.ts/card';
+import { SingleReview } from '../../lib/types/review';
+import { Point } from '../../lib/types/point';
+import { City } from '../../lib/types/city';
+import { SingleCard } from '../../lib/types/card';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';

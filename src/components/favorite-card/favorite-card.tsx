@@ -1,4 +1,4 @@
-import { SingleCard } from '../../lib/types.ts/card';
+import { SingleCard } from '../../lib/types/card';
 import Card from '../card/card';
 
 type Props = {

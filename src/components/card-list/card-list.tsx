@@ -1,5 +1,5 @@
 import { CARD_OPTIONS } from '../../const';
-import { CardType, SingleCard } from '../../lib/types.ts/card';
+import { CardType, SingleCard } from '../../lib/types/card';
 import Card from '../card/card';
 import clsx from 'clsx';
 

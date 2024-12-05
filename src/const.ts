@@ -1,4 +1,4 @@
-import { CardType } from './lib/types.ts/card';
+import { CardType } from './lib/types/card';
 
 export enum AppRoute {
   Main = '/',

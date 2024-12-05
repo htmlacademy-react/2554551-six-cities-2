@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 
-import { Favorite } from '../../lib/types.ts/favorite';
+import { Favorite } from '../../lib/types/favorite';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import FavoriteCard from '../../components/favorite-card/favorite-card';

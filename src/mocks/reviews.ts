@@ -1,4 +1,4 @@
-import { SingleReview } from '../lib/types.ts/review';
+import { SingleReview } from '../lib/types/review';
 
 export const REVIEWS: SingleReview[] = [
   {

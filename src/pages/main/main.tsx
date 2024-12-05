@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { SingleCard } from '../../lib/types.ts/card';
-import { City } from '../../lib/types.ts/city';
-import { Point } from '../../lib/types.ts/point';
+import { SingleCard } from '../../lib/types/card';
+import { City } from '../../lib/types/city';
+import { Point } from '../../lib/types/point';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
 
