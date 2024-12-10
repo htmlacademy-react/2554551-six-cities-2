@@ -1,5 +1,6 @@
-import { Point } from './point';
+import { Location } from './location';
 
-export type City = Point & {
-  zoom: number;
+export type City = {
+  name: string;
+  location: Location;
 };
