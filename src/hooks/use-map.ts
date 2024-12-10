@@ -12,8 +12,8 @@ export const useMap = (
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instanse = new Map(mapRef.current, {
-        center: { lat: city.lat, lng: city.lng },
-        zoom: city.zoom,
+        center: { lat: city.location.latitude, lng: city.location.longitude },
+        zoom: city.location.zoom,
       });
 
       const layer = new TileLayer(
@@ -26,6 +26,7 @@ export const useMap = (
 
       instanse.addLayer(layer);
       setMap(instanse);
+
       isRenderedRef.current = true;
     }
   }, [mapRef, city]);

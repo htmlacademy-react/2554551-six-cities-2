@@ -3,11 +3,15 @@ import { useMap } from '../../hooks/use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { City } from '../../lib/types/city';
-import { Point } from '../../lib/types/point';
+import { Location } from '../../lib/types/location';
 import styles from './map.module.css';
 import 'leaflet/dist/leaflet.css';
 
-type Props = { city: City; points: Point[]; selectedPoint: Point | undefined };
+type Props = {
+  city: City;
+  locations: Location[];
+  selectedLocation: Location | undefined;
+};
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -21,7 +25,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40],
 });
 
-const Map = ({ city, points, selectedPoint }: Props) => {
+const Map = ({ city, locations, selectedLocation }: Props) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const map = useMap(mapRef, city);
 
@@ -29,23 +33,33 @@ const Map = ({ city, points, selectedPoint }: Props) => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
 
-      points.forEach((point) => {
-        const marker = new Marker({ lat: point.lat, lng: point.lng });
+      locations.forEach((location) => {
+        const marker = new Marker({
+          lat: location.latitude,
+          lng: location.longitude,
+        });
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.title === selectedPoint.title
+            selectedLocation !== undefined &&
+              location.latitude === selectedLocation.latitude &&
+              location.longitude === selectedLocation.longitude
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(markerLayer);
       });
 
+      map.setView({
+        lat: city.location.latitude,
+        lng: city.location.longitude,
+      });
+
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, locations, city, selectedLocation]);
 
   return <div className={styles.map} ref={mapRef} />;
 };
