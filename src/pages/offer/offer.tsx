@@ -1,33 +1,33 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../lib/types/store';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { SingleReview } from '../../lib/types/review';
-import { Point } from '../../lib/types/point';
-import { City } from '../../lib/types/city';
-import { SingleCard } from '../../lib/types/card';
+import { SingleOffer } from '../../lib/types/offer';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
 
 type Props = {
-  offers: SingleCard[];
   reviews: SingleReview[];
-  city: City;
-  points: Point[];
 };
 
-const Offer = ({ offers, reviews, city, points }: Props) => {
-  const [selectedOffer, setSelectedOffer] = useState<Point | undefined>();
+const Offer = ({ reviews }: Props) => {
+  const [selectedOffer, setSelectedOffer] = useState<SingleOffer | undefined>();
+
+  const activeCity = useSelector((state: RootState) => state.activeCity);
+  const offers = useSelector((state: RootState) => state.offerList);
 
   const handleOfferHover = (placeName: string | undefined) => {
     if (placeName === undefined) {
       setSelectedOffer(undefined);
     }
 
-    const currentPoint = points.find((point) => point.title === placeName);
+    const currentLocation = offers.find((offer) => offer.title === placeName);
 
-    setSelectedOffer(currentPoint);
+    setSelectedOffer(currentLocation);
   };
 
   return (
@@ -214,7 +214,11 @@ const Offer = ({ offers, reviews, city, points }: Props) => {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={city} points={points} selectedPoint={selectedOffer} />
+            <Map
+              city={activeCity}
+              locations={offers.map((offer) => offer.location)}
+              selectedLocation={selectedOffer?.location}
+            />
           </section>
         </section>
         <div className="container">

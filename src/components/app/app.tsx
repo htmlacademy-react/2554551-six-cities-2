@@ -1,10 +1,8 @@
 /* eslint-disable arrow-body-style */
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { SingleCard } from '../../lib/types/card';
-import { Favorite } from '../../lib/types/favorite';
+import { SingleOffer } from '../../lib/types/offer';
 import { City } from '../../lib/types/city';
-import { Point } from '../../lib/types/point';
 import { SingleReview } from '../../lib/types/review';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
@@ -14,29 +12,16 @@ import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 
 type Props = {
-  offers: SingleCard[];
-  neighbourhoodOffers: SingleCard[];
-  favorites: Favorite[];
-  city: City;
-  points: Point[];
+  favorites: SingleOffer[];
   reviews: SingleReview[];
+  cityList: City[];
 };
 
-const App = ({
-  offers,
-  neighbourhoodOffers,
-  favorites,
-  city,
-  points,
-  reviews,
-}: Props) => {
+const App = ({ favorites, reviews, cityList }: Props) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<Main offers={offers} city={city} points={points} />}
-        />
+        <Route path={AppRoute.Main} element={<Main cityList={cityList} />} />
         <Route path={AppRoute.Login} element={<Login />} />
         <Route
           path={AppRoute.Favorites}
@@ -48,14 +33,7 @@ const App = ({
         />
         <Route
           path={`${AppRoute.Offer}/:id`}
-          element={
-            <Offer
-              offers={neighbourhoodOffers}
-              reviews={reviews}
-              city={city}
-              points={points.slice(-3)}
-            />
-          }
+          element={<Offer reviews={reviews} />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

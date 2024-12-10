@@ -1,13 +1,13 @@
-/* eslint-disable arrow-body-style */
-
-import { Favorite } from '../../lib/types/favorite';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
+import { SingleOffer } from '../../lib/types/offer';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 
-type Props = { favorites: Favorite[] };
+type Props = { favorites: SingleOffer[] };
 
 const Favorites = ({ favorites }: Props) => {
+  const cities = Array.from(new Set(favorites.map((item) => item.city.name)));
+
   return (
     <div className="page">
       <header className="header">
@@ -56,19 +56,21 @@ const Favorites = ({ favorites }: Props) => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {favorites.map((item) => (
-                <li className="favorites__locations-items" key={item.city}>
+              {cities.map((city) => (
+                <li className="favorites__locations-items" key={city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
                       <a className="locations__item-link" href="#">
-                        <span>{item.city}</span>
+                        <span>{city}</span>
                       </a>
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {item.cards.map((card) => (
-                      <FavoriteCard key={card.id} card={card} />
-                    ))}
+                    {favorites
+                      .filter((favorite) => favorite.city.name === city)
+                      .map((card) => (
+                        <FavoriteCard key={card.id} card={card} />
+                      ))}
                   </div>
                 </li>
               ))}

@@ -1,10 +1,11 @@
 import { CARD_OPTIONS } from '../../const';
-import { CardType, SingleCard } from '../../lib/types/card';
+import { CardType } from '../../lib/types/card';
+import { SingleOffer } from '../../lib/types/offer';
 import Card from '../card/card';
 import clsx from 'clsx';
 
 type Props = {
-  offers: SingleCard[];
+  offers: SingleOffer[];
   cardType: CardType;
   onCardMouseOver: (placeName: string | undefined) => void;
 };
@@ -18,7 +19,7 @@ const CardList = ({ offers, cardType, onCardMouseOver }: Props) => {
         <article
           className={clsx('place-card', card)}
           key={cardItem.id}
-          onMouseOver={() => onCardMouseOver(cardItem.placeName)}
+          onMouseOver={() => onCardMouseOver(cardItem.title)}
           onMouseLeave={() => onCardMouseOver(undefined)}
         >
           <Card
