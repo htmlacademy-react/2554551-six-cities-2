@@ -1,38 +1,31 @@
-import { SingleCard } from '../../lib/types.ts/card';
+import { CARD_OPTIONS } from '../../const';
+import { CardType } from '../../lib/types/card';
+import { SingleOffer } from '../../lib/types/offer';
 import Card from '../card/card';
 import clsx from 'clsx';
 
 type Props = {
-  offers: SingleCard[];
-  cardType: 'offer' | 'near';
+  offers: SingleOffer[];
+  cardType: CardType;
   onCardMouseOver: (placeName: string | undefined) => void;
 };
 
 const CardList = ({ offers, cardType, onCardMouseOver }: Props) => {
-  const listClassName =
-    cardType === 'offer'
-      ? 'cities__places-list tabs__content'
-      : 'near-places__list';
-  const cardClassName =
-    cardType === 'offer' ? 'cities__card' : 'near-places__card';
-  const imgClassName =
-    cardType === 'offer'
-      ? 'cities__image-wrapper'
-      : 'near-places__image-wrapper';
+  const { list, card, img } = CARD_OPTIONS[cardType];
 
   return (
-    <div className={clsx('places__list', listClassName)}>
-      {offers.map((card) => (
+    <div className={clsx('places__list', list)}>
+      {offers.map((cardItem) => (
         <article
-          className={clsx('place-card', cardClassName)}
-          key={card.id}
-          onMouseOver={() => onCardMouseOver(card.placeName)}
+          className={clsx('place-card', card)}
+          key={cardItem.id}
+          onMouseOver={() => onCardMouseOver(cardItem.title)}
           onMouseLeave={() => onCardMouseOver(undefined)}
         >
           <Card
-            card={card}
+            card={cardItem}
             imgAttributes={{
-              className: imgClassName,
+              className: img,
               width: '260',
               height: '200',
             }}

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { CardImgAttributes, SingleCard } from '../../lib/types.ts/card';
+import { CardImgAttributes } from '../../lib/types/card';
+import { SingleOffer } from '../../lib/types/offer';
 import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
 type Props = {
-  card: SingleCard;
+  card: SingleOffer;
   imgAttributes: CardImgAttributes;
   inFavorites?: boolean;
 };
@@ -13,12 +14,12 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
   const {
     id,
     isPremium,
-    imgPath,
+    previewImage,
     price,
-    inBookmarks,
+    isFavorite,
     rating,
-    placeName,
-    placeType,
+    title,
+    type,
   } = card;
 
   return (
@@ -36,7 +37,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
         <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
-            src={imgPath}
+            src={previewImage}
             width={imgAttributes.width}
             height={imgAttributes.height}
             alt="Place image"
@@ -58,7 +59,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
             className={clsx(
               'place-card__bookmark-button',
               'button',
-              inBookmarks && 'place-card__bookmark-button--active'
+              isFavorite && 'place-card__bookmark-button--active'
             )}
             type="button"
           >
@@ -66,7 +67,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">
-              {inBookmarks ? 'In bookmarks' : 'To bookmarks'}
+              {isFavorite ? 'In bookmarks' : 'To bookmarks'}
             </span>
           </button>
         </div>
@@ -77,9 +78,9 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${id}`}>{placeName}</Link>
+          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{placeType}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </>
   );

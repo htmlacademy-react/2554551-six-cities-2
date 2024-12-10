@@ -1,24 +1,40 @@
-import { useState } from 'react';
-import { SingleCard } from '../../lib/types.ts/card';
-import { City } from '../../lib/types.ts/city';
-import { Point } from '../../lib/types.ts/point';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../lib/types/store';
+import { City } from '../../lib/types/city';
+import { SingleOffer } from '../../lib/types/offer';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
+import CityList from '../../components/city-list/city-list';
 
-type Props = { offers: SingleCard[]; city: City; points: Point[] };
+type Props = {
+  cityList: City[];
+};
 
-const Main = ({ offers, city, points }: Props) => {
-  const [selectedOffer, setSelectedOffer] = useState<Point | undefined>();
+const Main = ({ cityList }: Props) => {
+  const [selectedOffer, setSelectedOffer] = useState<SingleOffer | undefined>();
+  const [filteredOffers, setFilteredOffers] = useState<SingleOffer[]>([]);
+
+  const offers = useSelector((state: RootState) => state.offerList);
+  const activeCity = useSelector((state: RootState) => state.activeCity);
 
   const handleOfferHover = (placeName: string | undefined) => {
     if (placeName === undefined) {
       setSelectedOffer(undefined);
     }
 
-    const currentPoint = points.find((point) => point.title === placeName);
+    const currentLocation = filteredOffers.find(
+      (offer) => offer.title === placeName
+    );
 
-    setSelectedOffer(currentPoint);
+    setSelectedOffer(currentLocation);
   };
+
+  useEffect(() => {
+    setFilteredOffers(
+      offers.filter((offer) => offer.city.name === activeCity.name)
+    );
+  }, [offers, activeCity]);
 
   return (
     <div className="page page--gray page--main">
@@ -64,45 +80,16 @@ const Main = ({ offers, city, points }: Props) => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CityList cityList={cityList.map((cityItem) => cityItem.name)} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">
+                {filteredOffers.length} places to stay in {activeCity.name}
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -131,7 +118,7 @@ const Main = ({ offers, city, points }: Props) => {
               </form>
 
               <CardList
-                offers={offers}
+                offers={filteredOffers}
                 cardType="offer"
                 onCardMouseOver={handleOfferHover}
               />
@@ -139,9 +126,9 @@ const Main = ({ offers, city, points }: Props) => {
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={city}
-                  points={points}
-                  selectedPoint={selectedOffer}
+                  city={activeCity}
+                  locations={filteredOffers.map((offer) => offer.location)}
+                  selectedLocation={selectedOffer?.location}
                 />
               </section>
             </div>

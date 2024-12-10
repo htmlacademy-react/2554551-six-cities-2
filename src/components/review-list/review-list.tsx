@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 
-import { SingleReview } from '../../lib/types.ts/review';
+import { SingleReview } from '../../lib/types/review';
 import ReviewItem from '../review-item/review-item';
 
 type Props = { reviews: SingleReview[] };
