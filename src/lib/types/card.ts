@@ -18,3 +18,5 @@ export type CardImgAttributes = {
 };
 
 export type CardType = 'offer' | 'near';
+
+export type CardOptions = 'list' | 'card' | 'img';
