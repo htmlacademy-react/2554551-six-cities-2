@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store';
 import { RootState } from '../../lib/types/store';
 import { City } from '../../lib/types/city';
 import { SingleOffer } from '../../lib/types/offer';
+import { selectOffer } from '../../store/actions';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
 import CityList from '../../components/city-list/city-list';
@@ -12,22 +14,24 @@ type Props = {
 };
 
 const Main = ({ cityList }: Props) => {
-  const [selectedOffer, setSelectedOffer] = useState<SingleOffer | undefined>();
   const [filteredOffers, setFilteredOffers] = useState<SingleOffer[]>([]);
 
   const offers = useSelector((state: RootState) => state.offerList);
   const activeCity = useSelector((state: RootState) => state.activeCity);
+  const selectedOffer = useSelector((state: RootState) => state.selectedOffer);
+
+  const dispatch = useAppDispatch();
 
   const handleOfferHover = (placeName: string | undefined) => {
     if (placeName === undefined) {
-      setSelectedOffer(undefined);
+      dispatch(selectOffer(undefined));
     }
 
     const currentLocation = filteredOffers.find(
       (offer) => offer.title === placeName
     );
 
-    setSelectedOffer(currentLocation);
+    dispatch(selectOffer(currentLocation));
   };
 
   useEffect(() => {

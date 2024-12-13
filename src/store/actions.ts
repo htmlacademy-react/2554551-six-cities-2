@@ -11,3 +11,8 @@ export const getOffers = createAction(
     payload: offers,
   })
 );
+
+export const selectOffer = createAction(
+  'offer/select',
+  (offer: SingleOffer | undefined) => ({ payload: offer })
+);

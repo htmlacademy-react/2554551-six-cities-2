@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store';
 import { RootState } from '../../lib/types/store';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { SingleReview } from '../../lib/types/review';
-import { SingleOffer } from '../../lib/types/offer';
+import { selectOffer } from '../../store/actions';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -15,19 +15,20 @@ type Props = {
 };
 
 const Offer = ({ reviews }: Props) => {
-  const [selectedOffer, setSelectedOffer] = useState<SingleOffer | undefined>();
-
-  const activeCity = useSelector((state: RootState) => state.activeCity);
   const offers = useSelector((state: RootState) => state.offerList);
+  const activeCity = useSelector((state: RootState) => state.activeCity);
+  const selectedOffer = useSelector((state: RootState) => state.selectedOffer);
+
+  const dispatch = useAppDispatch();
 
   const handleOfferHover = (placeName: string | undefined) => {
     if (placeName === undefined) {
-      setSelectedOffer(undefined);
+      dispatch(selectOffer(undefined));
     }
 
     const currentLocation = offers.find((offer) => offer.title === placeName);
 
-    setSelectedOffer(currentLocation);
+    dispatch(selectOffer(currentLocation));
   };
 
   return (
