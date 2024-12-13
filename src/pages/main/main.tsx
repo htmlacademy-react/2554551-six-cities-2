@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { RootState } from '../../lib/types/store';
 import { City } from '../../lib/types/city';
-import { SingleOffer } from '../../lib/types/offer';
 import { selectOffer } from '../../store/actions';
+import { getFilteredOffersByCity } from '../../store/offers.selectors';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
 import CityList from '../../components/city-list/city-list';
@@ -14,10 +13,10 @@ type Props = {
 };
 
 const Main = ({ cityList }: Props) => {
-  const [filteredOffers, setFilteredOffers] = useState<SingleOffer[]>([]);
-
-  const offers = useSelector((state: RootState) => state.offerList);
   const activeCity = useSelector((state: RootState) => state.activeCity);
+  const offers = useSelector((state: RootState) =>
+    getFilteredOffersByCity(state.offerList, activeCity.name)
+  );
   const selectedOffer = useSelector((state: RootState) => state.selectedOffer);
 
   const dispatch = useAppDispatch();
@@ -27,18 +26,10 @@ const Main = ({ cityList }: Props) => {
       dispatch(selectOffer(undefined));
     }
 
-    const currentLocation = filteredOffers.find(
-      (offer) => offer.title === placeName
-    );
+    const currentLocation = offers.find((offer) => offer.title === placeName);
 
     dispatch(selectOffer(currentLocation));
   };
-
-  useEffect(() => {
-    setFilteredOffers(
-      offers.filter((offer) => offer.city.name === activeCity.name)
-    );
-  }, [offers, activeCity]);
 
   return (
     <div className="page page--gray page--main">
@@ -92,7 +83,7 @@ const Main = ({ cityList }: Props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {filteredOffers.length} places to stay in {activeCity.name}
+                {offers.length} places to stay in {activeCity.name}
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -122,7 +113,7 @@ const Main = ({ cityList }: Props) => {
               </form>
 
               <CardList
-                offers={filteredOffers}
+                offers={offers}
                 cardType="offer"
                 onCardMouseOver={handleOfferHover}
               />
@@ -131,7 +122,7 @@ const Main = ({ cityList }: Props) => {
               <section className="cities__map map">
                 <Map
                   city={activeCity}
-                  locations={filteredOffers.map((offer) => offer.location)}
+                  locations={offers.map((offer) => offer.location)}
                   selectedLocation={selectedOffer?.location}
                 />
               </section>
