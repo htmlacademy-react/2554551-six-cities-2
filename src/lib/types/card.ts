@@ -1,12 +1,10 @@
-import { Rating } from './rating';
-
 export type SingleCard = {
   id: number;
   isPremium: boolean;
   imgPath: string;
   price: number;
   inBookmarks: boolean;
-  rating: Rating;
+  rating: number;
   placeName: string;
   placeType: string;
 };
