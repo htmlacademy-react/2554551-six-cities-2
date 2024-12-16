@@ -1,7 +1,5 @@
 /* eslint-disable arrow-body-style */
 
-import { AuthorizationStatus } from '../../const';
-import Header from '../header/header';
 import MainLayout from '../main-layout/main-layout';
 
 type Props = {
@@ -11,8 +9,6 @@ type Props = {
 const MainEmpty = ({ cityList }: Props) => {
   return (
     <div className="page page--gray page--main">
-      <Header active authorizationStatus={AuthorizationStatus.Auth} />
-
       <MainLayout cityList={cityList}>
         <>
           <section className="cities__no-places">

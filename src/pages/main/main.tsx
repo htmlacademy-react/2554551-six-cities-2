@@ -6,7 +6,6 @@ import { getFilteredOffersByCity } from '../../store/offers.selectors';
 import { AuthorizationStatus } from '../../const';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
-import Header from '../../components/header/header';
 import MainLayout from '../../components/main-layout/main-layout';
 
 type Props = {
@@ -34,8 +33,6 @@ const Main = ({ cityList }: Props) => {
 
   return (
     <div className="page page--gray page--main">
-      <Header active authorizationStatus={AuthorizationStatus.Auth} />
-
       <MainLayout cityList={cityList}>
         <>
           <section className="cities__places places">
