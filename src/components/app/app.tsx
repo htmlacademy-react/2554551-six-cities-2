@@ -23,7 +23,10 @@ const App = ({ favorites, reviews, cityList }: Props) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<Main cityList={cityList} />} />
+        <Route
+          path={AppRoute.Main}
+          element={<Main cityList={cityList.map((city) => city.name)} />}
+        />
         <Route path={AppRoute.Login} element={<Login />} />
         <Route
           path={AppRoute.Favorites}
