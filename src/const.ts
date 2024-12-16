@@ -13,6 +13,13 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum PlacesSortingName {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  Rating = 'Top rated first',
+}
+
 export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 
