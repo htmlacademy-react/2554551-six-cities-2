@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { RootState } from '../../lib/types/store';
@@ -6,10 +7,14 @@ import {
   getSortedOffers,
   selectFilteredOffers,
 } from '../../store/offers.selectors';
+import { getOffers } from '../../store/api-actions';
+import { ResponseStatus } from '../../const';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
 import MainLayout from '../../components/main-layout/main-layout';
 import PlacesSorting from '../../components/places-sorting/places-sorting';
+import Spinner from '../../components/spinner/spinner';
+import ErrorMessage from '../../components/error-message/error-message';
 
 type Props = {
   cityList: string[];
@@ -20,6 +25,9 @@ const Main = ({ cityList }: Props) => {
   const placesSorting = useSelector((state: RootState) => state.placesSorting);
   const offers = useSelector((state: RootState) =>
     getSortedOffers(selectFilteredOffers(state), placesSorting)
+  );
+  const offersResponseStatus = useSelector(
+    (state: RootState) => state.offersResponseStatus
   );
   const selectedOffer = useSelector((state: RootState) => state.selectedOffer);
   const dispatch = useAppDispatch();
@@ -34,6 +42,10 @@ const Main = ({ cityList }: Props) => {
     dispatch(selectOffer(currentLocation));
   };
 
+  useEffect(() => {
+    dispatch(getOffers());
+  }, [dispatch]);
+
   return (
     <div className="page page--gray page--main">
       <MainLayout cityList={cityList}>
@@ -45,11 +57,19 @@ const Main = ({ cityList }: Props) => {
 
           <PlacesSorting />
 
-          <CardList
-            offers={offers}
-            cardType="offer"
-            onCardMouseOver={handleOfferHover}
-          />
+          {offersResponseStatus === ResponseStatus.Pending && <Spinner />}
+
+          {offersResponseStatus === ResponseStatus.Error && (
+            <ErrorMessage message="Failed to load data" />
+          )}
+
+          {offersResponseStatus === ResponseStatus.Success && (
+            <CardList
+              offers={offers}
+              cardType="offer"
+              onCardMouseOver={handleOfferHover}
+            />
+          )}
         </section>
         <div className="cities__right-section">
           <section className="cities__map map">
