@@ -12,15 +12,17 @@ export const getCookie = (): string | undefined => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export const setCookie = (token: string, options: CookieOptions): void => {
+export const setCookie = (token: string, options?: CookieOptions): void => {
   let updatedCookie = `${encodeURIComponent(TOKEN_NAME)}=${encodeURIComponent(
     token
   )}`;
 
-  let optionKey: keyof CookieOptions;
+  if (options) {
+    let optionKey: keyof CookieOptions;
 
-  for (optionKey in options) {
-    updatedCookie += `; ${optionKey}=${options[optionKey]}`;
+    for (optionKey in options) {
+      updatedCookie += `; ${optionKey}=${options[optionKey]}`;
+    }
   }
 
   document.cookie = updatedCookie;
