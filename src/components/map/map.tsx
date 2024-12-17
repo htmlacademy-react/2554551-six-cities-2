@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 type Props = {
   city: City;
   locations: Location[];
-  selectedLocation: Location | undefined;
+  selectedLocation?: Location;
 };
 
 const defaultCustomIcon = new Icon({
