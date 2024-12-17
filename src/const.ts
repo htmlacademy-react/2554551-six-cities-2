@@ -20,13 +20,9 @@ export enum PlacesSortingName {
   Rating = 'Top rated first',
 }
 
-export const URL_MARKER_DEFAULT =
-  'https://img.icons8.com/ios-filled/50/228BE6/marker.png';
-// 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
-export const URL_MARKER_CURRENT =
-  'https://img.icons8.com/ios-filled/50/FAB005/marker.png';
-// 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const CARD_OPTIONS: Record<CardType, Record<CardOptions, string>> = {
   offer: {
