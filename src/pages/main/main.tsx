@@ -37,31 +37,29 @@ const Main = ({ cityList }: Props) => {
   return (
     <div className="page page--gray page--main">
       <MainLayout cityList={cityList}>
-        <>
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">
-              {offers.length} places to stay in {activeCity.name}
-            </b>
+        <section className="cities__places places">
+          <h2 className="visually-hidden">Places</h2>
+          <b className="places__found">
+            {offers.length} places to stay in {activeCity.name}
+          </b>
 
-            <PlacesSorting />
+          <PlacesSorting />
 
-            <CardList
-              offers={offers}
-              cardType="offer"
-              onCardMouseOver={handleOfferHover}
+          <CardList
+            offers={offers}
+            cardType="offer"
+            onCardMouseOver={handleOfferHover}
+          />
+        </section>
+        <div className="cities__right-section">
+          <section className="cities__map map">
+            <Map
+              city={activeCity}
+              locations={offers.map((offer) => offer.location)}
+              selectedLocation={selectedOffer?.location}
             />
           </section>
-          <div className="cities__right-section">
-            <section className="cities__map map">
-              <Map
-                city={activeCity}
-                locations={offers.map((offer) => offer.location)}
-                selectedLocation={selectedOffer?.location}
-              />
-            </section>
-          </div>
-        </>
+        </div>
       </MainLayout>
     </div>
   );
