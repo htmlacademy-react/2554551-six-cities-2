@@ -1,4 +1,4 @@
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import { SingleOffer } from '../../lib/types/offer';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
@@ -11,7 +11,7 @@ const Favorites = ({ favorites }: Props) => {
 
   return (
     <div className="page">
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

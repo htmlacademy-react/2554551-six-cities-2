@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck баг с react router
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { SingleOffer } from '../../lib/types/offer';
 import { City } from '../../lib/types/city';
 import { SingleReview } from '../../lib/types/review';
@@ -30,7 +30,7 @@ const App = ({ favorites, reviews, cityList }: Props) => (
         path={AppRoute.Favorites}
         element={
           //@ts-expect-error происходит какое-то безумие
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+          <PrivateRoute>
             <Favorites favorites={favorites} />
           </PrivateRoute>
         }

@@ -1,13 +1,13 @@
 /* eslint-disable arrow-body-style */
 
 import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import Header from '../header/header';
 
 const FavoritesEmpty = () => {
   return (
     <div className="page page--favorites-empty">
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header />
 
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
