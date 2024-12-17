@@ -1,13 +1,14 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { selectCity, getOffers, selectOffer, sortPlaces } from './actions';
+import { getAllOffers, selectCity, selectOffer, sortPlaces } from './actions';
 import { StoreState } from '../lib/types/store';
-import { CITIES, PlacesSortingName } from '../const';
-import { OFFERS } from '../mocks/offers';
+import { CITIES, PlacesSortingName, ResponseStatus } from '../const';
 import { SingleOffer } from '../lib/types/offer';
+import { getOffers } from './api-actions';
 
 const initialState: StoreState = {
   activeCity: CITIES[0],
-  offerList: OFFERS,
+  offers: [],
+  offersResponseStatus: ResponseStatus.Idle,
   selectedOffer: undefined,
   placesSorting: PlacesSortingName.Popular,
 };
@@ -18,8 +19,8 @@ export const reducer = createReducer(initialState, (builder) => {
       state.activeCity =
         CITIES.find((city) => city.name === action.payload) || CITIES[0];
     })
-    .addCase(getOffers, (state, action: PayloadAction<SingleOffer[]>) => {
-      state.offerList = action.payload;
+    .addCase(getAllOffers, (state, action: PayloadAction<SingleOffer[]>) => {
+      state.offers = action.payload;
     })
     .addCase(
       selectOffer,
@@ -29,5 +30,17 @@ export const reducer = createReducer(initialState, (builder) => {
     )
     .addCase(sortPlaces, (state, action: PayloadAction<PlacesSortingName>) => {
       state.placesSorting = action.payload;
+    })
+    .addCase(getOffers.pending, (state) => {
+      state.offers = [];
+      state.offersResponseStatus = ResponseStatus.Pending;
+    })
+    .addCase(getOffers.fulfilled, (state, action) => {
+      state.offers = action.payload;
+      state.offersResponseStatus = ResponseStatus.Success;
+    })
+    .addCase(getOffers.rejected, (state) => {
+      state.offers = [];
+      state.offersResponseStatus = ResponseStatus.Error;
     });
 });
