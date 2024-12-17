@@ -1,10 +1,14 @@
-/* eslint-disable arrow-body-style */
+import { useSelector } from 'react-redux';
+import { RootState } from '../../lib/types/store';
 import { AuthorizationStatus } from '../../const';
 import HeaderLayout from '../header-layout/header-layout';
 
-type Props = { authorizationStatus: AuthorizationStatus };
+const Header = () => {
+  const authorizationStatus = useSelector(
+    (state: RootState) => state.authorizationStatus
+  );
+  const user = useSelector((state: RootState) => state.user);
 
-const Header = ({ authorizationStatus }: Props) => {
   return (
     <HeaderLayout>
       <nav className="header__nav">
@@ -13,10 +17,10 @@ const Header = ({ authorizationStatus }: Props) => {
             <a className="header__nav-link header__nav-link--profile" href="#">
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
 
-              {authorizationStatus === 'AUTH' ? (
+              {authorizationStatus === AuthorizationStatus.Auth ? (
                 <>
                   <span className="header__user-name user__name">
-                    Oliver.conner@gmail.com
+                    {user?.email}
                   </span>
                   <span className="header__favorite-count">3</span>
                 </>
@@ -25,7 +29,8 @@ const Header = ({ authorizationStatus }: Props) => {
               )}
             </a>
           </li>
-          {authorizationStatus === 'AUTH' ? (
+
+          {authorizationStatus === AuthorizationStatus.Auth ? (
             <li className="header__nav-item">
               <a className="header__nav-link" href="#">
                 <span className="header__signout">Sign out</span>
