@@ -26,7 +26,7 @@ const Main = ({ cityList }: Props) => {
 
   const handleOfferHover = (placeName: string | undefined) => {
     if (placeName === undefined) {
-      dispatch(selectOffer(undefined));
+      dispatch(selectOffer());
     }
 
     const currentLocation = offers.find((offer) => offer.title === placeName);

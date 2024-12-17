@@ -15,7 +15,7 @@ export const getOffers = createAction(
 
 export const selectOffer = createAction(
   'offer/select',
-  (offer: SingleOffer | undefined) => ({ payload: offer })
+  (offer?: SingleOffer | undefined) => ({ payload: offer })
 );
 
 export const sortPlaces = createAction(
