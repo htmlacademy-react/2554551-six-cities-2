@@ -1,4 +1,4 @@
-import { CardType } from './lib/types/card';
+import { CardOptions, CardType } from './lib/types/card';
 
 export enum AppRoute {
   Main = '/',
@@ -13,16 +13,20 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum PlacesSortingName {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  Rating = 'Top rated first',
+}
+
 export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 
 export const URL_MARKER_CURRENT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
-export const CARD_OPTIONS: Record<
-  CardType,
-  Record<'list' | 'card' | 'img', string>
-> = {
+export const CARD_OPTIONS: Record<CardType, Record<CardOptions, string>> = {
   offer: {
     list: 'cities__places-list tabs__content',
     card: 'cities__card',

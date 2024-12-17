@@ -1,12 +1,10 @@
-import { Rating } from './rating';
-
 export type SingleCard = {
   id: number;
   isPremium: boolean;
   imgPath: string;
   price: number;
   inBookmarks: boolean;
-  rating: Rating;
+  rating: number;
   placeName: string;
   placeType: string;
 };
@@ -18,3 +16,5 @@ export type CardImgAttributes = {
 };
 
 export type CardType = 'offer' | 'near';
+
+export type CardOptions = 'list' | 'card' | 'img';
