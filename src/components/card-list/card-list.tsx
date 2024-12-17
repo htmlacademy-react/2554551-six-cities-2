@@ -13,20 +13,14 @@ type Props = {
 const CardList = ({ offers, cardType, onCardMouseOver }: Props) => {
   const { list, card, img } = CARD_OPTIONS[cardType];
 
-  const handleMouseAction = (placeName: string | undefined) => {
-    if (onCardMouseOver) {
-      onCardMouseOver(placeName);
-    }
-  };
-
   return (
     <div className={clsx('places__list', list)}>
       {offers.map((cardItem) => (
         <article
           className={clsx('place-card', card)}
           key={cardItem.id}
-          onMouseOver={() => handleMouseAction(cardItem.title)}
-          onMouseLeave={() => handleMouseAction(undefined)}
+          onMouseOver={() => onCardMouseOver?.(cardItem.title)}
+          onMouseLeave={() => onCardMouseOver?.(undefined)}
         >
           <Card
             card={cardItem}
