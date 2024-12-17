@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../lib/types/store';
-import { AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { Link } from 'react-router-dom';
 import HeaderLayout from '../header-layout/header-layout';
 
 const Header = () => {
@@ -14,7 +15,14 @@ const Header = () => {
       <nav className="header__nav">
         <ul className="header__nav-list">
           <li className="header__nav-item user">
-            <a className="header__nav-link header__nav-link--profile" href="#">
+            <Link
+              className="header__nav-link header__nav-link--profile"
+              to={
+                authorizationStatus === AuthorizationStatus.Auth
+                  ? AppRoute.Favorites
+                  : AppRoute.Login
+              }
+            >
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
 
               {authorizationStatus === AuthorizationStatus.Auth ? (
@@ -27,7 +35,7 @@ const Header = () => {
               ) : (
                 <span className="header__login">Sign in</span>
               )}
-            </a>
+            </Link>
           </li>
 
           {authorizationStatus === AuthorizationStatus.Auth ? (
