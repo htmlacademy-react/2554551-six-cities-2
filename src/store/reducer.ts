@@ -1,11 +1,25 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { getAllOffers, selectCity, selectOffer, sortPlaces } from './actions';
+import {
+  changeAuthorizationStatus,
+  getAllOffers,
+  selectCity,
+  selectOffer,
+  sortPlaces,
+} from './actions';
 import { StoreState } from '../lib/types/store';
-import { CITIES, PlacesSortingName, ResponseStatus } from '../const';
+import {
+  AuthorizationStatus,
+  CITIES,
+  PlacesSortingName,
+  ResponseStatus,
+} from '../const';
 import { SingleOffer } from '../lib/types/offer';
-import { getOffers } from './api-actions';
+import { checkLogin, getOffers } from './api-actions';
+import { User } from '../lib/types/user';
 
 const initialState: StoreState = {
+  authorizationStatus: AuthorizationStatus.Unknown,
+  user: undefined,
   activeCity: CITIES[0],
   offers: [],
   offersResponseStatus: ResponseStatus.Idle,
@@ -15,6 +29,9 @@ const initialState: StoreState = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(changeAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
     .addCase(selectCity, (state, action: PayloadAction<string>) => {
       state.activeCity =
         CITIES.find((city) => city.name === action.payload) || CITIES[0];
@@ -30,6 +47,18 @@ export const reducer = createReducer(initialState, (builder) => {
     )
     .addCase(sortPlaces, (state, action: PayloadAction<PlacesSortingName>) => {
       state.placesSorting = action.payload;
+    })
+    .addCase(checkLogin.pending, (state) => {
+      state.authorizationStatus = AuthorizationStatus.Unknown;
+      state.user = undefined;
+    })
+    .addCase(checkLogin.fulfilled, (state, action: PayloadAction<User>) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.user = action.payload;
+    })
+    .addCase(checkLogin.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.user = undefined;
     })
     .addCase(getOffers.pending, (state) => {
       state.offers = [];
