@@ -2,11 +2,11 @@
 import { AuthorizationStatus } from '../../const';
 import HeaderLayout from '../header-layout/header-layout';
 
-type Props = { active?: boolean; authorizationStatus: AuthorizationStatus };
+type Props = { authorizationStatus: AuthorizationStatus };
 
-const Header = ({ active, authorizationStatus }: Props) => {
+const Header = ({ authorizationStatus }: Props) => {
   return (
-    <HeaderLayout active={active}>
+    <HeaderLayout>
       <nav className="header__nav">
         <ul className="header__nav-list">
           <li className="header__nav-item user">

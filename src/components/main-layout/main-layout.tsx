@@ -8,7 +8,7 @@ type Props = PropsWithChildren<{ empty?: boolean; cityList: string[] }>;
 
 const MainLayout = ({ empty, cityList, children }: Props) => (
   <div className="page page--gray page--main">
-    <Header active authorizationStatus={AuthorizationStatus.Auth} />
+    <Header authorizationStatus={AuthorizationStatus.Auth} />
 
     <main
       className={clsx(
