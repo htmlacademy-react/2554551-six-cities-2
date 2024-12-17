@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Offer = ({ reviews }: Props) => {
-  const offers = useSelector((state: RootState) => state.offerList);
+  const offers = useSelector((state: RootState) => state.offers);
   const activeCity = useSelector((state: RootState) => state.activeCity);
 
   return (
