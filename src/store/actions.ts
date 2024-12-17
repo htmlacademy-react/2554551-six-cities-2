@@ -6,8 +6,8 @@ export const selectCity = createAction('city/select', (city: string) => ({
   payload: city,
 }));
 
-export const getOffers = createAction(
-  'offers/getAll',
+export const getAllOffers = createAction(
+  'offers/all',
   (offers: SingleOffer[]) => ({
     payload: offers,
   })

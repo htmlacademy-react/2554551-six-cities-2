@@ -6,7 +6,7 @@ import { RootState } from '../lib/types/store';
 export const selectAllOffers = (state: RootState) => state;
 
 const getFilteredOffers = (state: RootState) =>
-  state.offerList.filter((offer) => offer.city.name === state.activeCity.name);
+  state.offers.filter((offer) => offer.city.name === state.activeCity.name);
 
 export const selectFilteredOffers = createSelector(
   [selectAllOffers],
