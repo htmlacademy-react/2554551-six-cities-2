@@ -20,6 +20,17 @@ export enum PlacesSortingName {
   Rating = 'Top rated first',
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+}
+
+export enum ResponseStatus {
+  Idle,
+  Pending,
+  Success,
+  Error,
+}
+
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
