@@ -5,7 +5,7 @@ import {
 } from '../../const';
 import { store } from '../../store';
 import { City } from './city';
-import { SingleOffer } from './offer';
+import { OfferFull, OfferPartial } from './offer';
 import { SingleComment } from './review';
 import { User } from './user';
 
@@ -13,15 +13,15 @@ export type StoreState = {
   authorizationStatus: AuthorizationStatus;
   user: User | undefined;
   activeCity: City;
-  offers: SingleOffer[];
+  offers: OfferPartial[];
   offersResponseStatus: ResponseStatus;
-  offer: SingleOffer | undefined;
+  offer: OfferFull | undefined;
   offerResponseStatus: ResponseStatus;
-  nearbyOffers: SingleOffer[];
+  nearbyOffers: OfferPartial[];
   nearbyOffersResponseStatus: ResponseStatus;
   comments: SingleComment[];
   commentsResponseStatus: ResponseStatus;
-  selectedOffer: SingleOffer | undefined;
+  selectedOffer: OfferPartial | undefined;
   placesSorting: PlacesSortingName;
 };
 

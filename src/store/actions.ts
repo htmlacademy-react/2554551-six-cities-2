@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { SingleOffer } from '../lib/types/offer';
+import { OfferPartial } from '../lib/types/offer';
 import { AuthorizationStatus, PlacesSortingName } from '../const';
 
 export const selectCity = createAction('city/select', (city: string) => ({
@@ -8,14 +8,14 @@ export const selectCity = createAction('city/select', (city: string) => ({
 
 export const getAllOffers = createAction(
   'offers/getAll',
-  (offers: SingleOffer[]) => ({
+  (offers: OfferPartial[]) => ({
     payload: offers,
   })
 );
 
 export const selectOffer = createAction(
   'offer/select',
-  (offer?: SingleOffer | undefined) => ({ payload: offer })
+  (offer?: OfferPartial | undefined) => ({ payload: offer })
 );
 
 export const sortPlaces = createAction(

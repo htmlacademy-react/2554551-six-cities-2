@@ -6,14 +6,12 @@ import {
   selectOffer,
   sortPlaces,
 } from './actions';
-import { StoreState } from '../lib/types/store';
 import {
   AuthorizationStatus,
   CITIES,
   PlacesSortingName,
   ResponseStatus,
 } from '../const';
-import { SingleOffer } from '../lib/types/offer';
 import {
   checkLogin,
   getComments,
@@ -22,6 +20,8 @@ import {
   getOffers,
   login,
 } from './api-actions';
+import { StoreState } from '../lib/types/store';
+import { OfferPartial } from '../lib/types/offer';
 import { User } from '../lib/types/user';
 
 const initialState: StoreState = {
@@ -49,12 +49,12 @@ export const reducer = createReducer(initialState, (builder) => {
       state.activeCity =
         CITIES.find((city) => city.name === action.payload) || CITIES[0];
     })
-    .addCase(getAllOffers, (state, action: PayloadAction<SingleOffer[]>) => {
+    .addCase(getAllOffers, (state, action: PayloadAction<OfferPartial[]>) => {
       state.offers = action.payload;
     })
     .addCase(
       selectOffer,
-      (state, action: PayloadAction<SingleOffer | undefined>) => {
+      (state, action: PayloadAction<OfferPartial | undefined>) => {
         state.selectedOffer = action.payload;
       }
     )

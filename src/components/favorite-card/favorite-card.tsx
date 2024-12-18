@@ -1,8 +1,8 @@
-import { SingleOffer } from '../../lib/types/offer';
+import { OfferPartial } from '../../lib/types/offer';
 import Card from '../card/card';
 
 type Props = {
-  card: SingleOffer;
+  card: OfferPartial;
 };
 
 const FavoriteCard = ({ card }: Props) => (

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { CardImgAttributes } from '../../lib/types/card';
-import { SingleOffer } from '../../lib/types/offer';
+import { OfferPartial } from '../../lib/types/offer';
 import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
 type Props = {
-  card: SingleOffer;
+  card: OfferPartial;
   imgAttributes: CardImgAttributes;
   inFavorites?: boolean;
 };

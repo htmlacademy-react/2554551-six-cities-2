@@ -2,7 +2,7 @@
 //@ts-nocheck баг с react router
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { SingleOffer } from '../../lib/types/offer';
+import { OfferPartial } from '../../lib/types/offer';
 import { City } from '../../lib/types/city';
 import { SingleReview } from '../../lib/types/review';
 import { browserHistory } from '../../browser-history';
@@ -15,7 +15,7 @@ import PrivateRoute from '../private-route/private-route';
 import HistoryRouter from '../history-router/history-router';
 
 type Props = {
-  favorites: SingleOffer[];
+  favorites: OfferPartial[];
   reviews: SingleReview[];
   cityList: City[];
 };

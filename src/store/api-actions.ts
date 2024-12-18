@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
-import { SingleOffer } from '../lib/types/offer';
+import { OfferFull, OfferPartial } from '../lib/types/offer';
 import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
 import { setCookie } from '../services/cookie';
@@ -26,29 +26,29 @@ export const login = createAsyncThunk<User, UserAuth, Extra>(
   }
 );
 
-export const getOffers = createAsyncThunk<SingleOffer[], undefined, Extra>(
+export const getOffers = createAsyncThunk<OfferPartial[], undefined, Extra>(
   'offers/get',
   async (_, { extra: api }) => {
-    const { data } = await api.get<SingleOffer[]>(APIRoute.Offers);
+    const { data } = await api.get<OfferPartial[]>(APIRoute.Offers);
 
     return data;
   }
 );
 
-export const getOffer = createAsyncThunk<SingleOffer, string, Extra>(
+export const getOffer = createAsyncThunk<OfferFull, string, Extra>(
   'offer/get',
   async (offerId, { extra: api }) => {
-    const { data } = await api.get<SingleOffer>(`${APIRoute.Offer}${offerId}`);
+    const { data } = await api.get<OfferFull>(`${APIRoute.Offers}/${offerId}`);
 
     return data;
   }
 );
 
-export const getNearbyOffers = createAsyncThunk<SingleOffer[], string, Extra>(
+export const getNearbyOffers = createAsyncThunk<OfferPartial[], string, Extra>(
   'nearby/get',
   async (offerId, { extra: api }) => {
-    const { data } = await api.get<SingleOffer[]>(
-      `${APIRoute.Offer}${offerId}${APIRoute.Nearby}`
+    const { data } = await api.get<OfferPartial[]>(
+      `${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`
     );
 
     return data;
@@ -59,7 +59,7 @@ export const getComments = createAsyncThunk<SingleComment[], string, Extra>(
   'comments/get',
   async (offerId, { extra: api }) => {
     const { data } = await api.get<SingleComment[]>(
-      `${APIRoute.Comments}${offerId}`
+      `${APIRoute.Comments}/${offerId}`
     );
 
     return data;

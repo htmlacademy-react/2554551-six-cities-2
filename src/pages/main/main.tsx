@@ -30,6 +30,7 @@ const Main = ({ cityList }: Props) => {
     (state: RootState) => state.offersResponseStatus
   );
   const selectedOffer = useSelector((state: RootState) => state.selectedOffer);
+
   const dispatch = useAppDispatch();
 
   const handleOfferHover = (placeName: string | undefined) => {
