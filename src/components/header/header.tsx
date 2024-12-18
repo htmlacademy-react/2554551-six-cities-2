@@ -10,6 +10,11 @@ const Header = () => {
   );
   const user = useSelector((state: RootState) => state.user);
 
+  const style = {
+    backgroundImage: `url(${user?.avatarUrl || ''})`,
+    borderRadius: '20px',
+  };
+
   return (
     <HeaderLayout>
       <nav className="header__nav">
@@ -23,7 +28,12 @@ const Header = () => {
                   : AppRoute.Login
               }
             >
-              <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+              <div
+                className="header__avatar-wrapper user__avatar-wrapper"
+                style={user ? style : {}}
+              >
+                {''}
+              </div>
 
               {authorizationStatus === AuthorizationStatus.Auth ? (
                 <>
