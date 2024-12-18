@@ -4,6 +4,7 @@ import { SingleOffer } from '../lib/types/offer';
 import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
 import { setCookie } from '../services/cookie';
+import { SingleComment } from '../lib/types/review';
 
 export const checkLogin = createAsyncThunk<User, undefined, Extra>(
   'user/check',
@@ -26,9 +27,40 @@ export const login = createAsyncThunk<User, UserAuth, Extra>(
 );
 
 export const getOffers = createAsyncThunk<SingleOffer[], undefined, Extra>(
-  'offers/getAll',
+  'offers/get',
   async (_, { extra: api }) => {
     const { data } = await api.get<SingleOffer[]>(APIRoute.Offers);
+
+    return data;
+  }
+);
+
+export const getOffer = createAsyncThunk<SingleOffer, string, Extra>(
+  'offer/get',
+  async (offerId, { extra: api }) => {
+    const { data } = await api.get<SingleOffer>(`${APIRoute.Offer}${offerId}`);
+
+    return data;
+  }
+);
+
+export const getNearbyOffers = createAsyncThunk<SingleOffer[], string, Extra>(
+  'nearby/get',
+  async (offerId, { extra: api }) => {
+    const { data } = await api.get<SingleOffer[]>(
+      `${APIRoute.Offer}${offerId}${APIRoute.Nearby}`
+    );
+
+    return data;
+  }
+);
+
+export const getComments = createAsyncThunk<SingleComment[], string, Extra>(
+  'comments/get',
+  async (offerId, { extra: api }) => {
+    const { data } = await api.get<SingleComment[]>(
+      `${APIRoute.Comments}${offerId}`
+    );
 
     return data;
   }

@@ -24,6 +24,9 @@ export enum PlacesSortingName {
 export enum APIRoute {
   Login = '/login',
   Offers = '/offers',
+  Offer = '/offer/',
+  Nearby = '/nearby',
+  Comments = '/comments',
 }
 
 export enum ResponseStatus {
