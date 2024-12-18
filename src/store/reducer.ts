@@ -14,7 +14,7 @@ import {
   ResponseStatus,
 } from '../const';
 import { SingleOffer } from '../lib/types/offer';
-import { checkLogin, getOffers } from './api-actions';
+import { checkLogin, getOffers, login } from './api-actions';
 import { User } from '../lib/types/user';
 
 const initialState: StoreState = {
@@ -57,6 +57,18 @@ export const reducer = createReducer(initialState, (builder) => {
       state.user = action.payload;
     })
     .addCase(checkLogin.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.user = undefined;
+    })
+    .addCase(login.pending, (state) => {
+      state.authorizationStatus = AuthorizationStatus.Unknown;
+      state.user = undefined;
+    })
+    .addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.user = action.payload;
+    })
+    .addCase(login.rejected, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
       state.user = undefined;
     })
