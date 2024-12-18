@@ -7,3 +7,5 @@ export type User = {
   email: string;
   token: string;
 };
+
+export type UserDataValidity = { email: boolean; password: boolean };
