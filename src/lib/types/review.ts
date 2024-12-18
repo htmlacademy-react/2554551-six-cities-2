@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export type SingleReview = {
   id: number;
   imgPath: string;
@@ -6,4 +8,12 @@ export type SingleReview = {
   reviewText: string;
   dateTime: string;
   dateString: string;
+};
+
+export type SingleComment = {
+  id: string;
+  date: string;
+  user: Omit<User, 'email' | 'token'>;
+  comment: string;
+  rating: number;
 };
