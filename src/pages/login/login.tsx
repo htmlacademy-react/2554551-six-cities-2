@@ -9,7 +9,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import HeaderLayout from '../../components/header-layout/header-layout';
 import styles from './login.module.css';
 
-const emailRegEx = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w)$/;
+const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d).+$/i;
 
 const Login = () => {
@@ -34,10 +34,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, validity } = e.currentTarget;
+    const { name, value } = e.currentTarget;
 
     setFormData((prev) => ({ ...prev, [name]: value.trim() }));
-    setIsValid((prev) => ({ ...prev, [name]: validity.valid }));
     setFocused((prev) => ({ ...prev, [name]: true }));
   };
 
