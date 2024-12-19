@@ -1,9 +1,9 @@
 /* eslint-disable arrow-body-style */
 
-import { SingleReview } from '../../lib/types/review';
+import { SingleComment } from '../../lib/types/comment';
 import ReviewItem from '../review-item/review-item';
 
-type Props = { reviews: SingleReview[] };
+type Props = { reviews: SingleComment[] };
 
 const ReviewList = ({ reviews }: Props) => {
   return (
