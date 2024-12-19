@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../lib/types/store';
 import { AuthorizationStatus, ResponseStatus } from '../../const';
+import { selectSortedComments } from '../../store/reviews.selectors';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -13,7 +14,7 @@ import styles from './offer.module.css';
 
 const Offer = () => {
   const offer = useSelector((state: RootState) => state.offer);
-  const reviews = useSelector((state: RootState) => state.comments);
+  const reviews = useSelector(selectSortedComments);
   const nearbyOffers = useSelector((state: RootState) => state.nearbyOffers);
   const offerResponseStatus = useSelector(
     (state: RootState) => state.offerResponseStatus
