@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../lib/types/store';
-import { ResponseStatus } from '../../const';
+import { AuthorizationStatus, ResponseStatus } from '../../const';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -19,6 +19,9 @@ const Offer = () => {
     (state: RootState) => state.offerResponseStatus
   );
   const activeCity = useSelector((state: RootState) => state.activeCity);
+  const authorizationStatus = useSelector(
+    (state: RootState) => state.authorizationStatus
+  );
 
   return (
     <div className="page">
@@ -137,7 +140,9 @@ const Offer = () => {
                   </h2>
                   <ReviewList reviews={reviews} />
 
-                  <ReviewForm />
+                  {authorizationStatus === AuthorizationStatus.Auth && (
+                    <ReviewForm />
+                  )}
                 </section>
               </div>
             </div>
