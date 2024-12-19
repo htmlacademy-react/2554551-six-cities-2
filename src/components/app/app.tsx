@@ -1,10 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck баг с react router
+// @ts-nocheck баг с react router
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { OfferPartial } from '../../lib/types/offer';
 import { City } from '../../lib/types/city';
-import { SingleReview } from '../../lib/types/review';
 import { browserHistory } from '../../browser-history';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
@@ -16,11 +15,10 @@ import HistoryRouter from '../history-router/history-router';
 
 type Props = {
   favorites: OfferPartial[];
-  reviews: SingleReview[];
   cityList: City[];
 };
 
-const App = ({ favorites, reviews, cityList }: Props) => (
+const App = ({ favorites, cityList }: Props) => (
   <HistoryRouter history={browserHistory}>
     <Routes>
       <Route
@@ -37,10 +35,7 @@ const App = ({ favorites, reviews, cityList }: Props) => (
           </PrivateRoute>
         }
       />
-      <Route
-        path={`${AppRoute.Offer}/:id`}
-        element={<Offer reviews={reviews} />}
-      />
+      <Route path={`${AppRoute.Offer}/:id`} element={<Offer />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   </HistoryRouter>
