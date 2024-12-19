@@ -67,7 +67,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.placesSorting = action.payload;
     })
     .addCase(updateComments, (state, action: PayloadAction<SingleComment>) => {
-      state.comments = state.comments.concat([action.payload]);
+      state.comments = [action.payload].concat(state.comments);
     })
     .addCase(checkLogin.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;
