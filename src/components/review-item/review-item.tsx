@@ -1,4 +1,5 @@
 import { SingleComment } from '../../lib/types/comment';
+import { format } from 'date-fns';
 import clsx from 'clsx';
 
 type Props = {
@@ -33,7 +34,7 @@ const ReviewItem = ({ review }: Props) => {
         </div>
         <p className="reviews__text">{comment}</p>
         <time className="reviews__time" dateTime={date}>
-          {new Date(date).toLocaleDateString()}
+          {format(new Date(date), 'MMMM y')}
         </time>
       </div>
     </li>
