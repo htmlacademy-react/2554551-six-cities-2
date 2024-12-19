@@ -17,13 +17,15 @@ export const getSortedOffers = (
   offers: OfferPartial[],
   sortBy: PlacesSortingName
 ) => {
+  const offersCopy = [...offers];
+
   switch (sortBy) {
     case PlacesSortingName.LowToHigh:
-      return offers.sort((a, b) => a.price - b.price);
+      return offersCopy.sort((a, b) => a.price - b.price);
     case PlacesSortingName.HighToLow:
-      return offers.sort((a, b) => b.price - a.price);
+      return offersCopy.sort((a, b) => b.price - a.price);
     case PlacesSortingName.Rating:
-      return offers.sort((a, b) => b.rating - a.rating);
+      return offersCopy.sort((a, b) => b.rating - a.rating);
     default:
       return offers;
   }
