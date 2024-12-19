@@ -4,7 +4,7 @@ import { OfferFull, OfferPartial } from '../lib/types/offer';
 import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
 import { setCookie } from '../services/cookie';
-import { SingleComment } from '../lib/types/review';
+import { NewOfferComment, SingleComment } from '../lib/types/comment';
 
 export const checkLogin = createAsyncThunk<User, undefined, Extra>(
   'user/check',
@@ -65,3 +65,17 @@ export const getComments = createAsyncThunk<SingleComment[], string, Extra>(
     return data;
   }
 );
+
+export const createComment = createAsyncThunk<
+  SingleComment,
+  NewOfferComment,
+  Extra
+>('comments/create', async (commentData, { extra: api }) => {
+  const { comment, rating } = commentData;
+  const { data } = await api.post<SingleComment>(
+    `${APIRoute.Comments}/${commentData.offerId}`,
+    { comment, rating }
+  );
+
+  return data;
+});

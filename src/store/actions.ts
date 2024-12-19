@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { OfferPartial } from '../lib/types/offer';
 import { AuthorizationStatus, PlacesSortingName } from '../const';
+import { SingleComment } from '../lib/types/comment';
 
 export const selectCity = createAction('city/select', (city: string) => ({
   payload: city,
@@ -30,4 +31,9 @@ export const changeAuthorizationStatus = createAction(
   (authorizationStatus: AuthorizationStatus) => ({
     payload: authorizationStatus,
   })
+);
+
+export const updateComments = createAction(
+  'comments/update',
+  (comment: SingleComment) => ({ payload: comment })
 );

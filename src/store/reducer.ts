@@ -5,6 +5,7 @@ import {
   selectCity,
   selectOffer,
   sortPlaces,
+  updateComments,
 } from './actions';
 import {
   AuthorizationStatus,
@@ -14,6 +15,7 @@ import {
 } from '../const';
 import {
   checkLogin,
+  createComment,
   getComments,
   getNearbyOffers,
   getOffer,
@@ -23,6 +25,7 @@ import {
 import { StoreState } from '../lib/types/store';
 import { OfferPartial } from '../lib/types/offer';
 import { User } from '../lib/types/user';
+import { SingleComment } from '../lib/types/comment';
 
 const initialState: StoreState = {
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -36,6 +39,8 @@ const initialState: StoreState = {
   nearbyOffersResponseStatus: ResponseStatus.Idle,
   comments: [],
   commentsResponseStatus: ResponseStatus.Idle,
+  comment: undefined,
+  commentResponseStatus: ResponseStatus.Idle,
   selectedOffer: undefined,
   placesSorting: PlacesSortingName.Popular,
 };
@@ -60,6 +65,9 @@ export const reducer = createReducer(initialState, (builder) => {
     )
     .addCase(sortPlaces, (state, action: PayloadAction<PlacesSortingName>) => {
       state.placesSorting = action.payload;
+    })
+    .addCase(updateComments, (state, action: PayloadAction<SingleComment>) => {
+      state.comments = state.comments.concat([action.payload]);
     })
     .addCase(checkLogin.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;
@@ -132,5 +140,17 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(getComments.rejected, (state) => {
       state.comments = [];
       state.commentsResponseStatus = ResponseStatus.Error;
+    })
+    .addCase(createComment.pending, (state) => {
+      state.comment = undefined;
+      state.commentResponseStatus = ResponseStatus.Pending;
+    })
+    .addCase(createComment.fulfilled, (state, action) => {
+      state.comment = action.payload;
+      state.commentResponseStatus = ResponseStatus.Success;
+    })
+    .addCase(createComment.rejected, (state) => {
+      state.comment = undefined;
+      state.commentResponseStatus = ResponseStatus.Error;
     });
 });

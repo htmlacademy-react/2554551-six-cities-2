@@ -6,7 +6,7 @@ import {
 import { store } from '../../store';
 import { City } from './city';
 import { OfferFull, OfferPartial } from './offer';
-import { SingleComment } from './review';
+import { SingleComment } from './comment';
 import { User } from './user';
 
 export type StoreState = {
@@ -21,6 +21,8 @@ export type StoreState = {
   nearbyOffersResponseStatus: ResponseStatus;
   comments: SingleComment[];
   commentsResponseStatus: ResponseStatus;
+  comment: SingleComment | undefined;
+  commentResponseStatus: ResponseStatus;
   selectedOffer: OfferPartial | undefined;
   placesSorting: PlacesSortingName;
 };
