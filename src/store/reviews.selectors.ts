@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../lib/types/store';
 
-export const selectAllComments = (state: RootState) => state;
+const selectAllComments = (state: RootState) => state;
 
 const getSortedComments = (state: RootState) => {
   const commentsCopy = [...state.comments];

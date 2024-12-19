@@ -3,7 +3,7 @@ import { PlacesSortingName } from '../const';
 import { OfferPartial } from '../lib/types/offer';
 import { RootState } from '../lib/types/store';
 
-export const selectAllOffers = (state: RootState) => state;
+const selectAllOffers = (state: RootState) => state;
 
 const getFilteredOffers = (state: RootState) =>
   state.offers.filter((offer) => offer.city.name === state.activeCity.name);
