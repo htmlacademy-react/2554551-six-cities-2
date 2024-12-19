@@ -1,7 +1,9 @@
 import { City } from './city';
 import { Location } from './location';
 
-export type SingleOffer = {
+type Host = { name: string; avatarUrl: string; isPro: boolean };
+
+export type OfferPartial = {
   id: string;
   title: string;
   type: string;
@@ -12,4 +14,13 @@ export type SingleOffer = {
   isPremium: boolean;
   rating: number;
   previewImage: string;
+};
+
+export type OfferFull = Omit<OfferPartial, 'previewImage'> & {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: Host;
+  images: string[];
+  maxAdults: number;
 };

@@ -1,6 +1,6 @@
-import { SingleOffer } from '../lib/types/offer';
+import { OfferPartial } from '../lib/types/offer';
 
-export const FAVORITES: SingleOffer[] = [
+export const FAVORITES: OfferPartial[] = [
   {
     id: '3254be39-2087-43ce-b54c-45acce10037c',
     title: 'Amazing and Extremely Central Flat',

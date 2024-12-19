@@ -5,6 +5,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
+  NotFound = '*',
 }
 
 export enum AuthorizationStatus {
@@ -20,11 +21,23 @@ export enum PlacesSortingName {
   Rating = 'Top rated first',
 }
 
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export enum APIRoute {
+  Login = '/login',
+  Offers = '/offers',
+  Nearby = '/nearby',
+  Comments = '/comments',
+}
 
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export enum ResponseStatus {
+  Idle,
+  Pending,
+  Success,
+  Error,
+}
+
+export const URL_MARKER_DEFAULT = '/img/pin.svg';
+
+export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const CARD_OPTIONS: Record<CardType, Record<CardOptions, string>> = {
   offer: {

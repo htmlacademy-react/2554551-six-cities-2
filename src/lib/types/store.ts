@@ -1,12 +1,29 @@
-import { PlacesSortingName } from '../../const';
+import {
+  AuthorizationStatus,
+  PlacesSortingName,
+  ResponseStatus,
+} from '../../const';
 import { store } from '../../store';
 import { City } from './city';
-import { SingleOffer } from './offer';
+import { OfferFull, OfferPartial } from './offer';
+import { SingleComment } from './comment';
+import { User } from './user';
 
 export type StoreState = {
+  authorizationStatus: AuthorizationStatus;
+  user: User | undefined;
   activeCity: City;
-  offerList: SingleOffer[];
-  selectedOffer: SingleOffer | undefined;
+  offers: OfferPartial[];
+  offersResponseStatus: ResponseStatus;
+  offer: OfferFull | undefined;
+  offerResponseStatus: ResponseStatus;
+  nearbyOffers: OfferPartial[];
+  nearbyOffersResponseStatus: ResponseStatus;
+  comments: SingleComment[];
+  commentsResponseStatus: ResponseStatus;
+  comment: SingleComment | undefined;
+  commentResponseStatus: ResponseStatus;
+  selectedOffer: OfferPartial | undefined;
   placesSorting: PlacesSortingName;
 };
 

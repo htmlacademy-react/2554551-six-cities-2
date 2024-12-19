@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { PlacesSortingName } from '../const';
-import { SingleOffer } from '../lib/types/offer';
+import { OfferPartial } from '../lib/types/offer';
 import { RootState } from '../lib/types/store';
 
 export const selectAllOffers = (state: RootState) => state;
 
 const getFilteredOffers = (state: RootState) =>
-  state.offerList.filter((offer) => offer.city.name === state.activeCity.name);
+  state.offers.filter((offer) => offer.city.name === state.activeCity.name);
 
 export const selectFilteredOffers = createSelector(
   [selectAllOffers],
@@ -14,7 +14,7 @@ export const selectFilteredOffers = createSelector(
 );
 
 export const getSortedOffers = (
-  offers: SingleOffer[],
+  offers: OfferPartial[],
   sortBy: PlacesSortingName
 ) => {
   switch (sortBy) {

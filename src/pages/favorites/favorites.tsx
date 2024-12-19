@@ -1,17 +1,17 @@
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
-import { SingleOffer } from '../../lib/types/offer';
+import { OfferPartial } from '../../lib/types/offer';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 import Header from '../../components/header/header';
 
-type Props = { favorites: SingleOffer[] };
+type Props = { favorites: OfferPartial[] };
 
 const Favorites = ({ favorites }: Props) => {
   const cities = Array.from(new Set(favorites.map((item) => item.city.name)));
 
   return (
     <div className="page">
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

@@ -1,21 +1,22 @@
 import { createAction } from '@reduxjs/toolkit';
-import { SingleOffer } from '../lib/types/offer';
-import { PlacesSortingName } from '../const';
+import { OfferPartial } from '../lib/types/offer';
+import { AuthorizationStatus, PlacesSortingName } from '../const';
+import { SingleComment } from '../lib/types/comment';
 
 export const selectCity = createAction('city/select', (city: string) => ({
   payload: city,
 }));
 
-export const getOffers = createAction(
+export const getAllOffers = createAction(
   'offers/getAll',
-  (offers: SingleOffer[]) => ({
+  (offers: OfferPartial[]) => ({
     payload: offers,
   })
 );
 
 export const selectOffer = createAction(
   'offer/select',
-  (offer: SingleOffer | undefined) => ({ payload: offer })
+  (offer?: OfferPartial | undefined) => ({ payload: offer })
 );
 
 export const sortPlaces = createAction(
@@ -23,4 +24,16 @@ export const sortPlaces = createAction(
   (sortBy: PlacesSortingName) => ({
     payload: sortBy,
   })
+);
+
+export const changeAuthorizationStatus = createAction(
+  'user/changeAuthStatus',
+  (authorizationStatus: AuthorizationStatus) => ({
+    payload: authorizationStatus,
+  })
+);
+
+export const updateComments = createAction(
+  'comments/update',
+  (comment: SingleComment) => ({ payload: comment })
 );

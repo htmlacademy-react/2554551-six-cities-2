@@ -1,5 +1,5 @@
 import { SingleCard } from '../lib/types/card';
-import { SingleOffer } from '../lib/types/offer';
+import { OfferPartial } from '../lib/types/offer';
 
 export const NEIGHBOURHOOD_OFFERS: SingleCard[] = [
   {
@@ -34,7 +34,7 @@ export const NEIGHBOURHOOD_OFFERS: SingleCard[] = [
   },
 ];
 
-export const OFFERS: SingleOffer[] = [
+export const OFFERS: OfferPartial[] = [
   {
     id: '3254be39-2087-43ce-b54c-45acce10037c',
     title: 'Amazing and Extremely Central Flat',

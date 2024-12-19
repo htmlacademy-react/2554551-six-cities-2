@@ -1,0 +1,7 @@
+.error {
+  font-size: 14px;
+  color: red;
+}
+.error:last-of-type {
+  margin-top: 0;
+}/*# sourceMappingURL=login.module.css.map */
