@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../lib/types/store';
 import { SingleReview } from '../../lib/types/review';
-import { AuthorizationStatus } from '../../const';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -18,7 +17,7 @@ const Offer = ({ reviews }: Props) => {
 
   return (
     <div className="page">
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">

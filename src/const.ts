@@ -5,6 +5,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
+  NotFound = '*',
 }
 
 export enum AuthorizationStatus {
@@ -21,6 +22,7 @@ export enum PlacesSortingName {
 }
 
 export enum APIRoute {
+  Login = '/login',
   Offers = '/offers',
 }
 

@@ -1,9 +1,16 @@
-import { PlacesSortingName, ResponseStatus } from '../../const';
+import {
+  AuthorizationStatus,
+  PlacesSortingName,
+  ResponseStatus,
+} from '../../const';
 import { store } from '../../store';
 import { City } from './city';
 import { SingleOffer } from './offer';
+import { User } from './user';
 
 export type StoreState = {
+  authorizationStatus: AuthorizationStatus;
+  user: User | undefined;
   activeCity: City;
   offers: SingleOffer[];
   offersResponseStatus: ResponseStatus;

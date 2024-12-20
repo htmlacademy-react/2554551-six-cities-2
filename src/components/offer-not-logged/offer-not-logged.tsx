@@ -1,12 +1,11 @@
 /* eslint-disable arrow-body-style */
 
-import { AuthorizationStatus } from '../../const';
 import Header from '../header/header';
 
 const OfferNotLogged = () => {
   return (
     <div className="page">
-      <Header authorizationStatus={AuthorizationStatus.NoAuth} />
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">
