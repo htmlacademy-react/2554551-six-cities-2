@@ -16,8 +16,7 @@ const PlacesSorting = () => {
 
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
-
+      <span className="places__sorting-caption">Sort by</span>{' '}
       <span
         className="places__sorting-type"
         tabIndex={0}
@@ -28,7 +27,6 @@ const PlacesSorting = () => {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-
       {isOpen ? (
         <ClickAwayListener onClickAway={() => setIsOpen(false)}>
           <ul className="places__options places__options--custom places__options--opened">

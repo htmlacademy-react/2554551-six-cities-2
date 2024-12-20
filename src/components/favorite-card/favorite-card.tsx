@@ -14,7 +14,6 @@ const FavoriteCard = ({ card }: Props) => (
         width: '150',
         height: '110',
       }}
-      inFavorites
     />
   </article>
 );

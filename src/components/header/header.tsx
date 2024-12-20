@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   selectAuthorizationStatus,
   selectUser,
@@ -11,6 +11,10 @@ import HeaderLayout from '../header-layout/header-layout';
 const Header = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const user = useSelector(selectUser);
+
+  const location = useLocation();
+  const navigateTo =
+    location.pathname === AppRoute.Favorites ? AppRoute.Main : location;
 
   const style = {
     backgroundImage: `url(${user?.avatarUrl || ''})`,
@@ -52,9 +56,9 @@ const Header = () => {
 
           {authorizationStatus === AuthorizationStatus.Auth ? (
             <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
+              <Link className="header__nav-link" to={navigateTo}>
                 <span className="header__signout">Sign out</span>
-              </a>
+              </Link>
             </li>
           ) : (
             ''
