@@ -9,21 +9,34 @@ import { OfferFull, OfferPartial } from './offer';
 import { SingleComment } from './comment';
 import { User } from './user';
 
-export type StoreState = {
+export type UserState = {
   authorizationStatus: AuthorizationStatus;
   user: User | undefined;
-  activeCity: City;
+};
+
+export type OffersState = {
   offers: OfferPartial[];
   offersResponseStatus: ResponseStatus;
   offer: OfferFull | undefined;
   offerResponseStatus: ResponseStatus;
-  nearbyOffers: OfferPartial[];
-  nearbyOffersResponseStatus: ResponseStatus;
+  selectedOffer: OfferPartial | undefined;
+};
+
+export type CommentsState = {
   comments: SingleComment[];
   commentsResponseStatus: ResponseStatus;
   comment: SingleComment | undefined;
   commentResponseStatus: ResponseStatus;
-  selectedOffer: OfferPartial | undefined;
+};
+
+export type NearPlacesState = {
+  nearbyOffers: OfferPartial[];
+  nearbyOffersResponseStatus: ResponseStatus;
+};
+
+export type CityState = { activeCity: City };
+
+export type SortingState = {
   placesSorting: PlacesSortingName;
 };
 
