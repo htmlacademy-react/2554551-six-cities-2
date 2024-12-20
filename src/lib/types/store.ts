@@ -1,11 +1,12 @@
-import { PlacesSortingName } from '../../const';
+import { PlacesSortingName, ResponseStatus } from '../../const';
 import { store } from '../../store';
 import { City } from './city';
 import { SingleOffer } from './offer';
 
 export type StoreState = {
   activeCity: City;
-  offerList: SingleOffer[];
+  offers: SingleOffer[];
+  offersResponseStatus: ResponseStatus;
   selectedOffer: SingleOffer | undefined;
   placesSorting: PlacesSortingName;
 };

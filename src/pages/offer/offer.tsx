@@ -1,8 +1,6 @@
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../store';
 import { RootState } from '../../lib/types/store';
 import { SingleReview } from '../../lib/types/review';
-import { selectOffer } from '../../store/actions';
 import { AuthorizationStatus } from '../../const';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
@@ -15,21 +13,8 @@ type Props = {
 };
 
 const Offer = ({ reviews }: Props) => {
-  const offers = useSelector((state: RootState) => state.offerList);
+  const offers = useSelector((state: RootState) => state.offers);
   const activeCity = useSelector((state: RootState) => state.activeCity);
-  const selectedOffer = useSelector((state: RootState) => state.selectedOffer);
-
-  const dispatch = useAppDispatch();
-
-  const handleOfferHover = (placeName: string | undefined) => {
-    if (placeName === undefined) {
-      dispatch(selectOffer(undefined));
-    }
-
-    const currentLocation = offers.find((offer) => offer.title === placeName);
-
-    dispatch(selectOffer(currentLocation));
-  };
 
   return (
     <div className="page">
@@ -179,7 +164,6 @@ const Offer = ({ reviews }: Props) => {
             <Map
               city={activeCity}
               locations={offers.map((offer) => offer.location)}
-              selectedLocation={selectedOffer?.location}
             />
           </section>
         </section>
@@ -188,11 +172,7 @@ const Offer = ({ reviews }: Props) => {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <CardList
-              offers={offers}
-              cardType="near"
-              onCardMouseOver={handleOfferHover}
-            />
+            <CardList offers={offers} cardType="near" />
           </section>
         </div>
       </main>
