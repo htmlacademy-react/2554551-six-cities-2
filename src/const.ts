@@ -26,6 +26,7 @@ export enum APIRoute {
   Offers = '/offers',
   Nearby = '/nearby',
   Comments = '/comments',
+  Favorites = '/favorite',
 }
 
 export enum ResponseStatus {
@@ -33,6 +34,11 @@ export enum ResponseStatus {
   Pending,
   Success,
   Error,
+}
+
+export enum FavoriteStatus {
+  RemoveFromFavorites = 0,
+  AddToFavorites = 1,
 }
 
 export const URL_MARKER_DEFAULT = '/img/pin.svg';

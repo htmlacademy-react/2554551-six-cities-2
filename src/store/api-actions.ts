@@ -5,6 +5,7 @@ import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
 import { setCookie } from '../services/cookie';
 import { NewOfferComment, SingleComment } from '../lib/types/comment';
+import { NewFavoriteStatus } from '../lib/types/favorite';
 
 export const checkLogin = createAsyncThunk<User, undefined, Extra>(
   'user/check',
@@ -78,4 +79,23 @@ export const createComment = createAsyncThunk<
   );
 
   return data;
+});
+
+export const getFavorites = createAsyncThunk<OfferPartial[], undefined, Extra>(
+  'favorites/get',
+  async (_, { extra: api }) => {
+    const { data } = await api.get<OfferPartial[]>(APIRoute.Favorites);
+
+    return data;
+  }
+);
+
+export const changeFavoriteStatus = createAsyncThunk<
+  void,
+  NewFavoriteStatus,
+  Extra
+>('favorites/changeStatus', async (favoriteStatusData, { extra: api }) => {
+  await api.post<void>(
+    `${APIRoute.Favorites}/${favoriteStatusData.offerId}/${favoriteStatusData.status}`
+  );
 });

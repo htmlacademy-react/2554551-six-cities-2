@@ -40,6 +40,12 @@ export type SortingState = {
   placesSorting: PlacesSortingName;
 };
 
+export type FavoritesState = {
+  favorites: OfferPartial[];
+  favoritesResponseStatus: ResponseStatus;
+  favoriteResponseStatus: ResponseStatus;
+};
+
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
