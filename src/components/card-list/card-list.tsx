@@ -1,11 +1,11 @@
 import { CARD_OPTIONS } from '../../const';
 import { CardType } from '../../lib/types/card';
-import { SingleOffer } from '../../lib/types/offer';
+import { OfferPartial } from '../../lib/types/offer';
 import Card from '../card/card';
 import clsx from 'clsx';
 
 type Props = {
-  offers: SingleOffer[];
+  offers: OfferPartial[];
   cardType: CardType;
   onCardMouseOver?: (placeName: string | undefined) => void;
 };

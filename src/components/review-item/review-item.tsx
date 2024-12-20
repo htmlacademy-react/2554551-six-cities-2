@@ -1,26 +1,28 @@
-import { SingleReview } from '../../lib/types/review';
+import { SingleComment } from '../../lib/types/comment';
+import clsx from 'clsx';
 
 type Props = {
-  review: SingleReview;
+  review: SingleComment;
 };
 
 const ReviewItem = ({ review }: Props) => {
-  const { imgPath, userName, rating, reviewText, dateTime, dateString } =
-    review;
+  const { date, user, rating, comment } = review;
 
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
-        <div className="reviews__avatar-wrapper user__avatar-wrapper">
+        <div
+          className={clsx('reviews__avatar-wrapper', 'user__avatar-wrapper')}
+        >
           <img
             className="reviews__avatar user__avatar"
-            src={imgPath}
+            src={user.avatarUrl}
             width="54"
             height="54"
             alt="Reviews avatar"
           />
         </div>
-        <span className="reviews__user-name">{userName}</span>
+        <span className="reviews__user-name">{user.name}</span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
@@ -29,9 +31,9 @@ const ReviewItem = ({ review }: Props) => {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <p className="reviews__text">{reviewText}</p>
-        <time className="reviews__time" dateTime={dateTime}>
-          {dateString}
+        <p className="reviews__text">{comment}</p>
+        <time className="reviews__time" dateTime={date}>
+          {new Date(date).toLocaleDateString()}
         </time>
       </div>
     </li>

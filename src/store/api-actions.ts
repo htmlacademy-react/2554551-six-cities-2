@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
-import { SingleOffer } from '../lib/types/offer';
+import { OfferFull, OfferPartial } from '../lib/types/offer';
 import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
 import { setCookie } from '../services/cookie';
+import { NewOfferComment, SingleComment } from '../lib/types/comment';
 
 export const checkLogin = createAsyncThunk<User, undefined, Extra>(
   'user/check',
@@ -25,11 +26,56 @@ export const login = createAsyncThunk<User, UserAuth, Extra>(
   }
 );
 
-export const getOffers = createAsyncThunk<SingleOffer[], undefined, Extra>(
-  'offers/getAll',
+export const getOffers = createAsyncThunk<OfferPartial[], undefined, Extra>(
+  'offers/get',
   async (_, { extra: api }) => {
-    const { data } = await api.get<SingleOffer[]>(APIRoute.Offers);
+    const { data } = await api.get<OfferPartial[]>(APIRoute.Offers);
 
     return data;
   }
 );
+
+export const getOffer = createAsyncThunk<OfferFull, string, Extra>(
+  'offer/get',
+  async (offerId, { extra: api }) => {
+    const { data } = await api.get<OfferFull>(`${APIRoute.Offers}/${offerId}`);
+
+    return data;
+  }
+);
+
+export const getNearbyOffers = createAsyncThunk<OfferPartial[], string, Extra>(
+  'nearby/get',
+  async (offerId, { extra: api }) => {
+    const { data } = await api.get<OfferPartial[]>(
+      `${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`
+    );
+
+    return data;
+  }
+);
+
+export const getComments = createAsyncThunk<SingleComment[], string, Extra>(
+  'comments/get',
+  async (offerId, { extra: api }) => {
+    const { data } = await api.get<SingleComment[]>(
+      `${APIRoute.Comments}/${offerId}`
+    );
+
+    return data;
+  }
+);
+
+export const createComment = createAsyncThunk<
+  SingleComment,
+  NewOfferComment,
+  Extra
+>('comments/create', async (commentData, { extra: api }) => {
+  const { comment, rating } = commentData;
+  const { data } = await api.post<SingleComment>(
+    `${APIRoute.Comments}/${commentData.offerId}`,
+    { comment, rating }
+  );
+
+  return data;
+});

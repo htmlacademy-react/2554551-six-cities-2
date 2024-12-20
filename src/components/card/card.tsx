@@ -1,11 +1,17 @@
+import { useAppDispatch } from '../../store';
 import { Link } from 'react-router-dom';
 import { CardImgAttributes } from '../../lib/types/card';
-import { SingleOffer } from '../../lib/types/offer';
+import { OfferPartial } from '../../lib/types/offer';
 import { AppRoute } from '../../const';
+import {
+  getComments,
+  getNearbyOffers,
+  getOffer,
+} from '../../store/api-actions';
 import clsx from 'clsx';
 
 type Props = {
-  card: SingleOffer;
+  card: OfferPartial;
   imgAttributes: CardImgAttributes;
   inFavorites?: boolean;
 };
@@ -22,6 +28,14 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
     type,
   } = card;
 
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(getOffer(id));
+    dispatch(getComments(id));
+    dispatch(getNearbyOffers(id));
+  };
+
   return (
     <>
       {isPremium ? (
@@ -34,7 +48,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
       <div
         className={clsx(imgAttributes.className, 'place-card__image-wrapper')}
       >
-        <Link to={`${AppRoute.Offer}/${id}`}>
+        <Link to={`${AppRoute.Offer}/${id}`} onClick={handleClick}>
           <img
             className="place-card__image"
             src={previewImage}

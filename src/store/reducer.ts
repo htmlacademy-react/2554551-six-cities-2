@@ -5,17 +5,27 @@ import {
   selectCity,
   selectOffer,
   sortPlaces,
+  updateComments,
 } from './actions';
-import { StoreState } from '../lib/types/store';
 import {
   AuthorizationStatus,
   CITIES,
   PlacesSortingName,
   ResponseStatus,
 } from '../const';
-import { SingleOffer } from '../lib/types/offer';
-import { checkLogin, getOffers, login } from './api-actions';
+import {
+  checkLogin,
+  createComment,
+  getComments,
+  getNearbyOffers,
+  getOffer,
+  getOffers,
+  login,
+} from './api-actions';
+import { StoreState } from '../lib/types/store';
+import { OfferPartial } from '../lib/types/offer';
 import { User } from '../lib/types/user';
+import { SingleComment } from '../lib/types/comment';
 
 const initialState: StoreState = {
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -23,6 +33,14 @@ const initialState: StoreState = {
   activeCity: CITIES[0],
   offers: [],
   offersResponseStatus: ResponseStatus.Idle,
+  offer: undefined,
+  offerResponseStatus: ResponseStatus.Idle,
+  nearbyOffers: [],
+  nearbyOffersResponseStatus: ResponseStatus.Idle,
+  comments: [],
+  commentsResponseStatus: ResponseStatus.Idle,
+  comment: undefined,
+  commentResponseStatus: ResponseStatus.Idle,
   selectedOffer: undefined,
   placesSorting: PlacesSortingName.Popular,
 };
@@ -36,17 +54,20 @@ export const reducer = createReducer(initialState, (builder) => {
       state.activeCity =
         CITIES.find((city) => city.name === action.payload) || CITIES[0];
     })
-    .addCase(getAllOffers, (state, action: PayloadAction<SingleOffer[]>) => {
+    .addCase(getAllOffers, (state, action: PayloadAction<OfferPartial[]>) => {
       state.offers = action.payload;
     })
     .addCase(
       selectOffer,
-      (state, action: PayloadAction<SingleOffer | undefined>) => {
+      (state, action: PayloadAction<OfferPartial | undefined>) => {
         state.selectedOffer = action.payload;
       }
     )
     .addCase(sortPlaces, (state, action: PayloadAction<PlacesSortingName>) => {
       state.placesSorting = action.payload;
+    })
+    .addCase(updateComments, (state, action: PayloadAction<SingleComment>) => {
+      state.comments = state.comments.concat([action.payload]);
     })
     .addCase(checkLogin.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;
@@ -83,5 +104,53 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(getOffers.rejected, (state) => {
       state.offers = [];
       state.offersResponseStatus = ResponseStatus.Error;
+    })
+    .addCase(getOffer.pending, (state) => {
+      state.offer = undefined;
+      state.offerResponseStatus = ResponseStatus.Pending;
+    })
+    .addCase(getOffer.fulfilled, (state, action) => {
+      state.offer = action.payload;
+      state.offerResponseStatus = ResponseStatus.Success;
+    })
+    .addCase(getOffer.rejected, (state) => {
+      state.offer = undefined;
+      state.offerResponseStatus = ResponseStatus.Error;
+    })
+    .addCase(getNearbyOffers.pending, (state) => {
+      state.nearbyOffers = [];
+      state.nearbyOffersResponseStatus = ResponseStatus.Pending;
+    })
+    .addCase(getNearbyOffers.fulfilled, (state, action) => {
+      state.nearbyOffers = action.payload;
+      state.nearbyOffersResponseStatus = ResponseStatus.Success;
+    })
+    .addCase(getNearbyOffers.rejected, (state) => {
+      state.nearbyOffers = [];
+      state.nearbyOffersResponseStatus = ResponseStatus.Error;
+    })
+    .addCase(getComments.pending, (state) => {
+      state.comments = [];
+      state.commentsResponseStatus = ResponseStatus.Pending;
+    })
+    .addCase(getComments.fulfilled, (state, action) => {
+      state.comments = action.payload;
+      state.commentsResponseStatus = ResponseStatus.Success;
+    })
+    .addCase(getComments.rejected, (state) => {
+      state.comments = [];
+      state.commentsResponseStatus = ResponseStatus.Error;
+    })
+    .addCase(createComment.pending, (state) => {
+      state.comment = undefined;
+      state.commentResponseStatus = ResponseStatus.Pending;
+    })
+    .addCase(createComment.fulfilled, (state, action) => {
+      state.comment = action.payload;
+      state.commentResponseStatus = ResponseStatus.Success;
+    })
+    .addCase(createComment.rejected, (state) => {
+      state.comment = undefined;
+      state.commentResponseStatus = ResponseStatus.Error;
     });
 });
