@@ -1,9 +1,12 @@
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CardImgAttributes } from '../../lib/types/card';
 import { OfferPartial } from '../../lib/types/offer';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import {
+  changeFavoriteStatus,
   getComments,
   getNearbyOffers,
   getOffer,
@@ -13,10 +16,9 @@ import clsx from 'clsx';
 type Props = {
   card: OfferPartial;
   imgAttributes: CardImgAttributes;
-  inFavorites?: boolean;
 };
 
-const Card = ({ card, imgAttributes, inFavorites }: Props) => {
+const Card = ({ card, imgAttributes }: Props) => {
   const {
     id,
     isPremium,
@@ -28,12 +30,26 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
     type,
   } = card;
 
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
+
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
+  const handleCardClick = () => {
     dispatch(getOffer(id));
     dispatch(getComments(id));
     dispatch(getNearbyOffers(id));
+  };
+
+  const handleUpdateFavoriteStatus = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(
+        changeFavoriteStatus({ offerId: card.id, status: Number(!isFavorite) })
+      );
+    } else {
+      navigate(AppRoute.Login);
+    }
   };
 
   return (
@@ -48,7 +64,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
       <div
         className={clsx(imgAttributes.className, 'place-card__image-wrapper')}
       >
-        <Link to={`${AppRoute.Offer}/${id}`} onClick={handleClick}>
+        <Link to={`${AppRoute.Offer}/${id}`} onClick={handleCardClick}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -60,7 +76,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
       </div>
       <div
         className={clsx(
-          inFavorites && 'favorites__card-info',
+          isFavorite && 'favorites__card-info',
           'place-card__info'
         )}
       >
@@ -76,6 +92,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
               isFavorite && 'place-card__bookmark-button--active'
             )}
             type="button"
+            onClick={handleUpdateFavoriteStatus}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
