@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import { AuthorizationStatus } from '../../const';
 import Header from '../header/header';
 import CityList from '../city-list/city-list';
 import clsx from 'clsx';
@@ -8,7 +7,7 @@ type Props = PropsWithChildren<{ empty?: boolean; cityList: string[] }>;
 
 const MainLayout = ({ empty, cityList, children }: Props) => (
   <div className="page page--gray page--main">
-    <Header active authorizationStatus={AuthorizationStatus.Auth} />
+    <Header />
 
     <main
       className={clsx(

@@ -1,31 +1,56 @@
-/* eslint-disable arrow-body-style */
-import { AuthorizationStatus } from '../../const';
+import { memo } from 'react';
+import { useSelector } from 'react-redux';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { Link } from 'react-router-dom';
+import {
+  selectAuthorizationStatus,
+  selectUser,
+} from '../../store/user/user.selectors';
 import HeaderLayout from '../header-layout/header-layout';
 
-type Props = { active?: boolean; authorizationStatus: AuthorizationStatus };
+const Header = () => {
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
+  const user = useSelector(selectUser);
 
-const Header = ({ active, authorizationStatus }: Props) => {
+  const style = {
+    backgroundImage: `url(${user?.avatarUrl || ''})`,
+    borderRadius: '20px',
+  };
+
   return (
-    <HeaderLayout active={active}>
+    <HeaderLayout>
       <nav className="header__nav">
         <ul className="header__nav-list">
           <li className="header__nav-item user">
-            <a className="header__nav-link header__nav-link--profile" href="#">
-              <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+            <Link
+              className="header__nav-link header__nav-link--profile"
+              to={
+                authorizationStatus === AuthorizationStatus.Auth
+                  ? AppRoute.Favorites
+                  : AppRoute.Login
+              }
+            >
+              <div
+                className="header__avatar-wrapper user__avatar-wrapper"
+                style={user ? style : {}}
+              >
+                {''}
+              </div>
 
-              {authorizationStatus === 'AUTH' ? (
+              {authorizationStatus === AuthorizationStatus.Auth ? (
                 <>
                   <span className="header__user-name user__name">
-                    Oliver.conner@gmail.com
+                    {user?.email}
                   </span>
                   <span className="header__favorite-count">3</span>
                 </>
               ) : (
                 <span className="header__login">Sign in</span>
               )}
-            </a>
+            </Link>
           </li>
-          {authorizationStatus === 'AUTH' ? (
+
+          {authorizationStatus === AuthorizationStatus.Auth ? (
             <li className="header__nav-item">
               <a className="header__nav-link" href="#">
                 <span className="header__signout">Sign out</span>
@@ -40,4 +65,4 @@ const Header = ({ active, authorizationStatus }: Props) => {
   );
 };
 
-export default Header;
+export default memo(Header);
