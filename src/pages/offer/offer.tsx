@@ -1,6 +1,13 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../lib/types/store';
 import { AuthorizationStatus, ResponseStatus } from '../../const';
+import { selectSortedComments } from '../../store/comments/comments.selectors';
+import {
+  selectOffer,
+  selectOfferResponseStatus,
+} from '../../store/offers/offers.selectors';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import { selectNearbyOffers } from '../../store/nearPlaces/nearPlaces.selectors';
+import { selectActiveCity } from '../../store/city/city.selectors';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -12,16 +19,12 @@ import clsx from 'clsx';
 import styles from './offer.module.css';
 
 const Offer = () => {
-  const offer = useSelector((state: RootState) => state.offer);
-  const reviews = useSelector((state: RootState) => state.comments);
-  const nearbyOffers = useSelector((state: RootState) => state.nearbyOffers);
-  const offerResponseStatus = useSelector(
-    (state: RootState) => state.offerResponseStatus
-  );
-  const activeCity = useSelector((state: RootState) => state.activeCity);
-  const authorizationStatus = useSelector(
-    (state: RootState) => state.authorizationStatus
-  );
+  const offer = useSelector(selectOffer);
+  const reviews = useSelector(selectSortedComments);
+  const nearbyOffers = useSelector(selectNearbyOffers);
+  const offerResponseStatus = useSelector(selectOfferResponseStatus);
+  const activeCity = useSelector(selectActiveCity);
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
 
   return (
     <div className="page">

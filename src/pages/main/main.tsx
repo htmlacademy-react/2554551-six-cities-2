@@ -2,13 +2,17 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { RootState } from '../../lib/types/store';
-import { selectOffer } from '../../store/actions';
 import {
   getSortedOffers,
   selectFilteredOffers,
-} from '../../store/offers.selectors';
+  selectOffersResponseStatus,
+  selectSelectedOffer,
+} from '../../store/offers/offers.selectors';
 import { getOffers } from '../../store/api-actions';
 import { ResponseStatus } from '../../const';
+import { selectActiveCity } from '../../store/city/city.selectors';
+import { selectPlacesSorting } from '../../store/sorting/sorting.selectors';
+import { selectCurrentOffer } from '../../store/offers/offersSlice';
 import Map from '../../components/map/map';
 import CardList from '../../components/card-list/card-list';
 import MainLayout from '../../components/main-layout/main-layout';
@@ -21,26 +25,24 @@ type Props = {
 };
 
 const Main = ({ cityList }: Props) => {
-  const activeCity = useSelector((state: RootState) => state.activeCity);
-  const placesSorting = useSelector((state: RootState) => state.placesSorting);
+  const activeCity = useSelector(selectActiveCity);
+  const placesSorting = useSelector(selectPlacesSorting);
   const offers = useSelector((state: RootState) =>
     getSortedOffers(selectFilteredOffers(state), placesSorting)
   );
-  const offersResponseStatus = useSelector(
-    (state: RootState) => state.offersResponseStatus
-  );
-  const selectedOffer = useSelector((state: RootState) => state.selectedOffer);
+  const offersResponseStatus = useSelector(selectOffersResponseStatus);
+  const selectedOffer = useSelector(selectSelectedOffer);
 
   const dispatch = useAppDispatch();
 
-  const handleOfferHover = (placeName: string | undefined) => {
-    if (placeName === undefined) {
-      dispatch(selectOffer());
+  const handleOfferHover = (offerId: string | undefined) => {
+    if (offerId === undefined) {
+      dispatch(selectCurrentOffer());
     }
 
-    const currentLocation = offers.find((offer) => offer.title === placeName);
+    const currentOffer = offers.find((offer) => offer.id === offerId);
 
-    dispatch(selectOffer(currentLocation));
+    dispatch(selectCurrentOffer(currentOffer));
   };
 
   useEffect(() => {

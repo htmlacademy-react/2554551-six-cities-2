@@ -27,7 +27,7 @@ export const login = createAsyncThunk<User, UserAuth, Extra>(
 );
 
 export const getOffers = createAsyncThunk<OfferPartial[], undefined, Extra>(
-  'offers/get',
+  'offers/getAll',
   async (_, { extra: api }) => {
     const { data } = await api.get<OfferPartial[]>(APIRoute.Offers);
 
@@ -36,7 +36,7 @@ export const getOffers = createAsyncThunk<OfferPartial[], undefined, Extra>(
 );
 
 export const getOffer = createAsyncThunk<OfferFull, string, Extra>(
-  'offer/get',
+  'offers/getOne',
   async (offerId, { extra: api }) => {
     const { data } = await api.get<OfferFull>(`${APIRoute.Offers}/${offerId}`);
 
@@ -45,7 +45,7 @@ export const getOffer = createAsyncThunk<OfferFull, string, Extra>(
 );
 
 export const getNearbyOffers = createAsyncThunk<OfferPartial[], string, Extra>(
-  'nearby/get',
+  'nearPlaces/get',
   async (offerId, { extra: api }) => {
     const { data } = await api.get<OfferPartial[]>(
       `${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`
