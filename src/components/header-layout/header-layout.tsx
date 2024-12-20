@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { memo, PropsWithChildren } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import clsx from 'clsx';
@@ -36,4 +36,4 @@ const HeaderLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default HeaderLayout;
+export default memo(HeaderLayout);

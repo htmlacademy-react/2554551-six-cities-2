@@ -1,11 +1,15 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
-import { RootState } from '../../lib/types/store';
 import { ResponseStatus } from '../../const';
 import { NewComment } from '../../lib/types/comment';
 import { createComment } from '../../store/api-actions';
-import { updateComments } from '../../store/actions';
+import { selectOffer } from '../../store/offers/offers.selectors';
+import {
+  selectComment,
+  selectCommentResponseStatus,
+} from '../../store/comments/comments.selectors';
+import { updateComments } from '../../store/comments/commentsSlice';
 
 const ReviewForm = () => {
   const [formData, setFormData] = useState<NewComment>({
@@ -18,11 +22,9 @@ const ReviewForm = () => {
     formData.comment.trim().length < 300 &&
     formData.rating > 0;
 
-  const offer = useSelector((state: RootState) => state.offer);
-  const newComment = useSelector((state: RootState) => state.comment);
-  const commentResponseStatus = useSelector(
-    (state: RootState) => state.commentResponseStatus
-  );
+  const offer = useSelector(selectOffer);
+  const newComment = useSelector(selectComment);
+  const commentResponseStatus = useSelector(selectCommentResponseStatus);
 
   const dispatch = useAppDispatch();
 

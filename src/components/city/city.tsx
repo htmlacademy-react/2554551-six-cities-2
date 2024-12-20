@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
-import { RootState } from '../../lib/types/store';
-import { selectCity } from '../../store/actions';
+import { selectActiveCity } from '../../store/city/city.selectors';
+import { selectCity } from '../../store/city/citySlice';
 import clsx from 'clsx';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 };
 
 const City = ({ city }: Props) => {
-  const activeCity = useSelector((state: RootState) => state.activeCity);
+  const activeCity = useSelector(selectActiveCity);
 
   const dispatch = useAppDispatch();
 

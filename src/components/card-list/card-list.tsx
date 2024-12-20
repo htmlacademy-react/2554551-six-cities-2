@@ -7,7 +7,7 @@ import clsx from 'clsx';
 type Props = {
   offers: OfferPartial[];
   cardType: CardType;
-  onCardMouseOver?: (placeName: string | undefined) => void;
+  onCardMouseOver?: (offerId: string | undefined) => void;
 };
 
 const CardList = ({ offers, cardType, onCardMouseOver }: Props) => {
@@ -15,15 +15,15 @@ const CardList = ({ offers, cardType, onCardMouseOver }: Props) => {
 
   return (
     <div className={clsx('places__list', list)}>
-      {offers.map((cardItem) => (
+      {offers.map((offer) => (
         <article
           className={clsx('place-card', card)}
-          key={cardItem.id}
-          onMouseOver={() => onCardMouseOver?.(cardItem.title)}
+          key={offer.id}
+          onMouseOver={() => onCardMouseOver?.(offer.id)}
           onMouseLeave={() => onCardMouseOver?.(undefined)}
         >
           <Card
-            card={cardItem}
+            card={offer}
             imgAttributes={{
               className: img,
               width: '260',

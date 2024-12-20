@@ -2,10 +2,10 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../lib/types/store';
 import { login } from '../../store/api-actions';
 import { UserAuth, UserDataValidity } from '../../lib/types/user';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import HeaderLayout from '../../components/header-layout/header-layout';
 import styles from './login.module.css';
 
@@ -26,9 +26,7 @@ const Login = () => {
     password: false,
   });
 
-  const authorizationStatus = useSelector(
-    (state: RootState) => state.authorizationStatus
-  );
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

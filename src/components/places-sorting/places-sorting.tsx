@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
-import { RootState } from '../../lib/types/store';
 import { PlacesSortingName } from '../../const';
-import { sortPlaces } from '../../store/actions';
+import { selectPlacesSorting } from '../../store/sorting/sorting.selectors';
+import { sortPlaces } from '../../store/sorting/sortingSlice';
 import ClickAwayListener from 'react-click-away-listener';
 import clsx from 'clsx';
 
 const PlacesSorting = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const placeSorting = useSelector((state: RootState) => state.placesSorting);
+  const placeSorting = useSelector(selectPlacesSorting);
 
   const dispatch = useAppDispatch();
 
@@ -54,4 +54,4 @@ const PlacesSorting = () => {
   );
 };
 
-export default PlacesSorting;
+export default memo(PlacesSorting);

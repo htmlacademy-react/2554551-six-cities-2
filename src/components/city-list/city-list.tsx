@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import City from '../city/city';
 
 type Props = { cityList: string[] };
@@ -10,4 +11,4 @@ const CityList = ({ cityList }: Props) => (
   </ul>
 );
 
-export default CityList;
+export default memo(CityList);

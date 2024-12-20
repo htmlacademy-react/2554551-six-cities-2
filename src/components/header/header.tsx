@@ -1,14 +1,16 @@
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../lib/types/store';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
+import {
+  selectAuthorizationStatus,
+  selectUser,
+} from '../../store/user/user.selectors';
 import HeaderLayout from '../header-layout/header-layout';
 
 const Header = () => {
-  const authorizationStatus = useSelector(
-    (state: RootState) => state.authorizationStatus
-  );
-  const user = useSelector((state: RootState) => state.user);
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
+  const user = useSelector(selectUser);
 
   const style = {
     backgroundImage: `url(${user?.avatarUrl || ''})`,
@@ -63,4 +65,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);
