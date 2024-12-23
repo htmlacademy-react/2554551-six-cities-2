@@ -8,6 +8,7 @@ import {
 } from '../../store/user/user.selectors';
 import { selectFavorites } from '../../store/favorites/favorites.selectors';
 import HeaderLayout from '../header-layout/header-layout';
+import styles from './header.module.css';
 
 const Header = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
@@ -17,11 +18,6 @@ const Header = () => {
   const location = useLocation();
   const navigateTo =
     location.pathname === AppRoute.Favorites ? AppRoute.Main : location;
-
-  const style = {
-    backgroundImage: `url(${user?.avatarUrl || ''})`,
-    borderRadius: '20px',
-  };
 
   return (
     <HeaderLayout>
@@ -36,11 +32,16 @@ const Header = () => {
                   : AppRoute.Login
               }
             >
-              <div
-                className="header__avatar-wrapper user__avatar-wrapper"
-                style={user ? style : {}}
-              >
-                {''}
+              <div className="header__avatar-wrapper user__avatar-wrapper">
+                {user ? (
+                  <img
+                    className={styles.avatar}
+                    src={user?.avatarUrl}
+                    alt="avatar"
+                  />
+                ) : (
+                  ''
+                )}
               </div>
 
               {authorizationStatus === AuthorizationStatus.Auth ? (
