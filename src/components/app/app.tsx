@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { OfferPartial } from '../../lib/types/offer';
 import { City } from '../../lib/types/city';
 import { browserHistory } from '../../browser-history';
 import Login from '../../pages/login/login';
