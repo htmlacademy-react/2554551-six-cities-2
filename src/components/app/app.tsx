@@ -12,11 +12,10 @@ import HistoryRouter from '../history-router/history-router';
 import Main from '../../pages/main/main';
 
 type Props = {
-  favorites: OfferPartial[];
   cityList: City[];
 };
 
-const App = ({ favorites, cityList }: Props) => (
+const App = ({ cityList }: Props) => (
   <HistoryRouter history={browserHistory}>
     <Routes>
       <Route
@@ -29,7 +28,7 @@ const App = ({ favorites, cityList }: Props) => (
         element={
           // @ts-expect-error происходит какое-то безумие (не проходит сборка)
           <PrivateRoute>
-            <Favorites favorites={favorites} />
+            <Favorites />
           </PrivateRoute>
         }
       />
