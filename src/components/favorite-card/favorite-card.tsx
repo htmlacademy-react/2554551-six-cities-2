@@ -6,16 +6,14 @@ type Props = {
 };
 
 const FavoriteCard = ({ card }: Props) => (
-  <article className="place-card favorites__card">
-    <Card
-      card={card}
-      imgAttributes={{
-        className: 'favorites__image-wrapper',
-        width: '150',
-        height: '110',
-      }}
-    />
-  </article>
+  <Card
+    card={card}
+    cardType="favorite"
+    imgAttributes={{
+      width: '150',
+      height: '110',
+    }}
+  />
 );
 
 export default FavoriteCard;

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { Link, useNavigate } from 'react-router-dom';
-import { CardImgAttributes } from '../../lib/types/card';
+import { CardImgAttributes, CardType } from '../../lib/types/card';
 import { OfferPartial } from '../../lib/types/offer';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, CARD_OPTIONS } from '../../const';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import {
   changeFavoriteStatus,
@@ -12,13 +12,15 @@ import {
   getOffer,
 } from '../../store/api-actions';
 import clsx from 'clsx';
+import { selectCurrentOffer } from '../../store/offers/offersSlice';
 
 type Props = {
   card: OfferPartial;
+  cardType: CardType;
   imgAttributes: CardImgAttributes;
 };
 
-const Card = ({ card, imgAttributes }: Props) => {
+const Card = ({ card, cardType, imgAttributes }: Props) => {
   const {
     id,
     isPremium,
@@ -29,6 +31,7 @@ const Card = ({ card, imgAttributes }: Props) => {
     title,
     type,
   } = card;
+  const { cardClass, imgClass } = CARD_OPTIONS[cardType];
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
 
@@ -52,8 +55,24 @@ const Card = ({ card, imgAttributes }: Props) => {
     }
   };
 
+  const handleOfferHover = () => {
+    if (cardType !== 'favorite') {
+      if (id === undefined) {
+        dispatch(selectCurrentOffer());
+      }
+
+      // const currentOffer = offers.find((offer) => offer.id === offerId);
+
+      dispatch(selectCurrentOffer(card));
+    }
+  };
+
   return (
-    <>
+    <article
+      className={clsx('place-card', cardClass)}
+      onMouseOver={handleOfferHover}
+      onMouseLeave={handleOfferHover}
+    >
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -61,9 +80,7 @@ const Card = ({ card, imgAttributes }: Props) => {
       ) : (
         ''
       )}
-      <div
-        className={clsx(imgAttributes.className, 'place-card__image-wrapper')}
-      >
+      <div className={clsx(imgClass, 'place-card__image-wrapper')}>
         <Link to={`${AppRoute.Offer}/${id}`} onClick={handleCardClick}>
           <img
             className="place-card__image"
@@ -113,7 +130,7 @@ const Card = ({ card, imgAttributes }: Props) => {
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
-    </>
+    </article>
   );
 };
 

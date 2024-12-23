@@ -47,14 +47,19 @@ export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const CARD_OPTIONS: Record<CardType, Record<CardOptions, string>> = {
   offer: {
-    list: 'cities__places-list tabs__content',
-    card: 'cities__card',
-    img: 'cities__image-wrapper',
+    listClass: 'cities__places-list tabs__content',
+    cardClass: 'cities__card',
+    imgClass: 'cities__image-wrapper',
   },
   near: {
-    list: 'near-places__list',
-    card: 'near-places__card',
-    img: 'near-places__image-wrapper',
+    listClass: 'near-places__list',
+    cardClass: 'near-places__card',
+    imgClass: 'near-places__image-wrapper',
+  },
+  favorite: {
+    listClass: '',
+    cardClass: 'favorites__card',
+    imgClass: 'favorites__image-wrapper',
   },
 };
 
