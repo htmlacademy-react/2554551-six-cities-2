@@ -21,10 +21,6 @@ const Login = () => {
     email: false,
     password: false,
   });
-  const [focused, setFocused] = useState<UserDataValidity>({
-    email: false,
-    password: false,
-  });
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
 
@@ -35,7 +31,6 @@ const Login = () => {
     const { name, value } = e.currentTarget;
 
     setFormData((prev) => ({ ...prev, [name]: value.trim() }));
-    setFocused((prev) => ({ ...prev, [name]: true }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -46,8 +41,8 @@ const Login = () => {
 
   useEffect(() => {
     setIsValid({
-      email: emailRegEx.test(formData.email),
-      password: passwordRegEx.test(formData.password),
+      email: !formData.email || emailRegEx.test(formData.email),
+      password: !formData.password || passwordRegEx.test(formData.password),
     });
   }, [formData]);
 
@@ -82,7 +77,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChangeValue}
                 />
-                {!isValid.email && focused.email && (
+                {!isValid.email && (
                   <p className={styles.error}>Incorrect email</p>
                 )}
               </div>
@@ -97,7 +92,7 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChangeValue}
                 />
-                {!isValid.password && focused.password && (
+                {!isValid.password && (
                   <p className={styles.error}>Incorrect password</p>
                 )}
               </div>
