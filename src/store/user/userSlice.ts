@@ -17,7 +17,6 @@ export const userSlice = createSlice({
     builder
       .addCase(checkLogin.pending, (state) => {
         state.authorizationStatus = AuthorizationStatus.Unknown;
-        state.user = undefined;
       })
       .addCase(checkLogin.fulfilled, (state, action: PayloadAction<User>) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
@@ -29,7 +28,6 @@ export const userSlice = createSlice({
       })
       .addCase(login.pending, (state) => {
         state.authorizationStatus = AuthorizationStatus.Unknown;
-        state.user = undefined;
       })
       .addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
