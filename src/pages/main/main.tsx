@@ -73,11 +73,7 @@ const Main = ({ cityList }: Props) => {
             )}
 
             {offersResponseStatus === ResponseStatus.Success &&
-            offers.length ? (
-              <MainFull />
-            ) : (
-              <MainEmpty />
-            )}
+              (offers.length ? <MainFull /> : <MainEmpty />)}
           </div>
         </div>
       </main>
