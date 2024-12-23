@@ -29,12 +29,14 @@ const ReviewForm = () => {
   const dispatch = useAppDispatch();
 
   const handleChangeValue = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    value: string | number
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name } = e.currentTarget;
+    const { name, value } = e.currentTarget;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'rating' ? Number(value) : value,
+    }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -68,10 +70,10 @@ const ReviewForm = () => {
             <input
               className="form__rating-input visually-hidden"
               name="rating"
-              value={formData.rating}
+              value={num}
               id={`${num}-stars`}
               type="radio"
-              onChange={(e) => handleChangeValue(e, num)}
+              onChange={handleChangeValue}
             />
             <label
               htmlFor={`${num}-stars`}
@@ -91,7 +93,7 @@ const ReviewForm = () => {
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.comment}
-        onChange={(e) => handleChangeValue(e, e.currentTarget.value)}
+        onChange={handleChangeValue}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
