@@ -9,19 +9,12 @@ const getSortedComments = (state: RootState) => {
     .slice(0, 10);
 };
 
-const getComment = (state: RootState) => state.comments.comment;
-
 const getCommentResponseStatus = (state: RootState) =>
   state.comments.commentResponseStatus;
 
 export const selectSortedComments = createSelector(
   [(state: RootState) => state],
   getSortedComments
-);
-
-export const selectComment = createSelector(
-  [(state: RootState) => state],
-  getComment
 );
 
 export const selectCommentResponseStatus = createSelector(

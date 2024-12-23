@@ -25,7 +25,6 @@ export type OffersState = {
 export type CommentsState = {
   comments: SingleComment[];
   commentsResponseStatus: ResponseStatus;
-  comment: SingleComment | undefined;
   commentResponseStatus: ResponseStatus;
 };
 

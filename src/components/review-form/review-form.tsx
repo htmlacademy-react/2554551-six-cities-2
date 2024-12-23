@@ -5,11 +5,7 @@ import { ResponseStatus } from '../../const';
 import { NewComment } from '../../lib/types/comment';
 import { createComment } from '../../store/api-actions';
 import { selectOffer } from '../../store/offers/offers.selectors';
-import {
-  selectComment,
-  selectCommentResponseStatus,
-} from '../../store/comments/comments.selectors';
-import { updateComments } from '../../store/comments/commentsSlice';
+import { selectCommentResponseStatus } from '../../store/comments/comments.selectors';
 
 const ReviewForm = () => {
   const [formData, setFormData] = useState<NewComment>({
@@ -23,7 +19,6 @@ const ReviewForm = () => {
     formData.rating > 0;
 
   const offer = useSelector(selectOffer);
-  const newComment = useSelector(selectComment);
   const commentResponseStatus = useSelector(selectCommentResponseStatus);
 
   const dispatch = useAppDispatch();
@@ -48,11 +43,10 @@ const ReviewForm = () => {
   };
 
   useEffect(() => {
-    if (commentResponseStatus === ResponseStatus.Success && newComment) {
+    if (commentResponseStatus === ResponseStatus.Success) {
       setFormData({ comment: '', rating: 0 });
-      dispatch(updateComments(newComment));
     }
-  }, [commentResponseStatus, newComment, dispatch]);
+  }, [commentResponseStatus, dispatch]);
 
   return (
     <form

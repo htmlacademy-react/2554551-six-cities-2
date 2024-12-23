@@ -10,7 +10,6 @@ import {
 } from '../../store/offers/offers.selectors';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { selectNearbyOffers } from '../../store/nearPlaces/nearPlaces.selectors';
-import { selectActiveCity } from '../../store/city/city.selectors';
 import {
   changeFavoriteStatus,
   getComments,
@@ -32,7 +31,6 @@ const Offer = () => {
   const reviews = useSelector(selectSortedComments);
   const nearbyOffers = useSelector(selectNearbyOffers);
   const offerResponseStatus = useSelector(selectOfferResponseStatus);
-  const activeCity = useSelector(selectActiveCity);
   const authorizationStatus = useSelector(selectAuthorizationStatus);
 
   const navigate = useNavigate();
@@ -187,7 +185,7 @@ const Offer = () => {
             </div>
             <section className="offer__map map">
               <Map
-                city={activeCity}
+                city={offer.city}
                 locations={nearbyOffers.map((nearby) => nearby.location)}
               />
             </section>
