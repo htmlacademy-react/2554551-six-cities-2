@@ -6,10 +6,11 @@ import {
   selectFilteredOffers,
   selectOffersResponseStatus,
 } from '../../store/offers/offers.selectors';
-import { ResponseStatus } from '../../const';
+import { AuthorizationStatus, ResponseStatus } from '../../const';
 import { RootState } from '../../lib/types/store';
 import { selectPlacesSorting } from '../../store/sorting/sorting.selectors';
-import { getOffers } from '../../store/api-actions';
+import { getFavorites, getOffers } from '../../store/api-actions';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import Header from '../../components/header/header';
 import CityList from '../../components/city-list/city-list';
 import Spinner from '../../components/spinner/spinner';
@@ -26,11 +27,16 @@ const Main = ({ cityList }: Props) => {
     getSortedOffers(selectFilteredOffers(state), placesSorting)
   );
   const offersResponseStatus = useSelector(selectOffersResponseStatus);
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getOffers());
+
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(getFavorites());
+    }
   }, [dispatch]);
 
   return (

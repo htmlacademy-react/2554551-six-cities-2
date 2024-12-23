@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseStatus } from '../../const';
 import { OffersState } from '../../lib/types/store';
-import { getOffer, getOffers } from '../api-actions';
+import { changeFavoriteStatus, getOffer, getOffers } from '../api-actions';
 import { OfferFull, OfferPartial } from '../../lib/types/offer';
+import { FavoriteStatusChange } from '../../lib/types/favorite';
 
 const initialState: OffersState = {
   offers: [],
@@ -54,7 +55,21 @@ export const offersSlice = createSlice({
       .addCase(getOffer.rejected, (state) => {
         state.offer = undefined;
         state.offerResponseStatus = ResponseStatus.Error;
-      }),
+      })
+      .addCase(
+        changeFavoriteStatus.fulfilled,
+        (state, action: PayloadAction<FavoriteStatusChange>) => {
+          state.offers = state.offers.map((offer) =>
+            offer.id === action.payload.id
+              ? { ...offer, isFavorite: action.payload.data.isFavorite }
+              : offer
+          );
+
+          if (state.offer) {
+            state.offer.isFavorite = action.payload.data.isFavorite;
+          }
+        }
+      ),
 });
 
 export const { selectCurrentOffer } = offersSlice.actions;

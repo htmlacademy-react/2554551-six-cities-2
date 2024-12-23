@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
-import { OfferFull, OfferPartial } from '../lib/types/offer';
+import { OfferFavorite, OfferFull, OfferPartial } from '../lib/types/offer';
 import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
 import { setCookie } from '../services/cookie';
 import { NewOfferComment, SingleComment } from '../lib/types/comment';
-import { NewFavoriteStatus } from '../lib/types/favorite';
+import { FavoriteStatusChange, NewFavoriteStatus } from '../lib/types/favorite';
 
 export const checkLogin = createAsyncThunk<User, undefined, Extra>(
   'user/check',
@@ -91,11 +91,13 @@ export const getFavorites = createAsyncThunk<OfferPartial[], undefined, Extra>(
 );
 
 export const changeFavoriteStatus = createAsyncThunk<
-  void,
+  FavoriteStatusChange,
   NewFavoriteStatus,
   Extra
 >('favorites/changeStatus', async (favoriteStatusData, { extra: api }) => {
-  await api.post<void>(
+  const { data } = await api.post<OfferFavorite>(
     `${APIRoute.Favorites}/${favoriteStatusData.offerId}/${favoriteStatusData.status}`
   );
+
+  return { data, id: favoriteStatusData.offerId };
 });

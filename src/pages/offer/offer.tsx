@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
-import { AuthorizationStatus, ResponseStatus } from '../../const';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store';
+import { AppRoute, AuthorizationStatus, ResponseStatus } from '../../const';
 import { selectSortedComments } from '../../store/comments/comments.selectors';
 import {
   selectOffer,
@@ -8,6 +10,7 @@ import {
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { selectNearbyOffers } from '../../store/nearPlaces/nearPlaces.selectors';
 import { selectActiveCity } from '../../store/city/city.selectors';
+import { changeFavoriteStatus } from '../../store/api-actions';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -25,6 +28,23 @@ const Offer = () => {
   const offerResponseStatus = useSelector(selectOfferResponseStatus);
   const activeCity = useSelector(selectActiveCity);
   const authorizationStatus = useSelector(selectAuthorizationStatus);
+
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const handleUpdateFavoriteStatus = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth && offer) {
+      dispatch(
+        changeFavoriteStatus({
+          offerId: offer.id,
+          status: Number(!offer.isFavorite),
+        })
+      );
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
 
   return (
     <div className="page">
@@ -59,9 +79,10 @@ const Offer = () => {
                     className={clsx(
                       'offer__bookmark-button',
                       'button',
-                      offer.isFavorite && 'place-card__bookmark-button--active'
+                      offer.isFavorite && 'offer__bookmark-button--active'
                     )}
                     type="button"
+                    onClick={handleUpdateFavoriteStatus}
                   >
                     <svg
                       className="offer__bookmark-icon"

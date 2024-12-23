@@ -24,3 +24,12 @@ export type OfferFull = Omit<OfferPartial, 'previewImage'> & {
   images: string[];
   maxAdults: number;
 };
+
+export type OfferFavorite = OfferPartial & {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: Host;
+  images: string[];
+  maxAdults: number;
+};

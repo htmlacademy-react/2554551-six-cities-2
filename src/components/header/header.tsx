@@ -6,11 +6,13 @@ import {
   selectAuthorizationStatus,
   selectUser,
 } from '../../store/user/user.selectors';
+import { selectFavorites } from '../../store/favorites/favorites.selectors';
 import HeaderLayout from '../header-layout/header-layout';
 
 const Header = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const user = useSelector(selectUser);
+  const favorites = useSelector(selectFavorites);
 
   const location = useLocation();
   const navigateTo =
@@ -46,7 +48,9 @@ const Header = () => {
                   <span className="header__user-name user__name">
                     {user?.email}
                   </span>
-                  <span className="header__favorite-count">3</span>
+                  <span className="header__favorite-count">
+                    {favorites.length}
+                  </span>
                 </>
               ) : (
                 <span className="header__login">Sign in</span>
