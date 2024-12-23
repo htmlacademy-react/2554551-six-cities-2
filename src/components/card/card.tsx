@@ -5,14 +5,9 @@ import { CardImgAttributes, CardType } from '../../lib/types/card';
 import { OfferPartial } from '../../lib/types/offer';
 import { AppRoute, AuthorizationStatus, CARD_OPTIONS } from '../../const';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
-import {
-  changeFavoriteStatus,
-  getComments,
-  getNearbyOffers,
-  getOffer,
-} from '../../store/api-actions';
-import clsx from 'clsx';
 import { selectCurrentOffer } from '../../store/offers/offersSlice';
+import { changeFavoriteStatus } from '../../store/api-actions';
+import clsx from 'clsx';
 
 type Props = {
   card: OfferPartial;
@@ -38,12 +33,6 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-
-  const handleCardClick = () => {
-    dispatch(getOffer(id));
-    dispatch(getComments(id));
-    dispatch(getNearbyOffers(id));
-  };
 
   const handleUpdateFavoriteStatus = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -81,7 +70,7 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
         ''
       )}
       <div className={clsx(imgClass, 'place-card__image-wrapper')}>
-        <Link to={`${AppRoute.Offer}/${id}`} onClick={handleCardClick}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}

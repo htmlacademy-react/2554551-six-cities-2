@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 import { AppRoute, AuthorizationStatus, ResponseStatus } from '../../const';
 import { selectSortedComments } from '../../store/comments/comments.selectors';
@@ -10,7 +11,12 @@ import {
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { selectNearbyOffers } from '../../store/nearPlaces/nearPlaces.selectors';
 import { selectActiveCity } from '../../store/city/city.selectors';
-import { changeFavoriteStatus } from '../../store/api-actions';
+import {
+  changeFavoriteStatus,
+  getComments,
+  getNearbyOffers,
+  getOffer,
+} from '../../store/api-actions';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -30,6 +36,7 @@ const Offer = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const dispatch = useAppDispatch();
 
@@ -45,6 +52,14 @@ const Offer = () => {
       navigate(AppRoute.Login);
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getOffer(id));
+      dispatch(getComments(id));
+      dispatch(getNearbyOffers(id));
+    }
+  }, []);
 
   return (
     <div className="page">
