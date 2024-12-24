@@ -98,7 +98,9 @@ const ReviewForm = () => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isValid}
+          disabled={
+            !isValid || commentResponseStatus === ResponseStatus.Pending
+          }
         >
           Submit
         </button>
