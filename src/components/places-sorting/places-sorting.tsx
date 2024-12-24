@@ -14,6 +14,11 @@ const PlacesSorting = () => {
 
   const dispatch = useAppDispatch();
 
+  const handleSelectSorting = (sortBy: PlacesSortingName) => {
+    dispatch(sortPlaces(sortBy));
+    setIsOpen(false);
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>{' '}
@@ -38,7 +43,7 @@ const PlacesSorting = () => {
                 )}
                 key={sortBy}
                 tabIndex={0}
-                onClick={() => dispatch(sortPlaces(sortBy))}
+                onClick={() => handleSelectSorting(sortBy)}
               >
                 {sortBy}
               </li>
