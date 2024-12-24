@@ -20,10 +20,11 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const [isValid, setIsValid] = useState<UserDataValidity>({
+
+  let isValid: UserDataValidity = {
     email: false,
     password: false,
-  });
+  };
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const loginResponseStatus = useSelector(selectLoginResponseStatus);
@@ -43,12 +44,10 @@ const Login = () => {
     dispatch(login(formData));
   };
 
-  useEffect(() => {
-    setIsValid({
-      email: !formData.email || emailRegEx.test(formData.email),
-      password: !formData.password || passwordRegEx.test(formData.password),
-    });
-  }, [formData]);
+  isValid = {
+    email: emailRegEx.test(formData.email),
+    password: passwordRegEx.test(formData.password),
+  };
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -81,7 +80,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChangeValue}
                 />
-                {!isValid.email && (
+                {!isValid.email && formData.email && (
                   <p className={styles.error}>Incorrect email</p>
                 )}
               </div>
@@ -96,14 +95,20 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChangeValue}
                 />
-                {!isValid.password && (
+                {!isValid.password && formData.password && (
                   <p className={styles.error}>Incorrect password</p>
                 )}
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                disabled={!Object.values(isValid).every((val) => val)}
+                disabled={
+                  !(
+                    Object.values(isValid).every((val) => val) &&
+                    formData.email &&
+                    formData.password
+                  )
+                }
               >
                 Sign in
               </button>
