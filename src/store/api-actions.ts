@@ -3,7 +3,7 @@ import { APIRoute } from '../const';
 import { OfferFavorite, OfferFull, OfferPartial } from '../lib/types/offer';
 import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
-import { setCookie } from '../services/cookie';
+import { deleteCookie, setCookie } from '../services/cookie';
 import { NewOfferComment, SingleComment } from '../lib/types/comment';
 import { FavoriteStatusChange, NewFavoriteStatus } from '../lib/types/favorite';
 
@@ -24,6 +24,15 @@ export const login = createAsyncThunk<User, UserAuth, Extra>(
     setCookie(data.token);
 
     return data;
+  }
+);
+
+export const logout = createAsyncThunk<void, undefined, Extra>(
+  'user/logout',
+  async (_, { extra: api }) => {
+    await api.delete<User>(APIRoute.Logout);
+
+    deleteCookie();
   }
 );
 
