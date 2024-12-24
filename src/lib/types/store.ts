@@ -11,6 +11,7 @@ import { User } from './user';
 
 export type UserState = {
   authorizationStatus: AuthorizationStatus;
+  loginResponseStatus: ResponseStatus;
   user: User | undefined;
 };
 

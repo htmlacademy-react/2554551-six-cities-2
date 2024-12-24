@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { login } from '../../store/api-actions';
 import { UserAuth, UserDataValidity } from '../../lib/types/user';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import { AppRoute, AuthorizationStatus, ResponseStatus } from '../../const';
+import {
+  selectAuthorizationStatus,
+  selectLoginResponseStatus,
+} from '../../store/user/user.selectors';
 import HeaderLayout from '../../components/header-layout/header-layout';
 import styles from './login.module.css';
 
@@ -23,6 +26,7 @@ const Login = () => {
   });
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
+  const loginResponseStatus = useSelector(selectLoginResponseStatus);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -103,7 +107,7 @@ const Login = () => {
               >
                 Sign in
               </button>
-              {authorizationStatus === AuthorizationStatus.NoAuth && (
+              {loginResponseStatus === ResponseStatus.Error && (
                 <p className={styles.error}>Something went wrong</p>
               )}
             </form>

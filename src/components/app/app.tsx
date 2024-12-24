@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../store';
+import { checkLogin } from '../../store/api-actions';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { City } from '../../lib/types/city';
@@ -14,27 +17,35 @@ type Props = {
   cityList: City[];
 };
 
-const App = ({ cityList }: Props) => (
-  <HistoryRouter history={browserHistory}>
-    <Routes>
-      <Route
-        path={AppRoute.Main}
-        element={<Main cityList={cityList.map((city) => city.name)} />}
-      />
-      <Route path={AppRoute.Login} element={<Login />} />
-      <Route
-        path={AppRoute.Favorites}
-        element={
-          // @ts-expect-error происходит какое-то безумие (не проходит сборка)
-          <PrivateRoute>
-            <Favorites />
-          </PrivateRoute>
-        }
-      />
-      <Route path={`${AppRoute.Offer}/:id`} element={<Offer />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  </HistoryRouter>
-);
+const App = ({ cityList }: Props) => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkLogin());
+  }, [dispatch]);
+
+  return (
+    <HistoryRouter history={browserHistory}>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={<Main cityList={cityList.map((city) => city.name)} />}
+        />
+        <Route path={AppRoute.Login} element={<Login />} />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            // @ts-expect-error происходит какое-то безумие (не проходит сборка)
+            <PrivateRoute>
+              <Favorites />
+            </PrivateRoute>
+          }
+        />
+        <Route path={`${AppRoute.Offer}/:id`} element={<Offer />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </HistoryRouter>
+  );
+};
 
 export default App;
