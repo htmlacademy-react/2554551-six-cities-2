@@ -57,7 +57,7 @@ const Offer = () => {
       dispatch(getComments(id));
       dispatch(getNearbyOffers(id));
     }
-  }, []);
+  }, [id]);
 
   const locations = nearbyOffers.map((nearby) => nearby.location);
   const offerLocation = offer?.location;
