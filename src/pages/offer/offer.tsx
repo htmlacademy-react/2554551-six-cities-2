@@ -59,6 +59,13 @@ const Offer = () => {
     }
   }, []);
 
+  const locations = nearbyOffers.map((nearby) => nearby.location);
+  const offerLocation = offer?.location;
+
+  if (offerLocation) {
+    locations.push(offerLocation);
+  }
+
   return (
     <div className="page">
       <Header />
@@ -111,7 +118,9 @@ const Offer = () => {
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{ width: `${offer.rating * 20}%` }}></span>
+                    <span
+                      style={{ width: `${Math.round(offer.rating) * 20}%` }}
+                    ></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">
@@ -186,7 +195,8 @@ const Offer = () => {
             <section className="offer__map map">
               <Map
                 city={offer.city}
-                locations={nearbyOffers.map((nearby) => nearby.location)}
+                locations={locations}
+                selectedLocation={offerLocation}
               />
             </section>
           </section>
