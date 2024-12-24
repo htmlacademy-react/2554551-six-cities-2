@@ -28,9 +28,6 @@ export const setCookie = (token: string, options?: CookieOptions): void => {
   document.cookie = updatedCookie;
 };
 
-/** Удаление куки
- * @param name имя куки
- */
 export const deleteCookie = (): void => {
   setCookie('', {
     'max-age': -1,
