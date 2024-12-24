@@ -120,7 +120,8 @@ const Offer = () => {
                   <div className="offer__stars rating__stars">
                     <span
                       style={{ width: `${Math.round(offer.rating) * 20}%` }}
-                    ></span>
+                    >
+                    </span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">
