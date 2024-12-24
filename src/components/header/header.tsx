@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -9,6 +10,7 @@ import {
 import { selectFavorites } from '../../store/favorites/favorites.selectors';
 import HeaderLayout from '../header-layout/header-layout';
 import styles from './header.module.css';
+import { logout } from '../../store/api-actions';
 
 const Header = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
@@ -18,6 +20,12 @@ const Header = () => {
   const location = useLocation();
   const navigateTo =
     location.pathname === AppRoute.Favorites ? AppRoute.Main : location;
+
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <HeaderLayout>
@@ -61,7 +69,11 @@ const Header = () => {
 
           {authorizationStatus === AuthorizationStatus.Auth ? (
             <li className="header__nav-item">
-              <Link className="header__nav-link" to={navigateTo}>
+              <Link
+                className="header__nav-link"
+                to={navigateTo}
+                onClick={handleLogout}
+              >
                 <span className="header__signout">Sign out</span>
               </Link>
             </li>
