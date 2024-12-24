@@ -14,7 +14,7 @@ const getOffersResponseStatus = (state: RootState) =>
 const getOffer = (state: RootState) => state.offers.offer;
 
 const getOfferResponseStatus = (state: RootState) =>
-  state.offers.offersResponseStatus;
+  state.offers.offerResponseStatus;
 
 const getSelectedOffer = (state: RootState) => state.offers.selectedOffer;
 
