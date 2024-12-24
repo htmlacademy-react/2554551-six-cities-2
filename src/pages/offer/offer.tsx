@@ -115,7 +115,7 @@ const Offer = () => {
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">
-                    {offer.rating}
+                    {Math.round(offer.rating)}
                   </span>
                 </div>
                 <ul className="offer__features">
