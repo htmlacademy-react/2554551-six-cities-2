@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
-import { AppRoute, ResponseStatus } from '../../const';
+import { AppRoute, CityName, ResponseStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { selectCity } from '../../store/city/citySlice';
 import {
@@ -9,6 +9,8 @@ import {
   selectFavoritesResponseStatus,
 } from '../../store/favorites/favorites.selectors';
 import { getOffers } from '../../store/api-actions';
+import { FavoriteCity } from '../../lib/types/favorite';
+import { OfferPartial } from '../../lib/types/offer';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
@@ -18,6 +20,14 @@ const Favorites = () => {
   const favorites = useSelector(selectFavorites);
   const favoritesResponseStatus = useSelector(selectFavoritesResponseStatus);
   const cities = Array.from(new Set(favorites.map((item) => item.city.name)));
+
+  //@ts-expect-error не смогла разобраться, как сделать, чтобы ts не ругался на тип ключа
+  // Тип "{ [x: string]: OfferPartial[]; }[]" не может быть назначен для типа "FavoriteCity[]"
+  const favoriteCities: FavoriteCity[] = cities.map((city: CityName) => ({
+    [CityName[city]]: favorites.filter(
+      (favorite) => favorite.city.name === city
+    ),
+  }));
 
   const dispatch = useAppDispatch();
 
@@ -46,31 +56,34 @@ const Favorites = () => {
 
             <ul className="favorites__list">
               {!!favorites.length &&
-                cities.map((city) => (
-                  <li
-                    className="favorites__locations-items"
-                    key={city}
-                    onClick={() => handleSelectCity(city)}
-                  >
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <Link
-                          className="locations__item-link"
-                          to={AppRoute.Main}
-                        >
-                          <span>{city}</span>
-                        </Link>
+                favoriteCities.map((item) => {
+                  const city: CityName = Object.keys(item)[0] as CityName;
+                  const favoriteList: OfferPartial[] = item[city];
+
+                  return (
+                    <li
+                      className="favorites__locations-items"
+                      key={city}
+                      onClick={() => handleSelectCity(city)}
+                    >
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <Link
+                            className="locations__item-link"
+                            to={AppRoute.Main}
+                          >
+                            <span>{city}</span>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                    <div className="favorites__places">
-                      {favorites
-                        .filter((favorite) => favorite.city.name === city)
-                        .map((card) => (
+                      <div className="favorites__places">
+                        {favoriteList.map((card) => (
                           <FavoriteCard key={card.id} card={card} />
                         ))}
-                    </div>
-                  </li>
-                ))}
+                      </div>
+                    </li>
+                  );
+                })}
             </ul>
           </section>
         </div>
