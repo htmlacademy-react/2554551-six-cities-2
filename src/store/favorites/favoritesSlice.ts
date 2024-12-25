@@ -40,31 +40,7 @@ export const favoritesSlice = createSlice({
           state.favoriteResponseStatus = ResponseStatus.Success;
 
           if (action.payload.data.isFavorite) {
-            const {
-              id,
-              title,
-              type,
-              price,
-              city,
-              location,
-              isFavorite,
-              isPremium,
-              rating,
-              previewImage,
-            } = action.payload.data;
-
-            state.favorites.push({
-              id,
-              title,
-              type,
-              price,
-              city,
-              location,
-              isFavorite,
-              isPremium,
-              rating,
-              previewImage,
-            });
+            state.favorites.push(action.payload.data);
           } else {
             state.favorites = state.favorites.filter(
               (favorite) => favorite.id !== action.payload.id
