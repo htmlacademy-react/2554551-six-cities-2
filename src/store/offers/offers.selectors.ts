@@ -16,7 +16,7 @@ const getOffer = (state: RootState) => state.offers.offer;
 const getOfferResponseStatus = (state: RootState) =>
   state.offers.offerResponseStatus;
 
-const getSelectedOffer = (state: RootState) => state.offers.selectedOffer;
+const getSelectedOfferId = (state: RootState) => state.offers.selectedOfferId;
 
 export const selectFilteredOffers = createSelector(
   [(state: RootState) => state],
@@ -38,9 +38,9 @@ export const selectOfferResponseStatus = createSelector(
   getOfferResponseStatus
 );
 
-export const selectSelectedOffer = createSelector(
+export const selectSelectedOfferId = createSelector(
   [(state: RootState) => state],
-  getSelectedOffer
+  getSelectedOfferId
 );
 
 export const getSortedOffers = (

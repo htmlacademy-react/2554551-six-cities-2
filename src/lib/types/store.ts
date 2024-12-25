@@ -20,7 +20,7 @@ export type OffersState = {
   offersResponseStatus: ResponseStatus;
   offer: OfferFull | undefined;
   offerResponseStatus: ResponseStatus;
-  selectedOffer: OfferPartial | undefined;
+  selectedOfferId: string;
 };
 
 export type CommentsState = {

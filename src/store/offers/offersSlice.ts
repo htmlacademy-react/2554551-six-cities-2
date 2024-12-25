@@ -10,18 +10,15 @@ const initialState: OffersState = {
   offersResponseStatus: ResponseStatus.Idle,
   offer: undefined,
   offerResponseStatus: ResponseStatus.Idle,
-  selectedOffer: undefined,
+  selectedOfferId: '',
 };
 
 export const offersSlice = createSlice({
   name: 'offers',
   initialState,
   reducers: {
-    selectCurrentOffer: (
-      state,
-      action: PayloadAction<OfferPartial | undefined>
-    ) => {
-      state.selectedOffer = action.payload;
+    selectOfferId: (state, action: PayloadAction<string>) => {
+      state.selectedOfferId = action.payload;
     },
   },
   extraReducers: (builder) =>
@@ -72,6 +69,6 @@ export const offersSlice = createSlice({
       ),
 });
 
-export const { selectCurrentOffer } = offersSlice.actions;
+export const { selectOfferId } = offersSlice.actions;
 
 export default offersSlice.reducer;

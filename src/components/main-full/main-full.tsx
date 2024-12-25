@@ -3,7 +3,7 @@ import { RootState } from '../../lib/types/store';
 import {
   getSortedOffers,
   selectFilteredOffers,
-  selectSelectedOffer,
+  selectSelectedOfferId,
 } from '../../store/offers/offers.selectors';
 import { selectActiveCity } from '../../store/city/city.selectors';
 import { selectPlacesSorting } from '../../store/sorting/sorting.selectors';
@@ -17,7 +17,7 @@ const MainFull = () => {
   const offers = useSelector((state: RootState) =>
     getSortedOffers(selectFilteredOffers(state), placesSorting)
   );
-  const selectedOffer = useSelector(selectSelectedOffer);
+  const selectedOfferId = useSelector(selectSelectedOfferId);
 
   return (
     <>
@@ -36,7 +36,9 @@ const MainFull = () => {
           <Map
             city={activeCity}
             locations={offers.map((offer) => offer.location)}
-            selectedLocation={selectedOffer?.location}
+            selectedLocation={
+              offers.find((offer) => offer.id === selectedOfferId)?.location
+            }
           />
         </section>
       </div>

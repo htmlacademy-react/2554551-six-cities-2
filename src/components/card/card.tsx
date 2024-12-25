@@ -5,7 +5,7 @@ import { CardImgAttributes, CardType } from '../../lib/types/card';
 import { OfferPartial } from '../../lib/types/offer';
 import { AppRoute, AuthorizationStatus, CARD_OPTIONS } from '../../const';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
-import { selectCurrentOffer } from '../../store/offers/offersSlice';
+import { selectOfferId } from '../../store/offers/offersSlice';
 import { changeFavoriteStatus } from '../../store/api-actions';
 import clsx from 'clsx';
 
@@ -45,13 +45,7 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
   };
 
   const handleOfferHover = () => {
-    if (cardType !== 'favorite') {
-      if (id === undefined) {
-        dispatch(selectCurrentOffer());
-      }
-
-      dispatch(selectCurrentOffer(card));
-    }
+    dispatch(selectOfferId(id));
   };
 
   return (
