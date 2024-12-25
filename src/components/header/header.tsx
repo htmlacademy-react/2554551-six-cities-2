@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../../const';
@@ -8,9 +7,9 @@ import {
   selectUser,
 } from '../../store/user/user.selectors';
 import { selectFavorites } from '../../store/favorites/favorites.selectors';
+import { logout } from '../../store/api-actions';
 import HeaderLayout from '../header-layout/header-layout';
 import styles from './header.module.css';
-import { logout } from '../../store/api-actions';
 
 const Header = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
@@ -86,4 +85,4 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+export default Header;

@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { PlacesSortingName } from '../../const';
@@ -57,4 +57,4 @@ const PlacesSorting = () => {
   );
 };
 
-export default memo(PlacesSorting);
+export default PlacesSorting;
