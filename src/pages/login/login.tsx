@@ -22,9 +22,13 @@ const Login = () => {
   });
 
   const isValid: UserDataValidity = {
-    email: emailRegEx.test(formData.email),
-    password: passwordRegEx.test(formData.password),
+    email: emailRegEx.test(formData.email) || !formData.email,
+    password: passwordRegEx.test(formData.password) || !formData.password,
   };
+  const canSubmit =
+    Object.values(isValid).every((val) => val) &&
+    formData.email &&
+    formData.password;
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const loginResponseStatus = useSelector(selectLoginResponseStatus);
@@ -75,7 +79,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChangeValue}
                 />
-                {!isValid.email && formData.email && (
+                {!isValid.email && (
                   <p className={styles.error}>Incorrect email</p>
                 )}
               </div>
@@ -90,20 +94,14 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChangeValue}
                 />
-                {!isValid.password && formData.password && (
+                {!isValid.password && (
                   <p className={styles.error}>Incorrect password</p>
                 )}
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                disabled={
-                  !(
-                    Object.values(isValid).every((val) => val) &&
-                    formData.email &&
-                    formData.password
-                  )
-                }
+                disabled={!canSubmit}
               >
                 Sign in
               </button>
