@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { AppRoute, ResponseStatus } from '../../const';
@@ -7,6 +8,7 @@ import {
   selectFavorites,
   selectFavoritesResponseStatus,
 } from '../../store/favorites/favorites.selectors';
+import { getOffers } from '../../store/api-actions';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
@@ -22,6 +24,10 @@ const Favorites = () => {
   const handleSelectCity = (city: string) => {
     dispatch(selectCity(city));
   };
+
+  useEffect(() => {
+    dispatch(getOffers());
+  }, []);
 
   return (
     <div className="page">

@@ -33,11 +33,13 @@ const Main = ({ cityList }: Props) => {
 
   useEffect(() => {
     dispatch(getOffers());
+  }, [dispatch]);
 
+  useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(getFavorites());
     }
-  }, [dispatch]);
+  }, [dispatch, authorizationStatus]);
 
   return (
     <div className="page page--gray page--main">
