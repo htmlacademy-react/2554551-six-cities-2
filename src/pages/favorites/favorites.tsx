@@ -15,6 +15,8 @@ import FavoriteCard from '../../components/favorite-card/favorite-card';
 import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
 import ErrorMessage from '../../components/error-message/error-message';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import clsx from 'clsx';
 
 const Favorites = () => {
   const favorites = useSelector(selectFavorites);
@@ -28,6 +30,7 @@ const Favorites = () => {
       (favorite) => favorite.city.name === city
     ),
   }));
+  const empty = favorites.length === 0;
 
   const dispatch = useAppDispatch();
 
@@ -45,46 +48,52 @@ const Favorites = () => {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-
+          <section className={clsx('favorites', empty && 'favorites--empty')}>
             {favoritesResponseStatus === ResponseStatus.Pending && <Spinner />}
 
             {favoritesResponseStatus === ResponseStatus.Error && (
               <ErrorMessage message="Something went wrong" />
             )}
 
-            <ul className="favorites__list">
-              {!!favorites.length &&
-                favoriteCities.map((item) => {
-                  const city: CityName = Object.keys(item)[0] as CityName;
-                  const favoriteList: OfferPartial[] = item[city];
+            {empty ? (
+              <FavoritesEmpty />
+            ) : (
+              <>
+                <h1 className="favorites__title">Saved listing</h1>
 
-                  return (
-                    <li
-                      className="favorites__locations-items"
-                      key={city}
-                      onClick={() => handleSelectCity(city)}
-                    >
-                      <div className="favorites__locations locations locations--current">
-                        <div className="locations__item">
-                          <Link
-                            className="locations__item-link"
-                            to={AppRoute.Main}
-                          >
-                            <span>{city}</span>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="favorites__places">
-                        {favoriteList.map((card) => (
-                          <FavoriteCard key={card.id} card={card} />
-                        ))}
-                      </div>
-                    </li>
-                  );
-                })}
-            </ul>
+                <ul className="favorites__list">
+                  {!!favorites.length &&
+                    favoriteCities.map((item) => {
+                      const city: CityName = Object.keys(item)[0] as CityName;
+                      const favoriteList: OfferPartial[] = item[city];
+
+                      return (
+                        <li
+                          className="favorites__locations-items"
+                          key={city}
+                          onClick={() => handleSelectCity(city)}
+                        >
+                          <div className="favorites__locations locations locations--current">
+                            <div className="locations__item">
+                              <Link
+                                className="locations__item-link"
+                                to={AppRoute.Main}
+                              >
+                                <span>{city}</span>
+                              </Link>
+                            </div>
+                          </div>
+                          <div className="favorites__places">
+                            {favoriteList.map((card) => (
+                              <FavoriteCard key={card.id} card={card} />
+                            ))}
+                          </div>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </>
+            )}
           </section>
         </div>
       </main>
