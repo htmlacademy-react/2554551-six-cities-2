@@ -21,9 +21,9 @@ const Login = () => {
     password: '',
   });
 
-  let isValid: UserDataValidity = {
-    email: false,
-    password: false,
+  const isValid: UserDataValidity = {
+    email: emailRegEx.test(formData.email),
+    password: passwordRegEx.test(formData.password),
   };
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
@@ -42,11 +42,6 @@ const Login = () => {
     e.preventDefault();
 
     dispatch(login(formData));
-  };
-
-  isValid = {
-    email: emailRegEx.test(formData.email),
-    password: passwordRegEx.test(formData.password),
   };
 
   useEffect(() => {
