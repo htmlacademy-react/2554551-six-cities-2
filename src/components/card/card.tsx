@@ -50,8 +50,6 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
         dispatch(selectCurrentOffer());
       }
 
-      // const currentOffer = offers.find((offer) => offer.id === offerId);
-
       dispatch(selectCurrentOffer(card));
     }
   };
