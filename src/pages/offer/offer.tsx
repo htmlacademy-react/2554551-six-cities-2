@@ -81,7 +81,7 @@ const Offer = () => {
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {offer.images.map((src) => (
+                {offer.images.slice(0, 6).map((src) => (
                   <OfferImage src={src} key={src} />
                 ))}
               </div>
@@ -125,7 +125,7 @@ const Offer = () => {
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">
-                    {Math.round(offer.rating)}
+                    {offer.rating}
                   </span>
                 </div>
                 <ul className="offer__features">
@@ -185,7 +185,7 @@ const Offer = () => {
                     Reviews &middot;{' '}
                     <span className="reviews__amount">{reviews.length}</span>
                   </h2>
-                  <ReviewList reviews={reviews} />
+                  <ReviewList reviews={reviews.slice(0, 10)} />
 
                   {authorizationStatus === AuthorizationStatus.Auth && (
                     <ReviewForm />
