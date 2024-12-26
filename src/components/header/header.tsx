@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   selectAuthorizationStatus,
   selectUser,
@@ -15,10 +15,6 @@ const Header = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const user = useSelector(selectUser);
   const favorites = useSelector(selectFavorites);
-
-  const location = useLocation();
-  const navigateTo =
-    location.pathname === AppRoute.Favorites ? AppRoute.Main : location;
 
   const dispatch = useAppDispatch();
 
@@ -70,7 +66,7 @@ const Header = () => {
             <li className="header__nav-item">
               <Link
                 className="header__nav-link"
-                to={navigateTo}
+                to={AppRoute.Login}
                 onClick={handleLogout}
               >
                 <span className="header__signout">Sign out</span>
