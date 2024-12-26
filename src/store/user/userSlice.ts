@@ -41,6 +41,9 @@ export const userSlice = createSlice({
         state.loginResponseStatus = ResponseStatus.Error;
         state.user = undefined;
       })
+      .addCase(logout.pending, (state) => {
+        state.authorizationStatus = AuthorizationStatus.Unknown;
+      })
       .addCase(logout.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.user = undefined;
