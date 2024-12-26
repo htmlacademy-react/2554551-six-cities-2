@@ -4,9 +4,9 @@ import { RootState } from '../../lib/types/store';
 const getSortedComments = (state: RootState) => {
   const commentsCopy = [...state.comments.comments];
 
-  return commentsCopy
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 10);
+  return commentsCopy.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 };
 
 const getCommentResponseStatus = (state: RootState) =>
