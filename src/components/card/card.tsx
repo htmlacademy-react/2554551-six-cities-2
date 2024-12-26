@@ -44,15 +44,15 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
     }
   };
 
-  const handleOfferHover = () => {
-    dispatch(selectOfferId(id));
+  const handleOfferHover = (offerId: string) => {
+    dispatch(selectOfferId(offerId));
   };
 
   return (
     <article
       className={clsx('place-card', cardClass)}
-      onMouseOver={handleOfferHover}
-      onMouseLeave={handleOfferHover}
+      onMouseOver={() => handleOfferHover(id)}
+      onMouseLeave={() => handleOfferHover('')}
     >
       {isPremium ? (
         <div className="place-card__mark">
