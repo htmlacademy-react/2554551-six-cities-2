@@ -46,6 +46,11 @@ export type FavoritesState = {
   favoriteResponseStatus: ResponseStatus;
 };
 
+export type AlertState = {
+  isShown: boolean;
+  message: string;
+};
+
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;

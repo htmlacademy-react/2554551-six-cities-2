@@ -1,0 +1,22 @@
+.container {
+  position: fixed;
+  background-color: rgb(246, 135, 135);
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+}
+
+.message {
+  margin: 0 8px 0 0;
+}
+
+.close {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}/*# sourceMappingURL=alert.module.css.map */
