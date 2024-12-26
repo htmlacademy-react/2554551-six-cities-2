@@ -1,17 +1,25 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../store';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { login } from '../../store/api-actions';
 import { UserAuth, UserDataValidity } from '../../lib/types/user';
-import { AppRoute, AuthorizationStatus, ResponseStatus } from '../../const';
+import {
+  AppRoute,
+  AuthorizationStatus,
+  CityName,
+  ResponseStatus,
+} from '../../const';
 import {
   selectAuthorizationStatus,
   selectLoginResponseStatus,
 } from '../../store/user/user.selectors';
+import { selectCity } from '../../store/city/citySlice';
 import HeaderLayout from '../../components/header-layout/header-layout';
 import styles from './login.module.css';
 
+const cities = Object.keys(CityName);
+const randomCity = cities[Math.floor(Math.random() * cities.length)];
 const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d).+$/i;
 
@@ -46,6 +54,10 @@ const Login = () => {
     e.preventDefault();
 
     dispatch(login(formData));
+  };
+
+  const handleSelectCity = () => {
+    dispatch(selectCity(randomCity));
   };
 
   useEffect(() => {
@@ -112,9 +124,13 @@ const Login = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={handleSelectCity}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>
