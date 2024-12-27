@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { AuthorizationStatus, ResponseStatus } from '../../const';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../store';
+import { AppRoute, AuthorizationStatus, ResponseStatus } from '../../const';
 import { selectSortedComments } from '../../store/comments/comments.selectors';
 import {
   selectOffer,
@@ -7,7 +10,13 @@ import {
 } from '../../store/offers/offers.selectors';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { selectNearbyOffers } from '../../store/nearPlaces/nearPlaces.selectors';
-import { selectActiveCity } from '../../store/city/city.selectors';
+import {
+  changeFavoriteStatus,
+  getComments,
+  getFavorites,
+  getNearbyOffers,
+  getOffer,
+} from '../../store/api-actions';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -23,8 +32,42 @@ const Offer = () => {
   const reviews = useSelector(selectSortedComments);
   const nearbyOffers = useSelector(selectNearbyOffers);
   const offerResponseStatus = useSelector(selectOfferResponseStatus);
-  const activeCity = useSelector(selectActiveCity);
   const authorizationStatus = useSelector(selectAuthorizationStatus);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const dispatch = useAppDispatch();
+
+  const handleUpdateFavoriteStatus = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth && offer) {
+      dispatch(
+        changeFavoriteStatus({
+          offerId: offer.id,
+          status: Number(!offer.isFavorite),
+        })
+      ).then(() => {
+        dispatch(getFavorites());
+      });
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getOffer(id));
+      dispatch(getComments(id));
+      dispatch(getNearbyOffers(id));
+    }
+  }, [id]);
+
+  const locations = nearbyOffers.map((nearby) => nearby.location);
+  const offerLocation = offer?.location;
+
+  if (offerLocation) {
+    locations.push(offerLocation);
+  }
 
   return (
     <div className="page">
@@ -41,7 +84,7 @@ const Offer = () => {
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {offer.images.map((src) => (
+                {offer.images.slice(0, 6).map((src) => (
                   <OfferImage src={src} key={src} />
                 ))}
               </div>
@@ -59,9 +102,10 @@ const Offer = () => {
                     className={clsx(
                       'offer__bookmark-button',
                       'button',
-                      offer.isFavorite && 'place-card__bookmark-button--active'
+                      offer.isFavorite && 'offer__bookmark-button--active'
                     )}
                     type="button"
+                    onClick={handleUpdateFavoriteStatus}
                   >
                     <svg
                       className="offer__bookmark-icon"
@@ -77,7 +121,10 @@ const Offer = () => {
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{ width: `${offer.rating * 20}%` }}></span>
+                    <span
+                      style={{ width: `${Math.round(offer.rating) * 20}%` }}
+                    >
+                    </span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">
@@ -141,7 +188,7 @@ const Offer = () => {
                     Reviews &middot;{' '}
                     <span className="reviews__amount">{reviews.length}</span>
                   </h2>
-                  <ReviewList reviews={reviews} />
+                  <ReviewList reviews={reviews.slice(0, 10)} />
 
                   {authorizationStatus === AuthorizationStatus.Auth && (
                     <ReviewForm />
@@ -151,8 +198,9 @@ const Offer = () => {
             </div>
             <section className="offer__map map">
               <Map
-                city={activeCity}
-                locations={nearbyOffers.map((nearby) => nearby.location)}
+                city={offer.city}
+                locations={locations}
+                selectedLocation={offerLocation}
               />
             </section>
           </section>

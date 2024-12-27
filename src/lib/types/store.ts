@@ -11,6 +11,7 @@ import { User } from './user';
 
 export type UserState = {
   authorizationStatus: AuthorizationStatus;
+  loginResponseStatus: ResponseStatus;
   user: User | undefined;
 };
 
@@ -19,13 +20,12 @@ export type OffersState = {
   offersResponseStatus: ResponseStatus;
   offer: OfferFull | undefined;
   offerResponseStatus: ResponseStatus;
-  selectedOffer: OfferPartial | undefined;
+  selectedOfferId: string;
 };
 
 export type CommentsState = {
   comments: SingleComment[];
   commentsResponseStatus: ResponseStatus;
-  comment: SingleComment | undefined;
   commentResponseStatus: ResponseStatus;
 };
 
@@ -38,6 +38,17 @@ export type CityState = { activeCity: City };
 
 export type SortingState = {
   placesSorting: PlacesSortingName;
+};
+
+export type FavoritesState = {
+  favorites: OfferPartial[];
+  favoritesResponseStatus: ResponseStatus;
+  favoriteResponseStatus: ResponseStatus;
+};
+
+export type AlertState = {
+  isShown: boolean;
+  message: string;
 };
 
 export type RootState = ReturnType<typeof store.getState>;

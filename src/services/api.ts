@@ -3,6 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 import { AppRoute } from '../const';
 import { browserHistory } from '../browser-history';
 import { getCookie } from './cookie';
+import { store } from '../store';
+import { showAlert } from '../store/alert/alertSlice';
 
 const BASE_URL = 'https://13.design.htmlacademy.pro/six-cities';
 const TIMEOUT = 5000;
@@ -26,6 +28,8 @@ export const createApi = (): AxiosInstance => {
       if (error.response?.status === StatusCodes.NOT_FOUND) {
         browserHistory.push(AppRoute.NotFound);
       }
+
+      store.dispatch(showAlert(error.message));
 
       throw error;
     }

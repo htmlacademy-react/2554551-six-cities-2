@@ -1,14 +1,25 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../store';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { login } from '../../store/api-actions';
 import { UserAuth, UserDataValidity } from '../../lib/types/user';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import {
+  AppRoute,
+  AuthorizationStatus,
+  CityName,
+  ResponseStatus,
+} from '../../const';
+import {
+  selectAuthorizationStatus,
+  selectLoginResponseStatus,
+} from '../../store/user/user.selectors';
+import { selectCity } from '../../store/city/citySlice';
 import HeaderLayout from '../../components/header-layout/header-layout';
 import styles from './login.module.css';
 
+const cities = Object.keys(CityName);
+const randomCity = cities[Math.floor(Math.random() * cities.length)];
 const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d).+$/i;
 
@@ -17,16 +28,18 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const [isValid, setIsValid] = useState<UserDataValidity>({
-    email: false,
-    password: false,
-  });
-  const [focused, setFocused] = useState<UserDataValidity>({
-    email: false,
-    password: false,
-  });
+
+  const isValid: UserDataValidity = {
+    email: emailRegEx.test(formData.email) || !formData.email,
+    password: passwordRegEx.test(formData.password) || !formData.password,
+  };
+  const canSubmit =
+    Object.values(isValid).every((val) => val) &&
+    formData.email &&
+    formData.password;
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
+  const loginResponseStatus = useSelector(selectLoginResponseStatus);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -35,7 +48,6 @@ const Login = () => {
     const { name, value } = e.currentTarget;
 
     setFormData((prev) => ({ ...prev, [name]: value.trim() }));
-    setFocused((prev) => ({ ...prev, [name]: true }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -44,12 +56,9 @@ const Login = () => {
     dispatch(login(formData));
   };
 
-  useEffect(() => {
-    setIsValid({
-      email: emailRegEx.test(formData.email),
-      password: passwordRegEx.test(formData.password),
-    });
-  }, [formData]);
+  const handleSelectCity = () => {
+    dispatch(selectCity(randomCity));
+  };
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -82,7 +91,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChangeValue}
                 />
-                {!isValid.email && focused.email && (
+                {!isValid.email && (
                   <p className={styles.error}>Incorrect email</p>
                 )}
               </div>
@@ -97,27 +106,31 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChangeValue}
                 />
-                {!isValid.password && focused.password && (
+                {!isValid.password && (
                   <p className={styles.error}>Incorrect password</p>
                 )}
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                disabled={!Object.values(isValid).every((val) => val)}
+                disabled={!canSubmit}
               >
                 Sign in
               </button>
-              {authorizationStatus === AuthorizationStatus.NoAuth && (
+              {loginResponseStatus === ResponseStatus.Error && (
                 <p className={styles.error}>Something went wrong</p>
               )}
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={handleSelectCity}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>

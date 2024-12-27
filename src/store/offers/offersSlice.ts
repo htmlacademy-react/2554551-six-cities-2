@@ -1,26 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseStatus } from '../../const';
 import { OffersState } from '../../lib/types/store';
-import { getOffer, getOffers } from '../api-actions';
+import { changeFavoriteStatus, getOffer, getOffers } from '../api-actions';
 import { OfferFull, OfferPartial } from '../../lib/types/offer';
+import { FavoriteStatusChange } from '../../lib/types/favorite';
 
 const initialState: OffersState = {
   offers: [],
   offersResponseStatus: ResponseStatus.Idle,
   offer: undefined,
   offerResponseStatus: ResponseStatus.Idle,
-  selectedOffer: undefined,
+  selectedOfferId: '',
 };
 
 export const offersSlice = createSlice({
   name: 'offers',
   initialState,
   reducers: {
-    selectCurrentOffer: (
-      state,
-      action: PayloadAction<OfferPartial | undefined>
-    ) => {
-      state.selectedOffer = action.payload;
+    selectOfferId: (state, action: PayloadAction<string>) => {
+      state.selectedOfferId = action.payload;
     },
   },
   extraReducers: (builder) =>
@@ -54,9 +52,23 @@ export const offersSlice = createSlice({
       .addCase(getOffer.rejected, (state) => {
         state.offer = undefined;
         state.offerResponseStatus = ResponseStatus.Error;
-      }),
+      })
+      .addCase(
+        changeFavoriteStatus.fulfilled,
+        (state, action: PayloadAction<FavoriteStatusChange>) => {
+          state.offers = state.offers.map((offer) =>
+            offer.id === action.payload.id
+              ? { ...offer, isFavorite: action.payload.data.isFavorite }
+              : offer
+          );
+
+          if (state.offer) {
+            state.offer.isFavorite = action.payload.data.isFavorite;
+          }
+        }
+      ),
 });
 
-export const { selectCurrentOffer } = offersSlice.actions;
+export const { selectOfferId } = offersSlice.actions;
 
 export default offersSlice.reducer;
