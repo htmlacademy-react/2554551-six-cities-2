@@ -42,7 +42,7 @@ const App = ({ cityList }: Props) => {
         <Route
           path={AppRoute.Favorites}
           element={
-            // @ts-expect-error происходит какое-то безумие (не проходит сборка)
+            // @ts-expect-error происходит какое-то безумие (не проходит сборка), несовпадение типов между версиями
             <PrivateRoute>
               <Favorites />
             </PrivateRoute>
