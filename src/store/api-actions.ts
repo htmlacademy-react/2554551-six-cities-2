@@ -108,5 +108,7 @@ export const changeFavoriteStatus = createAsyncThunk<
     `${APIRoute.Favorites}/${favoriteStatusData.offerId}/${favoriteStatusData.status}`
   );
 
+  getFavorites();
+
   return { data, id: favoriteStatusData.offerId };
 });
