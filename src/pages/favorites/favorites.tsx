@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { AppRoute, CityName, ResponseStatus } from '../../const';
@@ -8,7 +7,6 @@ import {
   selectFavorites,
   selectFavoritesResponseStatus,
 } from '../../store/favorites/favorites.selectors';
-import { getOffers } from '../../store/api-actions';
 import { FavoriteCity } from '../../lib/types/favorite';
 import { OfferPartial } from '../../lib/types/offer';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
@@ -37,10 +35,6 @@ const Favorites = () => {
   const handleSelectCity = (city: string) => {
     dispatch(selectCity(city));
   };
-
-  useEffect(() => {
-    dispatch(getOffers());
-  }, []);
 
   return (
     <div className="page">

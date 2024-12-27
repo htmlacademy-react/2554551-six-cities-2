@@ -13,6 +13,7 @@ import { selectNearbyOffers } from '../../store/nearPlaces/nearPlaces.selectors'
 import {
   changeFavoriteStatus,
   getComments,
+  getFavorites,
   getNearbyOffers,
   getOffer,
 } from '../../store/api-actions';
@@ -45,7 +46,9 @@ const Offer = () => {
           offerId: offer.id,
           status: Number(!offer.isFavorite),
         })
-      );
+      ).then(() => {
+        dispatch(getFavorites());
+      });
     } else {
       navigate(AppRoute.Login);
     }

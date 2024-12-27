@@ -17,6 +17,7 @@ export const favoritesSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(getFavorites.pending, (state) => {
+        state.favorites = [];
         state.favoritesResponseStatus = ResponseStatus.Pending;
       })
       .addCase(

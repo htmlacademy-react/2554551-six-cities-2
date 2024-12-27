@@ -6,7 +6,7 @@ import { OfferPartial } from '../../lib/types/offer';
 import { AppRoute, AuthorizationStatus, CARD_OPTIONS } from '../../const';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 import { selectOfferId } from '../../store/offers/offersSlice';
-import { changeFavoriteStatus } from '../../store/api-actions';
+import { changeFavoriteStatus, getFavorites } from '../../store/api-actions';
 import clsx from 'clsx';
 
 type Props = {
@@ -38,7 +38,9 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(
         changeFavoriteStatus({ offerId: card.id, status: Number(!isFavorite) })
-      );
+      ).then(() => {
+        dispatch(getFavorites());
+      });
     } else {
       navigate(AppRoute.Login);
     }
