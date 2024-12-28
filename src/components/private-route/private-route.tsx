@@ -7,11 +7,13 @@ import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 const PrivateRoute = ({ children }: PropsWithChildren) => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
 
-  return authorizationStatus === AuthorizationStatus.Auth ? (
-    children
-  ) : (
-    <Navigate to={AppRoute.Login} />
-  );
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return children;
+  } else if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return null;
+  } else {
+    <Navigate to={AppRoute.Login} />;
+  }
 };
 
 export default PrivateRoute;
