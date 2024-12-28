@@ -6,6 +6,7 @@ import { User, UserAuth } from '../lib/types/user';
 import { deleteCookie, setCookie } from '../services/cookie';
 import { NewOfferComment, SingleComment } from '../lib/types/comment';
 import { FavoriteStatusChange, NewFavoriteStatus } from '../lib/types/favorite';
+import { store } from '.';
 
 export const checkLogin = createAsyncThunk<User, undefined, Extra>(
   'user/check',
@@ -107,6 +108,8 @@ export const changeFavoriteStatus = createAsyncThunk<
   const { data } = await api.post<OfferFavorite>(
     `${APIRoute.Favorites}/${favoriteStatusData.offerId}/${favoriteStatusData.status}`
   );
+
+  store.dispatch(getFavorites());
 
   return { data, id: favoriteStatusData.offerId };
 });

@@ -42,9 +42,7 @@ const Header = () => {
                     src={user?.avatarUrl}
                     alt="avatar"
                   />
-                ) : (
-                  ''
-                )}
+                ) : null}
               </div>
 
               {authorizationStatus === AuthorizationStatus.Auth ? (
