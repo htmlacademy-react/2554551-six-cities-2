@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { PlacesSortingName } from '../../const';
@@ -14,10 +14,14 @@ const PlacesSorting = () => {
 
   const dispatch = useAppDispatch();
 
+  const handleSelectSorting = (sortBy: PlacesSortingName) => {
+    dispatch(sortPlaces(sortBy));
+    setIsOpen(false);
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
-
+      <span className="places__sorting-caption">Sort by</span>{' '}
       <span
         className="places__sorting-type"
         tabIndex={0}
@@ -28,7 +32,6 @@ const PlacesSorting = () => {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-
       {isOpen ? (
         <ClickAwayListener onClickAway={() => setIsOpen(false)}>
           <ul className="places__options places__options--custom places__options--opened">
@@ -40,7 +43,7 @@ const PlacesSorting = () => {
                 )}
                 key={sortBy}
                 tabIndex={0}
-                onClick={() => dispatch(sortPlaces(sortBy))}
+                onClick={() => handleSelectSorting(sortBy)}
               >
                 {sortBy}
               </li>
@@ -54,4 +57,4 @@ const PlacesSorting = () => {
   );
 };
 
-export default memo(PlacesSorting);
+export default PlacesSorting;

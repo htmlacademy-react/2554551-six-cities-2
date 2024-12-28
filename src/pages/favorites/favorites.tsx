@@ -1,13 +1,40 @@
-import { AppRoute } from '../../const';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store';
+import { AppRoute, ResponseStatus } from '../../const';
 import { Link } from 'react-router-dom';
-import { OfferPartial } from '../../lib/types/offer';
+import { selectCity } from '../../store/city/citySlice';
+import {
+  selectFavorites,
+  selectFavoritesResponseStatus,
+} from '../../store/favorites/favorites.selectors';
+import { FavoriteCity } from '../../lib/types/favorite';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 import Header from '../../components/header/header';
+import Spinner from '../../components/spinner/spinner';
+import ErrorMessage from '../../components/error-message/error-message';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import clsx from 'clsx';
 
-type Props = { favorites: OfferPartial[] };
+const Favorites = () => {
+  const favorites = useSelector(selectFavorites);
+  const favoritesResponseStatus = useSelector(selectFavoritesResponseStatus);
 
-const Favorites = ({ favorites }: Props) => {
-  const cities = Array.from(new Set(favorites.map((item) => item.city.name)));
+  const cities = favorites.reduce(
+    (acc, next) =>
+      !acc[next.city.name]
+        ? { ...acc, [next.city.name]: [next] }
+        : { ...acc, [next.city.name]: acc[next.city.name].concat([next]) },
+
+    {} as FavoriteCity
+  );
+
+  const empty = favorites.length === 0;
+
+  const dispatch = useAppDispatch();
+
+  const handleSelectCity = (city: string) => {
+    dispatch(selectCity(city));
+  };
 
   return (
     <div className="page">
@@ -15,28 +42,47 @@ const Favorites = ({ favorites }: Props) => {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {cities.map((city) => (
-                <li className="favorites__locations-items" key={city}>
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="favorites__places">
-                    {favorites
-                      .filter((favorite) => favorite.city.name === city)
-                      .map((card) => (
-                        <FavoriteCard key={card.id} card={card} />
-                      ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
+          <section className={clsx('favorites', empty && 'favorites--empty')}>
+            {favoritesResponseStatus === ResponseStatus.Pending && <Spinner />}
+
+            {favoritesResponseStatus === ResponseStatus.Error && (
+              <ErrorMessage message="Something went wrong" />
+            )}
+
+            {empty ? (
+              <FavoritesEmpty />
+            ) : (
+              <>
+                <h1 className="favorites__title">Saved listing</h1>
+
+                <ul className="favorites__list">
+                  {!!favorites.length &&
+                    Object.keys(cities).map((city) => (
+                      <li
+                        className="favorites__locations-items"
+                        key={city}
+                        onClick={() => handleSelectCity(city)}
+                      >
+                        <div className="favorites__locations locations locations--current">
+                          <div className="locations__item">
+                            <Link
+                              className="locations__item-link"
+                              to={AppRoute.Main}
+                            >
+                              <span>{city}</span>
+                            </Link>
+                          </div>
+                        </div>
+                        <div className="favorites__places">
+                          {cities[city].map((card) => (
+                            <FavoriteCard key={card.id} card={card} />
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                </ul>
+              </>
+            )}
           </section>
         </div>
       </main>

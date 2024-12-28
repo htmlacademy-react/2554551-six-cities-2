@@ -8,6 +8,8 @@ import commentsSlice from './comments/commentsSlice';
 import nearPlacesSlice from './nearPlaces/nearPlacesSlice';
 import citySlice from './city/citySlice';
 import sortingSlice from './sorting/sortingSlice';
+import favoritesSlice from './favorites/favoritesSlice';
+import alertSlice from './alert/alertSlice';
 
 export const api = createApi();
 
@@ -19,6 +21,8 @@ export const store = configureStore({
     nearPlaces: nearPlacesSlice,
     city: citySlice,
     sorting: sortingSlice,
+    favorites: favoritesSlice,
+    alert: alertSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: { extraArgument: api } }),

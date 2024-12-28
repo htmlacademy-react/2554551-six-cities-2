@@ -1,20 +1,25 @@
-import { memo } from 'react';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import {
   selectAuthorizationStatus,
   selectUser,
 } from '../../store/user/user.selectors';
+import { selectFavorites } from '../../store/favorites/favorites.selectors';
+import { logout } from '../../store/api-actions';
 import HeaderLayout from '../header-layout/header-layout';
+import styles from './header.module.css';
 
 const Header = () => {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const user = useSelector(selectUser);
+  const favorites = useSelector(selectFavorites);
 
-  const style = {
-    backgroundImage: `url(${user?.avatarUrl || ''})`,
-    borderRadius: '20px',
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -30,11 +35,14 @@ const Header = () => {
                   : AppRoute.Login
               }
             >
-              <div
-                className="header__avatar-wrapper user__avatar-wrapper"
-                style={user ? style : {}}
-              >
-                {''}
+              <div className="header__avatar-wrapper user__avatar-wrapper">
+                {user ? (
+                  <img
+                    className={styles.avatar}
+                    src={user?.avatarUrl}
+                    alt="avatar"
+                  />
+                ) : null}
               </div>
 
               {authorizationStatus === AuthorizationStatus.Auth ? (
@@ -42,7 +50,9 @@ const Header = () => {
                   <span className="header__user-name user__name">
                     {user?.email}
                   </span>
-                  <span className="header__favorite-count">3</span>
+                  <span className="header__favorite-count">
+                    {favorites.length}
+                  </span>
                 </>
               ) : (
                 <span className="header__login">Sign in</span>
@@ -52,9 +62,13 @@ const Header = () => {
 
           {authorizationStatus === AuthorizationStatus.Auth ? (
             <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
+              <Link
+                className="header__nav-link"
+                to={AppRoute.Login}
+                onClick={handleLogout}
+              >
                 <span className="header__signout">Sign out</span>
-              </a>
+              </Link>
             </li>
           ) : (
             ''
@@ -65,4 +79,4 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+export default Header;

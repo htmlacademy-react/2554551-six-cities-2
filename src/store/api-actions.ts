@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../const';
-import { OfferFull, OfferPartial } from '../lib/types/offer';
+import { OfferFavorite, OfferFull, OfferPartial } from '../lib/types/offer';
 import { Extra } from '../lib/types/api';
 import { User, UserAuth } from '../lib/types/user';
-import { setCookie } from '../services/cookie';
+import { deleteCookie, setCookie } from '../services/cookie';
 import { NewOfferComment, SingleComment } from '../lib/types/comment';
+import { FavoriteStatusChange, NewFavoriteStatus } from '../lib/types/favorite';
+import { store } from '.';
 
 export const checkLogin = createAsyncThunk<User, undefined, Extra>(
   'user/check',
@@ -23,6 +25,15 @@ export const login = createAsyncThunk<User, UserAuth, Extra>(
     setCookie(data.token);
 
     return data;
+  }
+);
+
+export const logout = createAsyncThunk<void, undefined, Extra>(
+  'user/logout',
+  async (_, { extra: api }) => {
+    await api.delete<User>(APIRoute.Logout);
+
+    deleteCookie();
   }
 );
 
@@ -78,4 +89,27 @@ export const createComment = createAsyncThunk<
   );
 
   return data;
+});
+
+export const getFavorites = createAsyncThunk<OfferPartial[], undefined, Extra>(
+  'favorites/get',
+  async (_, { extra: api }) => {
+    const { data } = await api.get<OfferPartial[]>(APIRoute.Favorites);
+
+    return data;
+  }
+);
+
+export const changeFavoriteStatus = createAsyncThunk<
+  FavoriteStatusChange,
+  NewFavoriteStatus,
+  Extra
+>('favorites/changeStatus', async (favoriteStatusData, { extra: api }) => {
+  const { data } = await api.post<OfferFavorite>(
+    `${APIRoute.Favorites}/${favoriteStatusData.offerId}/${favoriteStatusData.status}`
+  );
+
+  store.dispatch(getFavorites());
+
+  return { data, id: favoriteStatusData.offerId };
 });

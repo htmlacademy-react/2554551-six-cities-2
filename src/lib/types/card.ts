@@ -10,11 +10,10 @@ export type SingleCard = {
 };
 
 export type CardImgAttributes = {
-  className: string;
   width: string;
   height: string;
 };
 
-export type CardType = 'offer' | 'near';
+export type CardType = 'offer' | 'near' | 'favorite';
 
-export type CardOptions = 'list' | 'card' | 'img';
+export type CardOptions = 'listClass' | 'cardClass' | 'imgClass';

@@ -1,22 +1,21 @@
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
-import { Link } from 'react-router-dom';
-import { CardImgAttributes } from '../../lib/types/card';
+import { Link, useNavigate } from 'react-router-dom';
+import { CardImgAttributes, CardType } from '../../lib/types/card';
 import { OfferPartial } from '../../lib/types/offer';
-import { AppRoute } from '../../const';
-import {
-  getComments,
-  getNearbyOffers,
-  getOffer,
-} from '../../store/api-actions';
+import { AppRoute, AuthorizationStatus, CARD_OPTIONS } from '../../const';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import { selectOfferId } from '../../store/offers/offersSlice';
+import { changeFavoriteStatus } from '../../store/api-actions';
 import clsx from 'clsx';
 
 type Props = {
   card: OfferPartial;
+  cardType: CardType;
   imgAttributes: CardImgAttributes;
-  inFavorites?: boolean;
 };
 
-const Card = ({ card, imgAttributes, inFavorites }: Props) => {
+const Card = ({ card, cardType, imgAttributes }: Props) => {
   const {
     id,
     isPremium,
@@ -27,17 +26,34 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
     title,
     type,
   } = card;
+  const { cardClass, imgClass } = CARD_OPTIONS[cardType];
+
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
+
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    dispatch(getOffer(id));
-    dispatch(getComments(id));
-    dispatch(getNearbyOffers(id));
+  const handleUpdateFavoriteStatus = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(
+        changeFavoriteStatus({ offerId: card.id, status: Number(!isFavorite) })
+      );
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
+
+  const handleOfferHover = (offerId: string) => {
+    dispatch(selectOfferId(offerId));
   };
 
   return (
-    <>
+    <article
+      className={clsx('place-card', cardClass)}
+      onMouseOver={() => handleOfferHover(id)}
+      onMouseLeave={() => handleOfferHover('')}
+    >
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -45,10 +61,8 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
       ) : (
         ''
       )}
-      <div
-        className={clsx(imgAttributes.className, 'place-card__image-wrapper')}
-      >
-        <Link to={`${AppRoute.Offer}/${id}`} onClick={handleClick}>
+      <div className={clsx(imgClass, 'place-card__image-wrapper')}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -60,7 +74,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
       </div>
       <div
         className={clsx(
-          inFavorites && 'favorites__card-info',
+          isFavorite && 'favorites__card-info',
           'place-card__info'
         )}
       >
@@ -76,6 +90,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
               isFavorite && 'place-card__bookmark-button--active'
             )}
             type="button"
+            onClick={handleUpdateFavoriteStatus}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -87,7 +102,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * 20}%` }}></span>
+            <span style={{ width: `${Math.round(rating) * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -96,7 +111,7 @@ const Card = ({ card, imgAttributes, inFavorites }: Props) => {
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
-    </>
+    </article>
   );
 };
 

@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { selectActiveCity } from '../../store/city/city.selectors';
 import { selectCity } from '../../store/city/citySlice';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import clsx from 'clsx';
 
 type Props = {
@@ -15,16 +17,16 @@ const City = ({ city }: Props) => {
 
   return (
     <li className="locations__item" onClick={() => dispatch(selectCity(city))}>
-      <a
+      <Link
         className={clsx(
           'locations__item-link',
           'tabs__item',
           activeCity.name === city && 'tabs__item--active'
         )}
-        href="#"
+        to={AppRoute.Main}
       >
         <span>{city}</span>
-      </a>
+      </Link>
     </li>
   );
 };
