@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store';
 import { AppRoute, ResponseStatus } from '../../const';
@@ -8,6 +9,7 @@ import {
   selectFavoritesResponseStatus,
 } from '../../store/favorites/favorites.selectors';
 import { FavoriteCity } from '../../lib/types/favorite';
+import { getFavorites } from '../../store/api-actions';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
@@ -28,13 +30,19 @@ const Favorites = () => {
     {} as FavoriteCity
   );
 
-  const empty = favorites.length === 0;
+  const empty =
+    favoritesResponseStatus === ResponseStatus.Success &&
+    favorites.length === 0;
 
   const dispatch = useAppDispatch();
 
   const handleSelectCity = (city: string) => {
     dispatch(selectCity(city));
   };
+
+  useEffect(() => {
+    dispatch(getFavorites());
+  }, []);
 
   return (
     <div className="page">

@@ -67,6 +67,7 @@ const ReviewForm = () => {
               value={num}
               id={`${num}-stars`}
               type="radio"
+              checked={num === formData.rating}
               onChange={handleChangeValue}
             />
             <label
