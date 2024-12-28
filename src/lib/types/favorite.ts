@@ -1,4 +1,4 @@
-import { CityName, FavoriteStatus } from '../../const';
+import { FavoriteStatus } from '../../const';
 import { OfferFavorite, OfferPartial } from './offer';
 
 export type NewFavoriteStatus = {
@@ -8,4 +8,4 @@ export type NewFavoriteStatus = {
 
 export type FavoriteStatusChange = { data: OfferFavorite; id: string };
 
-export type FavoriteCity = Record<CityName, OfferPartial[]>;
+export type FavoriteCity = Record<string, OfferPartial[]>;
