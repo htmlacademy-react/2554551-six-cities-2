@@ -5,7 +5,7 @@ import { CardImgAttributes, CardType } from '../../lib/types/card';
 import { OfferPartial } from '../../lib/types/offer';
 import { AppRoute, AuthorizationStatus, CARD_OPTIONS } from '../../const';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
-import { selectOfferId } from '../../store/offers/offersSlice';
+import { selectOfferId } from '../../store/offers/offers-slice';
 import { changeFavoriteStatus } from '../../store/api-actions';
 import clsx from 'clsx';
 
@@ -27,6 +27,7 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
     type,
   } = card;
   const { cardClass, imgClass } = CARD_OPTIONS[cardType];
+  const ratingWidth = Math.round(rating) * 20;
 
   const authorizationStatus = useSelector(selectAuthorizationStatus);
 
@@ -102,7 +103,7 @@ const Card = ({ card, cardType, imgAttributes }: Props) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${Math.round(rating) * 20}%` }}></span>
+            <span style={{ width: `${ratingWidth}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
